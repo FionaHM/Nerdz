@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> Nerdz </title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body>
+<!-- hook for adding the questions -->
+<!-- Need to add radio buttons or something to capture score -->
+ <div class="add-questions"></div>
+
+
+<form action="" method="POST">
+  <button id="submit">Submit Answers</button>
+</form>
+
+ <script>
+ // on load the questions are loaded
+// $(document).on('load', function(){
+  $('.questions').html("");  
+
+  $.get("/question", function(data) {
+    console.log(data);
+    for (var i = 0; i < data.length; i++){
+       var id = i+1;
+       $('.add-questions').append('<div class="questions" id="'+ id +'" data-catId="' + data[i].category_id + '" data-question="' + data[i].id + '">' + data[i].question +'</div>');  
+    }
+  });
+
+  $('#submit').on("click", function(){
+    $('.questions').each(function(i, obj) {
+      var id = i+1;
+      var questionObj = {
+        "score" : id, // DUMMY DATA
+        "question_id" : $('#' + id).attr("data-question"),
+        "category_id" :  $('#' + id).attr("data-catId"),
+        "user_id" :  1 // DUMMY DATA
+       };
+       $.post("/score", questionObj);
+       // tried to post array but server did not like it
+    });
+  })
+
+  
+
+
+</script>
+</html>
