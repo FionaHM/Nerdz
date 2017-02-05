@@ -15,10 +15,10 @@ module.exports = function(sequelize, DataTypes){
 			allowNull: false,
 			// validate: {len: [1, 33], notEmpty: true }
 		},
-		overall_score: {
-			type: DataTypes.DECIMAL(4, 2),
+		password: {
+			type: DataTypes.STRING,
 			allowNull: true,
-			defaultValue: null
+			// validate: {len : [6, 12]}
 		},
 		location: {
 			type: DataTypes.STRING,

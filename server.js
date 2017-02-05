@@ -25,13 +25,7 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 app.use(express.static("./public"));
 
 // Routes =============================================================
-
-
 require("./controllers/nerdz-controller.js")(app);
-require("./controllers/api-controller.js")(app);
-
-// require("./routes/post-api-routes.js")(app);
-// require("./routes/author-api-routes.js")(app);
 
 // Syncing our sequelize models and then starting our express app
 db.sequelize.sync({ force: false }).then(function() {

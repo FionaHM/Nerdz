@@ -12,45 +12,35 @@ function router(app){
 		res.sendFile(path.join(__dirname + "/../public/index.html"));
 	})
 
-	// POST to CREATE USER
-	app.post('/user', function (req, res) {
-		// capture the name of the burger
-		// var username = req.body.username;
-		// var email = req.body.email;
-		// // find the customer in the Customers table or create if it does not exist
- 	    db.User.findOrCreate({
- 	    	// DUMMY DATA
-			where: { username: "me", email: 'test'},
-	    }).then(function() {
-	    	// res.redirect("/");
-	    	// maybe redirect with user id??
-			res.sendFile(path.join(__dirname + "/../public/questions.html"));
+
+	app.get('/question', function (req, res) {
+		// Query the database
+		db.Question.findAll({}).then(function(data){
+			res.json(data)
 		}).catch(function(err){
-			console.log(err);
 			res.redirect("/");
 		})
 	})
 
-
-	app.get('/question', function (req, res) {
-
-		db.Question.findAll({}).then(function(data){
-			res.json(data)
+	// create user
+	app.post('/user', function (req, res) {
+		// capture the name of the user
+		var username = req.body.username;
+		var email = req.body.email;
+		var password = req.body.password;
+		var location = req.body.location; 
+		// // find the customer in the Users table or create if it does not exist
+ 	    db.User.findOrCreate({
+			where: { username: username, email: email, password: password, location: location }
+	    }).then(function() {
+			res.sendFile(path.join(__dirname + "/../public/questions.html"));
 		}).catch(function(err){
-			res.redirect("/question");
+			console.log(err);
+			// res.redirect("/");
 		})
-
-		// db.Category.findAll({include: db.Question}).then(function(data){
-		// 	res.json(data);
-		// 	console.log(data)
-		// }).catch(function(err){
-		// 	console.log(err);
-		// 	res.redirect("/");
-		// })
-	// }
 	})
 
-	//add scores
+	// add scores
 	app.post('/score', function (req, res) {
 		
 			// need to capture the following from the Client
@@ -67,19 +57,14 @@ function router(app){
 			   // seems to expect json object and not an array
 
 				db.Score.create({
-				// question: req.body.question.parseInt(),
-				// categoryid:  req.body.categoryid.parseInt(),
-				// userid:  req.body.useid.parseInt(),
-				// score : req.body.score.parseInt()
 					score: req.body.score,
 				   	category_id: req.body.category_id,
 				   	user_id: req.body.user_id
-				
 		    	}).then(function() {
-					res.redirect("/");
+					// res.sendFile(path.join(__dirname + "/../public/graphs.html"));
 				}).catch(function(err){
 					console.log(err);
-					res.redirect("/");
+					// res.redirect("/");
 				})
 			 // }
 	})
