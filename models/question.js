@@ -9,7 +9,12 @@ module.exports = function(sequelize, DataTypes){
 		question: {
 			type: DataTypes.STRING,
 			allowNull: false
-		}
+		},
+		category: {
+			type: DataTypes.STRING,
+			allowNull: false
+		},
+
 	},{  // use snake case instead of camel case so foreign keys of format modelname_pkid e.g. burger_id or customer_id
     	underscored: true,
     	classMethods: {

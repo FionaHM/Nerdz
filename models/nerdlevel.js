@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes){
-	var Category = sequelize.define("Category", {
+	var Nerdlevel = sequelize.define("Nerdlevel", {
 		id: {
 			type: DataTypes.INTEGER,
 			autoIncrement: true,
@@ -10,6 +10,8 @@ module.exports = function(sequelize, DataTypes){
 			type: DataTypes.STRING,
 			allowNull: false
 		}
+
+      },
   	},{
   		timestamps: false
 	})
