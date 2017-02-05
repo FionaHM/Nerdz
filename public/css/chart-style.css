@@ -1,0 +1,46 @@
+#chartdiv {
+  width: 100%;
+  height: 500px;
+  font-size: 10px;
+}
+
+h1 {
+  font-size: 7.5vw;
+  font-family: 'Barrio', cursive;
+  line-height: 100%;
+}
+
+#indie-chartdiv {
+  width: 100%;
+  height: 500px;
+  font-size: 10px;
+  font-family: 'Indie Flower', cursive;
+}
+
+#gauge-div {
+  width: 100%;
+  height: 500px;
+}
+
+body {
+  /*  background-image: url("../img/chalkboard.jpg");
+
+*/
+  background: #000;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #fff;
+}
+
+p {
+  line-height: 300%;
+  letter-spacing: 3px;
+}
+
+li.export-main {
+  display: none;
+}
+
+a.amcharts-main-div {
+  display: none;
+}
