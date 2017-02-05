@@ -35,7 +35,8 @@ function router(app){
 	app.get('/question', function (req, res) {
 
 		db.Question.findAll({}).then(function(data){
-			res.json(data)
+			res.json(data);
+			console.log(data);
 		}).catch(function(err){
 			res.redirect("/");
 		})

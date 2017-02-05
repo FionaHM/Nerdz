@@ -19,10 +19,10 @@
  <script>
  // on load the questions are loaded
 // $(document).on('load', function(){
-  $('.questions').html("");  
+  $('.add-questions').html("");  
 
   $.get("/question", function(data) {
-
+console.log(data);
     for (var i = 0; i < data.length; i++){
        var id = i+1;
        $('.add-questions').append('<div class="questions" id="'+ id +'" data-catId="' + data[i].category_id + '" data-question="' + data[i].id + '">' + data[i].question +'</div>');  
