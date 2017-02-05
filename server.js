@@ -6,7 +6,7 @@
 // =============================================================
 var express = require("express");
 var bodyParser = require("body-parser");
-
+// added this line for test
 // Sets up the Express App
 // =============================================================
 var app = express();
@@ -26,7 +26,10 @@ app.use(express.static("./public"));
 
 // Routes =============================================================
 
-require("./controller/nerdz-controller.js")(app);
+
+require("./controllers/nerdz-controller.js")(app);
+require("./controllers/api-controller.js")(app);
+
 // require("./routes/post-api-routes.js")(app);
 // require("./routes/author-api-routes.js")(app);
 
