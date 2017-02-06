@@ -95,6 +95,7 @@
 // };
 
 var chartData = {
+
     "1": [{
         "name": "jhornsten"
     }, {
@@ -107,6 +108,8 @@ var chartData = {
         "total_score": 3,
         "category": "CAT C"
     }],
+
+
     "2": [{
         "name": "user1"
     }, {
@@ -119,19 +122,21 @@ var chartData = {
         "total_score": 8,
         "category": "CAT C"
     }]
+
 };
 
-var chartData = [];
+// var chartData = [];
 
-function getData() {
-    $.get("/aggregatescore", function(data) {
+// function getData() {
+//     $.get("/aggregatescore", function(data) {
 
-        chartData.push(data);
-    });
-}
 
-getData();
-console.log(chartData);
+//         chartData.push(data);
+//     });
+// }
+
+// getData();
+// console.log(chartData);
 
 var size = Object.keys(chartData).length;
 
