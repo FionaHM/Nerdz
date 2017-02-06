@@ -59,27 +59,28 @@ function router(app){
   				var resultsArr = [];
   				resultsArr.push(resultsObj);
   				var control = 0;
-  				var j =0;
+  				var j =1;
   				for (var i = 0; i < results.length; i++){
 
   					if ( user === results[i].username){
   						resultsArr.push({total_score: results[i].total_score,
   					  category: results[i].category})
-						resultsObj = { "num" : resultsArr };
+						resultsObj = { [j] : resultsArr };
   					} else {
-  						console.log(resultsObj);
+  						// console.log(resultsObj);
   						outputArr.push(resultsObj);
+  						j= j+1;
   						resultsObj = {};
   						resultsArr = [];
-  						resultsObj = { "num" : resultsArr };
+  						// resultsObj = { "num" : resultsArr };
   						user = results[i].username;
-  						resultsObj = { "name" : results[i].username };
+  						resultsObj = { ["name" ]: results[i].username };
   						// the username is added
   						resultsArr.push(resultsObj);
   						// add score data
   						resultsArr.push({total_score: results[i].total_score,
   					  category: results[i].category})
-  						resultsObj = { "num" : resultsArr };
+  						resultsObj = { [j] : resultsArr };
 
   					}
   		            
