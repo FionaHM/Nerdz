@@ -1,9 +1,18 @@
 var methodOverride = require("method-override");
 var db = require('../models');
 var path = require("path");
+var passwordHash = require("password-hash");
+var expressJWT = require("express-jwt");
+var jwt = require("jsonwebtoken");
+var session = require("express-session");
 
 function router(app){
+	// middleware that checks for jwt from api
 
+	// some routes wont require a jwt e.g. login route these are 
+	// specified in the unless clause
+	// app.use(expressJWT({ secret: "putthisinaseparatefile"}).unless({path: ['/loginpage', '/login']}));
+	// app.use(session({cookie: { httpOnly : true}}));
 	// Override with POST having ?_method=PUT or DELETE
 	app.use(methodOverride("_method"));
 
@@ -17,6 +26,39 @@ function router(app){
 	})
 
 	app.post('/login', function(req, res){
+		var email = req.body.email;
+		var password = req.body.password;
+		if (!email){
+			res.status(400).send("email required");
+			return;
+		}
+		if (!password){
+			res.status(400).send("password required");
+			return;
+		}
+
+		db.User.findOne({
+			where: { email: email }
+	    }).then(function(data) {
+
+
+		    if (passwordHash.verify(password, data.password)){
+		     	// send back the token
+		     	var myToken = jwt.sign({ username: data.username}, "putthisinaseparatefile");
+		     	// res.status(200).json(myToken);
+		     	// res.cookie('sessionid', '1', {httpOnly : true});
+		     	// res.cookie('sessionid', '1', {secure : true});
+		  		res.status(200).json(myToken);
+		    } else {
+		    	res.status(400).send("Invalid Password");
+		    }
+		    // true
+    
+
+		}).catch(function(err){
+			console.log(err);
+			// res.redirect("/");
+		})
 		// to be completed
 	})
 
@@ -66,11 +108,13 @@ function router(app){
   						resultsArr.push({total_score: results[i].total_score,
   					  category: results[i].category})
 						resultsObj = { [j] : resultsArr };
+						// resultsObj[j] = resultsArr;
+						console.log(resultsObj);
   					} else {
-  						// console.log(resultsObj);
+  						
   						outputArr.push(resultsObj);
   						j= j+1;
-  						resultsObj = {};
+  						// resultsObj = {};
   						resultsArr = [];
   						// resultsObj = { "num" : resultsArr };
   						user = results[i].username;
@@ -81,6 +125,7 @@ function router(app){
   						resultsArr.push({total_score: results[i].total_score,
   					  category: results[i].category})
   						resultsObj = { [j] : resultsArr };
+  						// resultsObj[j] = resultsArr;
 
   					}
   		            
@@ -89,7 +134,13 @@ function router(app){
   					}
 
   				}
-	  			res.json(outputArr);
+  				// post processing to get right format for charts
+  				var outputObj = {};
+  				for (var k = 0; k < outputArr.length; k++){
+  					outputObj[k+1] = outputArr[k][k+1];
+  				}
+  				// console.log("arr", outputArr[0][1]);
+	  			res.json(outputObj);
 	  		})
   		})
    
@@ -126,7 +177,8 @@ function router(app){
 		// capture the name of the user
 		var username = req.body.username;
 		var email = req.body.email;
-		var password = req.body.password;
+		// hash the password before saving
+		var password = passwordHash.generate(req.body.password);
 		var location = req.body.location; 
 		// // find the customer in the Users table or create if it does not exist
  	    db.User.findOrCreate({
