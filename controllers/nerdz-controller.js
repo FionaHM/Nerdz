@@ -60,25 +60,90 @@ function router(app){
 	})
 
 
-   	app.get('/aggregatescore/:id', function (req, res) {
+
+
+   	app.get('/aggregatescore/:id?', function (req, res) {
    		// get aggregate score for a user
    		var total = 0;
    		var userid = req.params.id;  // passed in from client
-   		var queryString = "select sum(a.score) as total from rawscores as a, users as b where b.id = a.user_id and a.user_id = "+ userid;
+   		var queryString = "select sum(a.score) as total from rawscores as a, users as b where b.id = a.user_id";
+   		// if there is a userid sent then append it to the query
+   		if (userid !== undefined) {
+   			queryString += " and a.user_id = " + userid;
+   		}
    		// select b.username, sum(a.score), a.category from rawscores as a, users as b where b.id = a.user_id and a.user_id = 1 group by a.category
 		db.sequelize.query(queryString, { type: db.sequelize.QueryTypes.SELECT})
   		.then(function(results) {
   			// gives percentage
   			total = results[0].total;	
-	   		queryString = "select b.username, sum(a.score)/"+ total + "*100 as total_score, a.category from rawscores as a, users as b where b.id = a.user_id and a.user_id = "+ userid + " group by a.category";
-	   		// select b.username, sum(a.score), a.category from rawscores as a, users as b where b.id = a.user_id and a.user_id = 1 group by a.category
+  			// this give back raw scores
+	   		queryString = "select b.username, sum(a.score) as total_score, a.category from rawscores as a, users as b where b.id = a.user_id group by  b.username, a.category";
+	   		// user id gives raw scores
+			if (userid !== undefined) {
+   				queryString = "select b.username, sum(a.score) as total_score, a.category from rawscores as a, users as b where b.id = a.user_id and a.user_id = "+ userid + " group by a.category";
+   			}
 			db.sequelize.query(queryString, { type: db.sequelize.QueryTypes.SELECT})
 	  		.then(function(results) {
-	  			res.json(results);
+	  			// put results into format for charts - per jess example
+	  				var resultsObj = { "name" : results[0].username };
+	  				var outputArr = [];
+	  				var user = results[0].username;
+	  				var resultsArr = [];
+	  				resultsArr.push(resultsObj);
+	  				var control = 0;
+	  				var j =0;
+	  				for (var i = 0; i < results.length; i++){
+
+	  					if ( user === results[i].username){
+	  						resultsArr.push({total_score: results[i].total_score,
+	  					  category: results[i].category})
+							resultsObj = { "num" : resultsArr };
+	  					} else {
+	  						console.log(resultsObj);
+	  						outputArr.push(resultsObj);
+	  						resultsObj = {};
+	  						resultsArr = [];
+	  						resultsObj = { "num" : resultsArr };
+	  						user = results[i].username;
+	  						resultsObj = { "name" : results[i].username };
+	  						// the username is added
+	  						resultsArr.push(resultsObj);
+	  						// add score data
+	  						resultsArr.push({total_score: results[i].total_score,
+	  					  category: results[i].category})
+	  						resultsObj = { "num" : resultsArr };
+
+	  					}
+	  		            
+	  					if (i === results.length-1){
+	  						outputArr.push(resultsObj);
+	  					}
+
+
+	  					
+
+	  				}
+
+	  			res.json(outputArr);
 	  		})
   		})
    
 	})
+
+// function formatResuls(results, resultsArr, resultsObj, j){
+// 	for (var i = j; i < results.length; i++){
+
+// 		if ( user === results[i].username){
+// 			resultsArr.push({total_score: results[i].total_score,
+// 		  category: results[i].category})
+// 			resultsObj = { i : resultsArr };
+// 		}
+
+// 	}
+
+// }
+
+
 
 	// get category for user id 
 	app.get('/category/:id', function (req, res) {
