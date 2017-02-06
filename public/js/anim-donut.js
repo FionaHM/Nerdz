@@ -5,91 +5,91 @@ var chartData = {
     "1": [{
         "name": "Charles"
     }, {
-        "title": "Culture Nerd",
+        "title": "Culture",
         "value": 20
     }, {
-        "title": "Tech Nerd",
+        "title": "Tech",
         "value": 20
     }, {
-        "title": "Collector Nerd",
+        "title": "Collector",
         "value": 20
     }, {
-        "title": "Fantasy Nerd",
+        "title": "Fantasy",
         "value": 10
     }, {
-        "title": "Well-Rounded Nerd",
+        "title": "Well-Rounded",
         "value": 30
     }],
     "2": [{
         "name": "Fiona"
     }, {
-        "title": "Culture Nerd",
+        "title": "Culture",
         "value": 10
     }, {
-        "title": "Tech Nerd",
+        "title": "Tech",
         "value": 50
     }, {
-        "title": "Collector Nerd",
+        "title": "Collector",
         "value": 20
     }, {
-        "title": "Fantasy Nerd",
+        "title": "Fantasy",
         "value": 15
     }, {
-        "title": "Well-Rounded Nerd",
+        "title": "Well-Rounded",
         "value": 5
     }],
     "3": [{
         "name": "Jessica"
     }, {
-        "title": "Culture Nerd",
+        "title": "Culture",
         "value": 40
     }, {
-        "title": "Tech Nerd",
+        "title": "Tech",
         "value": 20
     }, {
-        "title": "Collector Nerd",
+        "title": "Collector",
         "value": 10
     }, {
-        "title": "Fantasy Nerd",
+        "title": "Fantasy",
         "value": 20
     }, {
-        "title": "Well-Rounded Nerd",
+        "title": "Well-Rounded",
         "value": 10
     }],
     "4": [{
         "name": "Phil"
     }, {
-        "title": "Culture Nerd",
+        "title": "Culture",
         "value": 50
     }, {
-        "title": "Tech Nerd",
+        "title": "Tech",
         "value": 20
     }, {
-        "title": "Collector Nerd",
+        "title": "Collector",
         "value": 10
     }, {
-        "title": "Fantasy Nerd",
+        "title": "Fantasy",
         "value": 10
     }, {
-        "title": "Well-Rounded Nerd",
+        "title": "Well-Rounded",
         "value": 10
     }],
     "5": [{
         "name": "Mitali"
     }, {
-        "title": "Culture Nerd",
+        "title": "Culture",
         "value": 5
     }, {
-        "title": "Tech Nerd",
+        "title": "Tech",
         "value": 55
     }, {
-        "title": "Collector Nerd",
+        "title": "Collector",
         "value": 20
     }, {
-        "title": "Fantasy Nerd",
+        "title": "Fantasy",
         "value": 10
     }, {
-        "title": "Well-Rounded Nerd",
+        "title": "Well-Rounded",
         "value": 10
     }]
 };
@@ -112,6 +112,11 @@ var chart = AmCharts.makeChart("chartdiv", {
     "radius": "30%",
     "pullOutRadius": 20,
     "marginTop": 30,
+    "percentFormatter": {
+        precision: 0,
+        decimalSeparator: '.',
+        thousandsSeparator: ','
+    },
     "allLabels": [{
         "y": "54%",
         "align": "center",
