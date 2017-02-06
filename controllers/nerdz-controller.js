@@ -6,6 +6,7 @@ var expressJWT = require("express-jwt");
 var jwt = require("jsonwebtoken");
 var session = require("express-session");
 
+
 function router(app){
 	// middleware that checks for jwt from api
 
