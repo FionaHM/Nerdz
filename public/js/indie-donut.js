@@ -1,4 +1,4 @@
-var data = [{
+var indieData = [{
     "name": "Lewis",
     "location": ""
 }, {
@@ -21,7 +21,7 @@ var data = [{
 var chart1 = AmCharts.makeChart("indie-chartdiv", {
     "type": "pie",
     "theme": "dark",
-    "dataProvider": data,
+    "dataProvider": indieData,
     "valueField": "value",
     "titleField": "title",
     "labelRadius": 5,
