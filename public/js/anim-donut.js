@@ -1,98 +1,137 @@
-/**
- * Define data for each year
- */
+// /**
+//  * Define data for each year
+//  */
+// var chartData = {
+//     "1": [{
+//         "name": "Charles"
+//     }, {
+//         "category": "Culture",
+//         "total_score": 20
+//     }, {
+//         "category": "Tech",
+//         "total_score": 20
+//     }, {
+//         "category": "Collector",
+//         "total_score": 20
+//     }, {
+//         "category": "Fantasy",
+//         "total_score": 10
+//     }, {
+//         "category": "Well-Rounded",
+//         "total_score": 30
+//     }],
+//     "2": [{
+//         "name": "Fiona"
+//     }, {
+//         "category": "Culture",
+//         "total_score": 10
+//     }, {
+//         "category": "Tech",
+//         "total_score": 50
+//     }, {
+//         "category": "Collector",
+//         "total_score": 20
+//     }, {
+//         "category": "Fantasy",
+//         "total_score": 15
+//     }, {
+//         "category": "Well-Rounded",
+//         "total_score": 5
+//     }],
+//     "3": [{
+//         "name": "Jessica"
+//     }, {
+//         "category": "Culture",
+//         "total_score": 40
+//     }, {
+//         "category": "Tech",
+//         "total_score": 20
+//     }, {
+//         "category": "Collector",
+//         "total_score": 10
+//     }, {
+//         "category": "Fantasy",
+//         "total_score": 20
+//     }, {
+//         "category": "Well-Rounded",
+//         "total_score": 10
+//     }],
+//     "4": [{
+//         "name": "Phil"
+//     }, {
+//         "category": "Culture",
+//         "total_score": 50
+//     }, {
+//         "category": "Tech",
+//         "total_score": 20
+//     }, {
+//         "category": "Collector",
+//         "total_score": 10
+//     }, {
+//         "category": "Fantasy",
+//         "total_score": 10
+//     }, {
+//         "category": "Well-Rounded",
+//         "total_score": 10
+//     }],
+//     "5": [{
+//         "name": "Mitali"
+//     }, {
+//         "category": "Culture",
+//         "total_score": 5
+//     }, {
+//         "category": "Tech",
+//         "total_score": 55
+//     }, {
+//         "category": "Collector",
+//         "total_score": 20
+//     }, {
+//         "category": "Fantasy",
+//         "total_score": 10
+//     }, {
+//         "category": "Well-Rounded",
+//         "total_score": 10
+//     }]
+// };
+
 var chartData = {
     "1": [{
-        "name": "Charles"
+        "name": "jhornsten"
     }, {
-        "title": "Culture",
-        "value": 20
+        "total_score": 34,
+        "category": "CAT A"
     }, {
-        "title": "Tech",
-        "value": 20
+        "total_score": 5,
+        "category": "CAT B"
     }, {
-        "title": "Collector",
-        "value": 20
-    }, {
-        "title": "Fantasy",
-        "value": 10
-    }, {
-        "title": "Well-Rounded",
-        "value": 30
+        "total_score": 3,
+        "category": "CAT C"
     }],
     "2": [{
-        "name": "Fiona"
+        "name": "user1"
     }, {
-        "title": "Culture",
-        "value": 10
+        "total_score": 7,
+        "category": "CAT A"
     }, {
-        "title": "Tech",
-        "value": 50
+        "total_score": 3,
+        "category": "CAT B"
     }, {
-        "title": "Collector",
-        "value": 20
-    }, {
-        "title": "Fantasy",
-        "value": 15
-    }, {
-        "title": "Well-Rounded",
-        "value": 5
-    }],
-    "3": [{
-        "name": "Jessica"
-    }, {
-        "title": "Culture",
-        "value": 40
-    }, {
-        "title": "Tech",
-        "value": 20
-    }, {
-        "title": "Collector",
-        "value": 10
-    }, {
-        "title": "Fantasy",
-        "value": 20
-    }, {
-        "title": "Well-Rounded",
-        "value": 10
-    }],
-    "4": [{
-        "name": "Phil"
-    }, {
-        "title": "Culture",
-        "value": 50
-    }, {
-        "title": "Tech",
-        "value": 20
-    }, {
-        "title": "Collector",
-        "value": 10
-    }, {
-        "title": "Fantasy",
-        "value": 10
-    }, {
-        "title": "Well-Rounded",
-        "value": 10
-    }],
-    "5": [{
-        "name": "Mitali"
-    }, {
-        "title": "Culture",
-        "value": 5
-    }, {
-        "title": "Tech",
-        "value": 55
-    }, {
-        "title": "Collector",
-        "value": 20
-    }, {
-        "title": "Fantasy",
-        "value": 10
-    }, {
-        "title": "Well-Rounded",
-        "value": 10
+        "total_score": 8,
+        "category": "CAT C"
     }]
 };
+
+var chartData = [];
+
+function getData() {
+    $.get("/aggregatescore", function(data) {
+
+        chartData.push(data);
+    });
+}
+
+getData();
+console.log(chartData);
 
 var size = Object.keys(chartData).length;
 
@@ -105,8 +144,8 @@ var chart = AmCharts.makeChart("chartdiv", {
     "type": "pie",
     "theme": "dark",
     "dataProvider": [],
-    "valueField": "value",
-    "titleField": "title",
+    "valueField": "total_score",
+    "titleField": "category",
     "startDuration": 0,
     "innerRadius": "60%",
     "radius": "30%",
