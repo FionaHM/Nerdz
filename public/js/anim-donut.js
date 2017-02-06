@@ -94,117 +94,86 @@
 //     }]
 // };
 
-var chartData = {
 
-    "1": [{
-        "name": "jhornsten"
-    }, {
-        "total_score": 34,
-        "category": "CAT A"
-    }, {
-        "total_score": 5,
-        "category": "CAT B"
-    }, {
-        "total_score": 3,
-        "category": "CAT C"
-    }],
+function getData() {
+    $.get("/aggregatescore", function(data) {
 
+        var chartData = data;
 
-    "2": [{
-        "name": "user1"
-    }, {
-        "total_score": 7,
-        "category": "CAT A"
-    }, {
-        "total_score": 3,
-        "category": "CAT B"
-    }, {
-        "total_score": 8,
-        "category": "CAT C"
-    }]
+        var size = Object.keys(chartData).length;
 
-};
+        console.log(size);
 
-// var chartData = [];
+        /**
+         * Create the chart
+         */
+        var currentPerson = 1;
 
-// function getData() {
-//     $.get("/aggregatescore", function(data) {
+        var chart = AmCharts.makeChart("chartdiv", {
+            "type": "pie",
+            "theme": "dark",
+            "dataProvider": [],
+            "valueField": "total_score",
+            "titleField": "category",
+            "startDuration": 0,
+            "innerRadius": "60%",
+            "radius": "30%",
+            "pullOutRadius": 20,
+            "marginTop": 30,
+            "percentFormatter": {
+                precision: 0,
+                decimalSeparator: '.',
+                thousandsSeparator: ','
+            },
+            "allLabels": [{
+                "y": "54%",
+                "align": "center",
+                "size": 25,
+                "bold": true,
+                "text": "1",
+                "color": "#fff"
+            }, {
+                "y": "49%",
+                "align": "center",
+                "size": 15,
+                "text": "Nerd:",
+                "color": "#fff"
+            }],
+            "listeners": [{
+                "event": "init",
+                "method": function(e) {
+                    var chart = e.chart;
 
+                    function getCurrentData() {
+                        var data = chartData[currentPerson];
 
-//         chartData.push(data);
-//     });
-// }
-
-// getData();
-// console.log(chartData);
-
-var size = Object.keys(chartData).length;
-
-/**
- * Create the chart
- */
-var currentPerson = 1;
-
-var chart = AmCharts.makeChart("chartdiv", {
-    "type": "pie",
-    "theme": "dark",
-    "dataProvider": [],
-    "valueField": "total_score",
-    "titleField": "category",
-    "startDuration": 0,
-    "innerRadius": "60%",
-    "radius": "30%",
-    "pullOutRadius": 20,
-    "marginTop": 30,
-    "percentFormatter": {
-        precision: 0,
-        decimalSeparator: '.',
-        thousandsSeparator: ','
-    },
-    "allLabels": [{
-        "y": "54%",
-        "align": "center",
-        "size": 25,
-        "bold": true,
-        "text": "1",
-        "color": "#fff"
-    }, {
-        "y": "49%",
-        "align": "center",
-        "size": 15,
-        "text": "Nerd:",
-        "color": "#fff"
-    }],
-    "listeners": [{
-        "event": "init",
-        "method": function(e) {
-            var chart = e.chart;
-
-            function getCurrentData() {
-                var data = chartData[currentPerson];
-
-                currentPerson++;
-                if (currentPerson > size)
-                    currentPerson = 1;
-                return data;
-            }
-
-            function loop() {
-                currentPersonLabel = chartData[currentPerson]["0"].name;
-                chart.allLabels[0].text = currentPersonLabel;
-                var data = getCurrentData();
-                chart.animateData(data, {
-                    duration: 1000,
-                    complete: function() {
-                        setTimeout(loop, 3000);
+                        currentPerson++;
+                        if (currentPerson > size)
+                            currentPerson = 1;
+                        return data;
                     }
-                });
-            }
 
-            loop();
-        }
-    }],
-    "export": {
-        "enabled": true
-    }
-});
+                    function loop() {
+                        currentPersonLabel = chartData[currentPerson]["0"].name;
+                        chart.allLabels[0].text = currentPersonLabel;
+                        var data = getCurrentData();
+                        chart.animateData(data, {
+                            duration: 1000,
+                            complete: function() {
+                                setTimeout(loop, 3000);
+                            }
+                        });
+                    }
+
+                    loop();
+                }
+            }],
+            "export": {
+                "enabled": true
+            }
+        });
+
+    });
+}
+
+getData();
