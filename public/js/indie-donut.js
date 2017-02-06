@@ -1,19 +1,20 @@
 var data = [{
-    "name": "Lewis"
+    "name": "Lewis",
+    "location": ""
 }, {
-    "title": "Culture Nerd",
+    "title": "Culture",
     "value": 20
 }, {
-    "title": "Tech Nerd",
+    "title": "Tech",
     "value": 13
 }, {
-    "title": "Collector Nerd",
+    "title": "Collector",
     "value": 15
 }, {
-    "title": "Fantasy Nerd",
+    "title": "Fantasy",
     "value": 4
 }, {
-    "title": "Well-Rounded Nerd",
+    "title": "Well-Rounded",
     "value": 10
 }];
 
@@ -28,6 +29,11 @@ var chart1 = AmCharts.makeChart("indie-chartdiv", {
     "radius": "30%",
     "innerRadius": "60%",
     "marginTop": 30,
+    "percentFormatter": {
+        precision: 0,
+        decimalSeparator: '.',
+        thousandsSeparator: ','
+    },
     "allLabels": [{
         "y": "54%",
         "align": "center",
