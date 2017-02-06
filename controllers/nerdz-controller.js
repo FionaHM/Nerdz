@@ -11,14 +11,18 @@ function router(app){
 
 	// some routes wont require a jwt e.g. login route these are 
 	// specified in the unless clause
-	// app.use(expressJWT({ secret: "putthisinaseparatefile"}).unless({path: ['/loginpage', '/login']}));
-	// app.use(session({cookie: { httpOnly : true}}));
+	// comment out for now.......
+	
+	app.use(session({secret: "supersecretcookies", cookie: { httpOnly : true}}));
 	// Override with POST having ?_method=PUT or DELETE
 	app.use(methodOverride("_method"));
 
+
+
+	// app.use(expressJWT({ secret: })
 	// path for main landing page
-	app.get('/', function(req, res){
-		res.sendFile(path.join(__dirname + "/../public/index.html"));
+	app.get('/graph', function(req, res){
+		res.sendFile(path.join(__dirname + "/../public/graphs.html"));
 	})
 
 	app.get('/loginpage', function(req, res){
@@ -44,11 +48,11 @@ function router(app){
 
 		    if (passwordHash.verify(password, data.password)){
 		     	// send back the token
-		     	var myToken = jwt.sign({ username: data.username}, "putthisinaseparatefile");
-		     	// res.status(200).json(myToken);
-		     	// res.cookie('sessionid', '1', {httpOnly : true});
-		     	// res.cookie('sessionid', '1', {secure : true});
-		  		res.status(200).json(myToken);
+		     	var myToken = jwt.sign({ username: data.username}, "putthisinaseparatefile", { expiresIn: 60 * 60 });
+		     	// expires in one hour
+		     	// jwt.sign({data: 'foobar'}, 'secret', { expiresIn: 60 * 60 });
+		     	// this is stored as a cookie on client and sent in AJAX Header
+		  		res.json(myToken);
 		    } else {
 		    	res.status(400).send("Invalid Password");
 		    }
@@ -61,6 +65,29 @@ function router(app){
 		})
 		// to be completed
 	})
+
+
+// this is the code to get and verify a token - needs to be used in each api route
+	function getToken(req) {
+
+		var token = null;
+	    if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
+	        token = req.headers.authorization.split(' ')[1];
+	    } else if (req.query && req.query.token) {
+	      token = req.query.token;
+	    } else {
+	    	token = null;
+	    }
+	    // var token = getToken(req);
+		console.log(token) ;// bar
+		// verify a token symmetric - synchronous
+		var decoded = jwt.verify(token, 'putthisinaseparatefile');
+				// jwt.verify(token,'putthisinaseparatefile' , function(err, decoded) {
+  //       if(err) {
+  //           return res.status(401).send({message: 'invalid_token'});
+  //       }
+		return decoded; 
+	}
 
 	// gets all questions from the database
 	app.get('/question', function (req, res) {
@@ -147,7 +174,7 @@ function router(app){
 	})
 
 	// get all users data for the map
-	app.get('/api/map', function (req, res) {
+	app.get('/map', function (req, res) {
 		// select a count of users by category and location
 		var total = 50;
    		var queryString = "select count(b.id) as total, b.overall_category, b.location from users as b group by b.location, b.overall_category";

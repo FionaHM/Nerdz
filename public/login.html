@@ -9,13 +9,60 @@
 <body>
 
 
-<form action="/login" method="POST">
+<!-- <form action=""> -->
 <!--  //verify with email -->
     <label for="email">Email</label>
     <input type="text" name="email" id="email" >
     <label for="password">Password</label>
     <input type="text" name="password" id="password">
   <button id="submit">Login</button>
-</form>
+<!-- </form> -->
 </body>
+<script  type="text/javascript">
+$("#submit").on("click", function(){
+	var loginObj = {
+		email: $("#email").val(),
+		password: $("#password").val(),
+	}
+	createCookie("user_email", $("#email").val(), 0 );
+	$.post('/login', loginObj, function(data, status){
+		console.log(data);
+		createCookie("auth_token", data, 0 );
+	})	
+})
+
+
+
+// copied from stackoverflow.com
+var createCookie = function(name, value, days) {
+    var expires;
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toGMTString();
+    }
+    else {
+        expires = "";
+    }
+    document.cookie = name + "=" + value + expires + "; path=/";
+}
+
+// copied from stackoverflow.com
+function getCookie(c_name) {
+    if (document.cookie.length > 0) {
+        c_start = document.cookie.indexOf(c_name + "=");
+        if (c_start != -1) {
+            c_start = c_start + c_name.length + 1;
+            c_end = document.cookie.indexOf(";", c_start);
+            if (c_end == -1) {
+                c_end = document.cookie.length;
+            }
+            return unescape(document.cookie.substring(c_start, c_end));
+        }
+    }
+    return "";
+}
+
+
+</script>
 </html>
