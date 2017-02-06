@@ -23,14 +23,26 @@ module.exports = function(sequelize, DataTypes){
 		location: {
 			type: DataTypes.STRING,
 			allowNull: true
+		},
+		overall_category: {
+			type: DataTypes.STRING,
+			allowNull: true
+		},
+		nerd_level: {
+			type: DataTypes.STRING,
+			allowNull: true
 		}
 	},{  // use snake case instead of camel case so foreign keys of format modelname_pkid e.g. burger_id or customer_id
     	underscored: true,
     	classMethods: {
         associate: function(models) {
            // One to many relationship
-			// When a Customer is deleted, also delete any associated Burgers
-			User.hasMany(models.Score, {
+			// When a User is deleted, also delete any associated Burgers
+			User.hasMany(models.Rawscore, {
+				onDelete: "cascade",
+				constraints: false
+			}),
+			User.hasMany(models.Aggregatescore, {
 				onDelete: "cascade",
 				constraints: false
 			});
@@ -40,8 +52,6 @@ module.exports = function(sequelize, DataTypes){
   		timestamps: false
 	})
 
-	// Syncs with DB
-	// Burger.sync();
 
 	return User;
 };

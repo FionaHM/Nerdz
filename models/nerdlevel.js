@@ -1,22 +1,27 @@
 module.exports = function(sequelize, DataTypes){
-	var Category = sequelize.define("Category", {
+	var Nerdlevel = sequelize.define("Nerdlevel", {
 		id: {
 			type: DataTypes.INTEGER,
 			autoIncrement: true,
 			primaryKey: true,
 			allowNull: false
 		},
-		category_name: {
+		nerd_level: {
 			type: DataTypes.STRING,
+			allowNull: false
+		},
+		max_score: {
+			type: DataTypes.DECIMAL(10,2),
+			allowNull: false
+		},
+		min_score: {
+			type: DataTypes.DECIMAL(10,2),
 			allowNull: false
 		}
   	},{
   		timestamps: false
 	})
 
-	// Syncs with DB
-	// Burger.sync();
-
-	return Category;
+	return Nerdlevel;
 };
 
