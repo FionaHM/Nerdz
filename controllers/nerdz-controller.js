@@ -43,52 +43,102 @@ function router(app){
 	// add scores
 	app.post('/score', function (req, res) {
 		
-			// need to capture the following from the Client
-			   // need to see how the data is passed in req object
-			   // but we need the following:
-			   // question id => var question = req.body.question;
-			   // category_id => var categoryid = req.body.categoryid;
-			   // user_id => var userid = req.body.userid;
-			   // individual scores => var categoryid = req.body.scores;
-			   // might need to loop through the req object
-			   // then do some calcuation/aggregaion on the scores
-			   // before saving to the database below
-
-			   // seems to expect json object and not an array
-
-				db.Score.create({
-					score: req.body.score,
-				   	category_id: req.body.category_id,
-				   	user_id: req.body.user_id
-		    	}).then(function() {
-					// res.sendFile(path.join(__dirname + "/../public/graphs.html"));
-				}).catch(function(err){
-					console.log(err);
-					// res.redirect("/");
-				})
-			 // }
+	    // loops through and updates rawscores table
+		for (var i = 0; i < req.body.arr.length; i++){
+			// updates rawscores table
+			db.Rawscore.create({
+				score: req.body.arr[i].score,
+			   	category: req.body.arr[i].category,
+			   	user_id: req.body.arr[i].user_id,
+			   	question_id: req.body.arr[i].question_id
+	    	}).then(function(){
+	    		res.json();
+	    	}).catch(function(err){
+				console.log(err);
+			})
+		}
 	})
+
+
+   	app.get('/aggregatescore/:id', function (req, res) {
+   		// get aggregate score for a user
+   		var total = 0;
+   		var userid = req.params.id;  // passed in from client
+   		var queryString = "select sum(a.score) as total from rawscores as a, users as b where b.id = a.user_id and a.user_id = "+ userid;
+   		// select b.username, sum(a.score), a.category from rawscores as a, users as b where b.id = a.user_id and a.user_id = 1 group by a.category
+		db.sequelize.query(queryString, { type: db.sequelize.QueryTypes.SELECT})
+  		.then(function(results) {
+  			// gives percentage
+  			total = results[0].total;	
+	   		queryString = "select b.username, sum(a.score)/"+ total + "*100 as total_score, a.category from rawscores as a, users as b where b.id = a.user_id and a.user_id = "+ userid + " group by a.category";
+	   		// select b.username, sum(a.score), a.category from rawscores as a, users as b where b.id = a.user_id and a.user_id = 1 group by a.category
+			db.sequelize.query(queryString, { type: db.sequelize.QueryTypes.SELECT})
+	  		.then(function(results) {
+	  			res.json(results);
+	  		})
+  		})
+   
+	})
+
+	// get category for user id 
+	app.get('/category/:id', function (req, res) {
+		var userid = req.params.id;  // passed in from client
+		// select a count of users by category and take the highest only (limit 1)
+   		var queryString = "select sum(score) as total, a.category from rawscores as a  where a.user_id = " + userid + " group by a.category order by total desc limit 1"
+   		// select b.username, sum(a.score), a.category from rawscores as a, users as b where b.id = a.user_id and a.user_id = 1 group by a.category
+		db.sequelize.query(queryString, { type: db.sequelize.QueryTypes.SELECT})
+  		.then(function(results) {
+  			res.json(results);
+  		})
+	})
+
+	// update the category and nerd_level in users table based on user_id
+	app.post('/category/nerd/:id', function (req, res) {
+		var userid = req.params.id;  // passed in from client
+		// select a count of users by category and take the highest only (limit 1)
+   		var queryString = "select sum(score) as total, a.category from rawscores as a  where a.user_id = " + userid + " group by a.category order by total desc limit 1"
+   		// the category, then the nerd level then update user table
+		db.sequelize.query(queryString, { type: db.sequelize.QueryTypes.SELECT})
+  		.then(function(results) {
+			var score = results[0].total;
+			var category = results[0].category;
+  			db.Nerdlevel.findAll({
+  				where: {min_score: {lte: score}},
+  				attributes: ['nerd_level'],
+  				order: 'max_score DESC',
+  				limit: 1
+  			}).then(function(data){
+			  	// finally update the nerd_level in the user table
+				db.User.update(
+					{nerd_level: data[0].nerd_level, 
+					overall_category: category }, 
+					{where : { id : userid }}, 
+					{fields: ['nerd_level', 'overall_category']}
+				).catch(function(err){
+					console.log(err);
+				});
+			}).catch(function(err){
+				// res.redirect("/");
+			})
+  		})
+	})
+
 
 	// get all users data for the map
 	app.get('/api/map', function (req, res) {
 
+		// select a count of users by category and location
+		var total = 50;
+   		var queryString = "select count(b.id) as total, b.overall_category, b.location from users as b group by b.location, b.overall_category";
+   		// select b.username, sum(a.score), a.category from rawscores as a, users as b where b.id = a.user_id and a.user_id = 1 group by a.category
+		db.sequelize.query(queryString, { type: db.sequelize.QueryTypes.SELECT})
+  		.then(function(results) {
+  			res.json(results);
+  		})
 
-			// to much nesting - just aggregate by category id then back fill from table?
-			// or just save category not id
-			db.User.find({
-			    include: [
-			        {
-			            model: db.Score,
-			        }
-			    ]
-			}).then(function(data){
-			res.json(data)
-		}).catch(function(err){
-			// res.redirect("/question");
-			console.log(err)
-		})
-	// }
 	})
+
+
 
 
 }	

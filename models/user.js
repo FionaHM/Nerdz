@@ -24,7 +24,7 @@ module.exports = function(sequelize, DataTypes){
 			type: DataTypes.STRING,
 			allowNull: true
 		},
-		category: {
+		overall_category: {
 			type: DataTypes.STRING,
 			allowNull: true
 		},
@@ -37,7 +37,7 @@ module.exports = function(sequelize, DataTypes){
     	classMethods: {
         associate: function(models) {
            // One to many relationship
-			// When a Customer is deleted, also delete any associated Burgers
+			// When a User is deleted, also delete any associated Burgers
 			User.hasMany(models.Rawscore, {
 				onDelete: "cascade",
 				constraints: false
@@ -52,8 +52,6 @@ module.exports = function(sequelize, DataTypes){
   		timestamps: false
 	})
 
-	// Syncs with DB
-	// Burger.sync();
 
 	return User;
 };

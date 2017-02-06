@@ -19,16 +19,15 @@ module.exports = function(sequelize, DataTypes){
     	underscored: true,
     	classMethods: {
         associate: function(models) {
-       		// many to one relationship Questions to Category 
-          	// An Category (foreignKey) is required or a Question can't be added
-	        	Question.belongsTo(models.Category, {
-		            foreignKey: {
-		              allowNull: false
-		            },
-		            constraints: false
-	          	});
-        	}
-    	}
+           // One to many relationship
+			// When a Customer is deleted, also delete any associated Burgers
+			Question.hasMany(models.Rawscore, {
+				onDelete: "cascade",
+				constraints: false
+			})
+        }
+      }
+  
     },{
   		timestamps: false
 	})

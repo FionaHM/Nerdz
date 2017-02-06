@@ -23,8 +23,6 @@ module.exports = function(sequelize, DataTypes){
   	},{
   		timestamps: false
 	} )
-	// Syncs with DB
-	// Customer.sync();
 
 	return Aggregatescore;
 };
