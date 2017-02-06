@@ -17,21 +17,29 @@ function router(app){
 	// Override with POST having ?_method=PUT or DELETE
 	app.use(methodOverride("_method"));
 
+	// app.use(express.static(__dirname + '/../public'));
 
+
+	app.get('/', function(req, res){
+		res.sendFile(path.join(__dirname + "/../public/index.html"));
+	})
 
 	// app.use(expressJWT({ secret: })
 	// path for main landing page
-	app.get('/graph', function(req, res){
-		res.sendFile(path.join(__dirname + "/../public/graphs.html"));
-	})
-
-	app.get('/loginpage', function(req, res){
+	app.get('/login', function(req, res){
 		res.sendFile(path.join(__dirname + "/../public/login.html"));
 	})
 
-	app.post('/login', function(req, res){
+	// app.get('/loginpage', function(req, res){
+	// 	res.sendFile(path.join(__dirname + "/../public/login.html"));
+	// })
+
+	app.post('/existinguser', function(req, res){
+		
 		var email = req.body.email;
 		var password = req.body.password;
+		console.log("email", email);
+			console.log("email", password);
 		if (!email){
 			res.status(400).send("email required");
 			return;
@@ -48,7 +56,11 @@ function router(app){
 
 		    if (passwordHash.verify(password, data.password)){
 		     	// send back the token
-		     	var myToken = jwt.sign({ username: data.username}, "putthisinaseparatefile", { expiresIn: 60 * 60 });
+		     	// can use password hash in payload - but would need to get again
+		     	// jwt.sign(payload, secretOrPrivateKey, options, [callback])
+		     	// decoded.payload - compare to password
+		     	// console.log(data.password);
+		     	var myToken = jwt.sign( { password: data.password, email: data.email, username: data.username}, "putthisinaseparatefile", { expiresIn: 60 * 60 });
 		     	// expires in one hour
 		     	// jwt.sign({data: 'foobar'}, 'secret', { expiresIn: 60 * 60 });
 		     	// this is stored as a cookie on client and sent in AJAX Header
@@ -82,12 +94,23 @@ function router(app){
 		console.log(token) ;// bar
 		// verify a token symmetric - synchronous
 		var decoded = jwt.verify(token, 'putthisinaseparatefile');
+		console.log("payload",decoded.password);
+		console.log(decoded);
 				// jwt.verify(token,'putthisinaseparatefile' , function(err, decoded) {
   //       if(err) {
   //           return res.status(401).send({message: 'invalid_token'});
   //       }
 		return decoded; 
 	}
+
+	// gets all questions from the database
+	app.get('/questionpage', function (req, res) {
+		console.log("here");
+		
+		res.sendFile(path.join(__dirname + "/../public/questions.html"), function(err) {
+        	console.log(__dirname + "/../public/questions.html");
+    	});
+	})
 
 	// gets all questions from the database
 	app.get('/question', function (req, res) {
@@ -100,6 +123,7 @@ function router(app){
 	})
 
    	app.get('/aggregatescore/:id?', function (req, res) {
+   		getToken(req);
    		// get aggregate score for a user
    		var total = 0;
    		var userid = req.params.id;  // passed in from client
@@ -200,7 +224,7 @@ function router(app){
 
 
 	// create user
-	app.post('/user', function (req, res) {
+	app.post('/newuser', function (req, res) {
 		// capture the name of the user
 		var username = req.body.username;
 		var email = req.body.email;
