@@ -2660,6 +2660,8 @@ function getData() {
         }
 
         //update bubbles
+
+
         function update() {
             var images = map.dataProvider.images;
 
@@ -2680,7 +2682,7 @@ function getData() {
             world.Step(1 / framesPerSecond, 10, 10);
 
             // uncomment next line if you want to see box2d objects in action (also canvas element at the bottom)
-            //world.DrawDebugData();
+            // world.DrawDebugData();
             world.ClearForces();
         };
 
