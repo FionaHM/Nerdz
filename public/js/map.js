@@ -5,6 +5,7 @@ is even outside the country itself (like US, because of Alaska and Hawaii)
 That's why wehave the coordinates stored here
 */
 
+
 var latlong = {};
 latlong["ALA"] = {
     "latitude": 32.7990,
