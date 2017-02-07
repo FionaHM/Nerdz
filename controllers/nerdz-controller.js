@@ -93,13 +93,13 @@ function router(app){
 	    } else {
 	    	token = null;
 	    }
-	    console.log(token);
-	    console.log(req.headers.authorization);
-	    // var token = getToken(req);
+	    // console.log(token);
+	    // console.log(req.headers.authorization);
+	    // // var token = getToken(req);
 		// console.log(token) ;// bar
 		// verify a token symmetric - synchronous
 		var decoded = jwt.verify(token, 'putthisinaseparatefile');
-		console.log("payload",decoded.password);
+		// console.log("payload",decoded.password);
 		console.log(decoded);
 				// jwt.verify(token,'putthisinaseparatefile' , function(err, decoded) {
   //       if(err) {
@@ -134,7 +134,7 @@ function router(app){
 	})
 
 	app.get('/aggregatescore/user/:id', function (req, res) {
-   		getToken(req);  /// for web
+   		// getToken(req); code for token validation 
    		// get aggregate score for a user
    		var userid = req.params.id;  // passed in from client
    		aggregates(req, res, userid);
