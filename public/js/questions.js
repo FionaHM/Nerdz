@@ -1,14 +1,17 @@
 // clear the div
-$('.add-questions').html("");
+
+$('.add-questions').html("");  
 
 // send auth-token in header
 getCookie('auth_token');
-$.ajaxSetup({
-    beforeSend: function(xhr) {
-        xhr.setRequestHeader("Accept", "application/vvv.website+json;version=1");
-        xhr.setRequestHeader("Authorization", "Bearer " + getCookie('auth_token'));
-    }
-});
+  $.ajaxSetup({
+      beforeSend: function (xhr)
+      {
+         xhr.setRequestHeader("Accept","application/vvv.website+json;version=1");
+         xhr.setRequestHeader("Authorization","Bearer "+getCookie('auth_token'));        
+      }
+  });
+
 
 //          var token = window.localStorage.getItem('token');
 
@@ -65,3 +68,5 @@ function getCookie(c_name) {
     }
     return "";
 }
+
+
