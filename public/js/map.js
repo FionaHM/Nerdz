@@ -5,6 +5,59 @@ is even outside the country itself (like US, because of Alaska and Hawaii)
 That's why wehave the coordinates stored here
 */
 
+// var latitude = 41.881832;
+// var longitude = -87.623177;
+// var lati;
+// var longi;
+
+
+
+
+// function initMap() {
+
+//     var geocoder = new google.maps.Geocoder;
+
+//     navigator.geolocation.getCurrentPosition(function(position) {
+
+
+//         // $('#location-lng').html();
+//         geocodeLatLng(geocoder, position.coords.latitude, position.coords.longitude);
+//         console.log(position.coords.latitude, position.coords.longitude);
+//     })
+
+
+//     function geocodeLatLng(geocoder, lat, lng) {
+
+//         var latlng = {
+//             lat: lat,
+//             lng: lng
+//         };
+
+//         // latlong["USER"] = {
+//         //     "latitude": lat,
+//         //     "longitude": lng
+//         // };
+
+//         geocoder.geocode({
+//             'location': latlng
+//         }, function(results, status) {
+//             if (status === 'OK') {
+//                 if (results[1]) {
+//                     console.log(results[1].address_components[3].short_name);
+//                     // $('#location-state').html(results[1].address_components[3].short_name);
+
+
+
+//                 } else {
+//                     window.alert('No results found');
+//                 }
+//             } else {
+//                 window.alert('Geocoder failed due to: ' + status);
+//             }
+//         });
+//     }
+
+// }
 
 var latlong = {};
 latlong["ALA"] = {
@@ -1221,6 +1274,7 @@ latlong["ZW"] = {
 };
 
 
+
 var mapData = [{
     "code": "ALA",
     "name": "Alabama",
@@ -2349,10 +2403,6 @@ for (var i = 0; i < mapData.length; i++) {
     if (value > max) {
         max = value;
     }
-}
-
-function colorPicker() {
-
 }
 
 // build map
