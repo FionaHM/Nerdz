@@ -2335,7 +2335,7 @@ var minBulletSize = 7;
 var maxBulletSize = 80;
 
 // set dark theme
-AmCharts.theme = AmCharts.themes.dark;
+AmCharts.theme = AmCharts.themes.chalk;
 
 // get min and max values
 var min = Infinity;
@@ -2362,7 +2362,7 @@ AmCharts.ready(function() {
     map.fontFamily = "Lato";
     map.fontSize = 15;
     map.creditsPosition = "top-right";
-    map.zoomControl.buttonFillColor = "#343434";
+    map.zoomControl.buttonFillColor = "#629b6d";
 
     // style tooltip
     map.balloon = {
@@ -2441,8 +2441,8 @@ AmCharts.ready(function() {
         dataProvider.images.push({
             // type: "circle",
 
-            // svgPath: icon,
-            type: "circle",
+            svgPath: icon,
+            // type: "circle",
             width: size,
             height: size,
             color: dataItem.color,

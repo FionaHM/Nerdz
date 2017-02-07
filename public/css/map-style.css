@@ -2,7 +2,7 @@ body {
   font-family: Lato, Tahoma;
   color: #e7e7e7;
   font-size: 1em;
-  background-color: #222;
+  background-color: #111;
 }
 
 .description {
@@ -10,11 +10,20 @@ body {
   font-size: 0.8em;
 }
 
+.form-control {
+  margin: 3px;
+}
+
+.navbar-brand {
+  font-family: 'Barrio', cursive;
+  color: #eee;
+}
+
 a:visited,
 a:active,
 a {
-  color: #aaa;
-  text-decoration: underline;
+  color: #ddd;
+  text-decoration: none;
 }
 
 a:hover {
@@ -29,14 +38,18 @@ a:hover {
   border-radius: 3px;
   color: #ffffff;
   font-size: 15px;
-  background: #3d5296;
+  background: #629b6d;
   padding: 10px 20px 10px 20px;
   text-decoration: none;
 }
 
 .btn:hover {
-  background: #4462c6;
+  background: #456b4c;
   text-decoration: none;
+}
+
+btn:active {
+  border-color: #456b4c;
 }
 
 .amcharts-map-image:hover {
