@@ -69,13 +69,14 @@ $("#register-submit").on("click", function(event){
 	}
 	
 	$.post('/newuser', registerObj, function(data, status){
+    console.log(data);
 		if (status === "success"){
 			createCookie("auth_token", data, 0 );
 			createCookie("user_email", $("#new-user-email").val(), 0 );
 		} else {
 			// error message or modal
 		}
-	}).done(function(status){
+	}).done(function(data,status){
 	 	// move to next page
 
 	 	window.location.replace("../questionpage");

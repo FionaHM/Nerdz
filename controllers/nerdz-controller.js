@@ -30,6 +30,10 @@ function router(app){
 		res.sendFile(path.join(__dirname + "/../public/login.html"));
 	})
 
+	app.get('/graph', function(req, res){
+		res.sendFile(path.join(__dirname + "/../public/graphs.html"));
+	})
+
 	// app.get('/loginpage', function(req, res){
 	// 	res.sendFile(path.join(__dirname + "/../public/login.html"));
 	// })
@@ -38,8 +42,7 @@ function router(app){
 		
 		var email = req.body.email;
 		var password = req.body.password;
-		console.log("email", email);
-			console.log("email", password);
+		
 		if (!email){
 			res.status(400).send("email required");
 			return;
@@ -60,7 +63,7 @@ function router(app){
 		     	// jwt.sign(payload, secretOrPrivateKey, options, [callback])
 		     	// decoded.payload - compare to password
 		     	// console.log(data.password);
-		     	var myToken = jwt.sign( { password: data.password, email: data.email, username: data.username}, "putthisinaseparatefile", { expiresIn: 60 * 60 });
+		     	var myToken = jwt.sign( { id: data.id, email: data.email, username: data.username}, "putthisinaseparatefile", { expiresIn: 60 * 60 });
 		     	// expires in one hour
 		     	// jwt.sign({data: 'foobar'}, 'secret', { expiresIn: 60 * 60 });
 		     	// this is stored as a cookie on client and sent in AJAX Header
@@ -90,8 +93,10 @@ function router(app){
 	    } else {
 	    	token = null;
 	    }
+	    console.log(token);
+	    console.log(req.headers.authorization);
 	    // var token = getToken(req);
-		console.log(token) ;// bar
+		// console.log(token) ;// bar
 		// verify a token symmetric - synchronous
 		var decoded = jwt.verify(token, 'putthisinaseparatefile');
 		console.log("payload",decoded.password);
@@ -105,8 +110,7 @@ function router(app){
 
 	// gets all questions from the database
 	app.get('/questionpage', function (req, res) {
-		console.log("here");
-		
+	
 		res.sendFile(path.join(__dirname + "/../public/questions.html"), function(err) {
         	console.log(__dirname + "/../public/questions.html");
     	});
@@ -122,11 +126,22 @@ function router(app){
 		})
 	})
 
-   	app.get('/aggregatescore/:id?', function (req, res) {
-   		getToken(req);
-   		// get aggregate score for a user
-   		var total = 0;
+   	app.get('/aggregatescore/', function (req, res) {
+   		// no jwt here
    		var userid = req.params.id;  // passed in from client
+   		// get aggregate score all
+   		aggregates(req, res, userid);
+	})
+
+	app.get('/aggregatescore/user/:id', function (req, res) {
+   		getToken(req);  /// for web
+   		// get aggregate score for a user
+   		var userid = req.params.id;  // passed in from client
+   		aggregates(req, res, userid);
+	})
+
+	function aggregates(req, res, userid){
+		var total = 0;
    		var queryString = "select sum(a.score) as total from rawscores as a, users as b where b.id = a.user_id";
    		// if there is a userid sent then append it to the query
    		if (userid !== undefined) {
@@ -195,7 +210,7 @@ function router(app){
 	  		})
   		})
    
-	})
+	}
 
 	// get all users data for the map
 	app.get('/map', function (req, res) {
@@ -234,8 +249,13 @@ function router(app){
 		// // find the customer in the Users table or create if it does not exist
  	    db.User.findOrCreate({
 			where: { username: username, email: email, password: password, location: location }
-	    }).then(function() {
-			res.sendFile(path.join(__dirname + "/../public/questions.html"));
+	    }).then(function(data) {
+	    	// console.log(data);
+	    	var myToken = jwt.sign( { id: data.id, email: data.email, username: data.username}, "putthisinaseparatefile", { expiresIn: 60 * 60 });
+		     	// expires in one hour
+		     	// jwt.sign({data: 'foobar'}, 'secret', { expiresIn: 60 * 60 });
+		     	// this is stored as a cookie on client and sent in AJAX Header
+		  	res.json(myToken);
 		}).catch(function(err){
 			console.log(err);
 			// res.redirect("/");
