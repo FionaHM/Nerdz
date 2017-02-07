@@ -52,14 +52,15 @@ $("#login-submit").on("click", function(){
 		}).done(function(status){
 	 	if ( status ){
 			// move to next page
-			location.href = "../questionpage";
+			window.location.replace("../questionpage");
 	 	} else {
 	 		// error message or modal
 	 	}
 	})	
 })
 
-$("#register-submit").on("click", function(){
+$("#register-submit").on("click", function(event){
+	event.preventDefault();
 	var registerObj = {
 		location: $("#new-user-location").val(),
 		password: $("#new-user-password").val(),
@@ -76,7 +77,11 @@ $("#register-submit").on("click", function(){
 		}
 	}).done(function(status){
 	 	// move to next page
-	 	location.href = "../questionpage";
+
+	 	window.location.replace("../questionpage");
+	 	// $.get("/questionpage", function(){
+
+	 	// });
 
 	 	
 	})	
