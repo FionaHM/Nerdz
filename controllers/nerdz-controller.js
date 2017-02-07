@@ -13,7 +13,7 @@ function router(app){
 	// specified in the unless clause
 	// comment out for now.......
 	
-	app.use(session({secret: "supersecretcookies", cookie: { httpOnly : true}}));
+	app.use(session({secret: "supersecretcookies", cookie: { httpOnly : true,  maxAge: 60000 }, resave: false, saveUninitialized: false}));
 	// Override with POST having ?_method=PUT or DELETE
 	app.use(methodOverride("_method"));
 
