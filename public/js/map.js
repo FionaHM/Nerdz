@@ -2441,8 +2441,8 @@ AmCharts.ready(function() {
         dataProvider.images.push({
             // type: "circle",
 
-            // svgPath: icon,
-            type: "circle",
+            svgPath: icon,
+            // type: "circle",
             width: size,
             height: size,
             color: dataItem.color,

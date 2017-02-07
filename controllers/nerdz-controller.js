@@ -6,28 +6,41 @@ var expressJWT = require("express-jwt");
 var jwt = require("jsonwebtoken");
 var session = require("express-session");
 
+
 function router(app) {
     // middleware that checks for jwt from api
 
     // some routes wont require a jwt e.g. login route these are 
     // specified in the unless clause
-    // app.use(expressJWT({ secret: "putthisinaseparatefile"}).unless({path: ['/loginpage', '/login']}));
-    // app.use(session({cookie: { httpOnly : true}}));
+    // comment out for now.......
+
+    app.use(session({ secret: "supersecretcookies", cookie: { httpOnly: true } }));
     // Override with POST having ?_method=PUT or DELETE
     app.use(methodOverride("_method"));
 
-    // path for main landing page
+    // app.use(express.static(__dirname + '/../public'));
+
+
     app.get('/', function(req, res) {
         res.sendFile(path.join(__dirname + "/../public/index.html"));
     })
 
-    app.get('/loginpage', function(req, res) {
+    // app.use(expressJWT({ secret: })
+    // path for main landing page
+    app.get('/login', function(req, res) {
         res.sendFile(path.join(__dirname + "/../public/login.html"));
     })
 
-    app.post('/login', function(req, res) {
+    // app.get('/loginpage', function(req, res){
+    //  res.sendFile(path.join(__dirname + "/../public/login.html"));
+    // })
+
+    app.post('/existinguser', function(req, res) {
+
         var email = req.body.email;
         var password = req.body.password;
+        console.log("email", email);
+        console.log("email", password);
         if (!email) {
             res.status(400).send("email required");
             return;
@@ -44,11 +57,15 @@ function router(app) {
 
                 if (passwordHash.verify(password, data.password)) {
                     // send back the token
-                    var myToken = jwt.sign({ username: data.username }, "putthisinaseparatefile");
-                    // res.status(200).json(myToken);
-                    // res.cookie('sessionid', '1', {httpOnly : true});
-                    // res.cookie('sessionid', '1', {secure : true});
-                    res.status(200).json(myToken);
+                    // can use password hash in payload - but would need to get again
+                    // jwt.sign(payload, secretOrPrivateKey, options, [callback])
+                    // decoded.payload - compare to password
+                    // console.log(data.password);
+                    var myToken = jwt.sign({ password: data.password, email: data.email, username: data.username }, "putthisinaseparatefile", { expiresIn: 60 * 60 });
+                    // expires in one hour
+                    // jwt.sign({data: 'foobar'}, 'secret', { expiresIn: 60 * 60 });
+                    // this is stored as a cookie on client and sent in AJAX Header
+                    res.json(myToken);
                 } else {
                     res.status(400).send("Invalid Password");
                 }
@@ -62,6 +79,40 @@ function router(app) {
             // to be completed
     })
 
+
+    // this is the code to get and verify a token - needs to be used in each api route
+    function getToken(req) {
+
+        var token = null;
+        if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
+            token = req.headers.authorization.split(' ')[1];
+        } else if (req.query && req.query.token) {
+            token = req.query.token;
+        } else {
+            token = null;
+        }
+        // var token = getToken(req);
+        console.log(token); // bar
+        // verify a token symmetric - synchronous
+        var decoded = jwt.verify(token, 'putthisinaseparatefile');
+        console.log("payload", decoded.password);
+        console.log(decoded);
+        // jwt.verify(token,'putthisinaseparatefile' , function(err, decoded) {
+        //       if(err) {
+        //           return res.status(401).send({message: 'invalid_token'});
+        //       }
+        return decoded;
+    }
+
+    // gets all questions from the database
+    app.get('/questionpage', function(req, res) {
+        console.log("here");
+
+        res.sendFile(path.join(__dirname + "/../public/questions.html"), function(err) {
+            console.log(__dirname + "/../public/questions.html");
+        });
+    })
+
     // gets all questions from the database
     app.get('/question', function(req, res) {
         // Query the database
@@ -73,6 +124,7 @@ function router(app) {
     })
 
     app.get('/aggregatescore/:id?', function(req, res) {
+        getToken(req);
         // get aggregate score for a user
         var total = 0;
         var userid = req.params.id; // passed in from client
@@ -110,7 +162,8 @@ function router(app) {
                                     category: results[i].category
                                 })
                                 resultsObj = {
-                                    [j]: resultsArr };
+                                    [j]: resultsArr
+                                };
                                 // resultsObj[j] = resultsArr;
                                 console.log(resultsObj);
                             } else {
@@ -122,7 +175,8 @@ function router(app) {
                                 // resultsObj = { "num" : resultsArr };
                                 user = results[i].username;
                                 resultsObj = {
-                                    ["name"]: results[i].username };
+                                    ["name"]: results[i].username
+                                };
                                 // the username is added
                                 resultsArr.push(resultsObj);
                                 // add score data
@@ -131,7 +185,8 @@ function router(app) {
                                     category: results[i].category
                                 })
                                 resultsObj = {
-                                    [j]: resultsArr };
+                                    [j]: resultsArr
+                                };
                                 // resultsObj[j] = resultsArr;
 
                             }
@@ -154,7 +209,7 @@ function router(app) {
     })
 
     // get all users data for the map
-    app.get('/api/map', function(req, res) {
+    app.get('/map', function(req, res) {
         // select a count of users by category and location
         var total = 50;
         var queryString = "select count(b.id) as total, b.overall_category, b.location from users as b group by b.location, b.overall_category";
@@ -180,7 +235,7 @@ function router(app) {
 
 
     // create user
-    app.post('/user', function(req, res) {
+    app.post('/newuser', function(req, res) {
         // capture the name of the user
         var username = req.body.username;
         var email = req.body.email;

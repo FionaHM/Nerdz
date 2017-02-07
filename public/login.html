@@ -1,21 +1,115 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<title> Nerdz </title>
+  <title> Nerdz </title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="https://code.jquery.com/jquery.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
+
 <body>
-
-
-<form action="/login" method="POST">
-<!--  //verify with email -->
-    <label for="email">Email</label>
-    <input type="text" name="email" id="email" >
-    <label for="password">Password</label>
-    <input type="text" name="password" id="password">
-  <button id="submit">Login</button>
-</form>
+  <!-- <form action=""> -->
+  <!--  //verify with email -->
+  <div>Login Section</div>
+  <label for="email">Email</label>
+  <input type="text" name="existing-user-email" id="existing-user-email">
+  <label for="password">Password</label>
+  <input type="password" name="existing-user-password" id="existing-user-password">
+  <button id="login-submit">Login</button>
+  <!-- </form> -->
+  <div>Registration Section</div>
+  <label for="name">Name</label>
+  <input type="text" name="new-username" id="new-username">
+  <label for="email">Email</label>
+  <input type="text" name="new-user-email" id="new-user-email">
+  <label for="password">Password</label>
+  <input type="password" name="new-user-password" id="new-user-password">
+  <label for="country">State</label>
+  <select name="new-user-location" id="country">
+    <option value="CA">CA</option>
+    <option value="IL">IL</option>
+    <option value="OH">OH</option>
+    <option value="CO">CO</option>
+    <option value="NY">NY</option>
+  </select>
+  <button id="register-submit">Register</button>
+  </form>
 </body>
+<script type="text/javascript">
+$("#login-submit").on("click", function() {
+  var loginObj = {
+    email: $("#existing-user-email").val(),
+    password: $("#existing-user-password").val(),
+  };
+  $.post('/existinguser', loginObj, function(data, status) {
+    console.log(data);
+    console.log(status);
+    createCookie("auth_token", data, 0);
+    createCookie("user_email", $("#existing-user-email").val(), 0);
+
+  }).done(function(status) {
+    if (status) {
+      // move to next page
+      location.href = "../questionpage";
+    } else {
+      // error message or modal
+    }
+  })
+})
+
+$("#register-submit").on("click", function() {
+  var registerObj = {
+    location: $("#new-user-location").val(),
+    password: $("#new-user-password").val(),
+    email: $("#new-user-email").val(),
+    username: $("#new-username").val(),
+  }
+
+  $.post('/newuser', registerObj, function(data, status) {
+    if (status === "success") {
+      createCookie("auth_token", data, 0);
+      createCookie("user_email", $("#new-user-email").val(), 0);
+    } else {
+      // error message or modal
+    }
+  }).done(function(status) {
+    // move to next page
+    location.href = "../questionpage";
+
+
+  })
+})
+
+
+// copied from stackoverflow.com
+var createCookie = function(name, value, days) {
+  var expires;
+  if (days) {
+    var date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    expires = "; expires=" + date.toGMTString();
+  } else {
+    expires = "";
+  }
+  document.cookie = name + "=" + value + expires + "; path=/";
+}
+
+// copied from stackoverflow.com
+function getCookie(c_name) {
+  if (document.cookie.length > 0) {
+    c_start = document.cookie.indexOf(c_name + "=");
+    if (c_start != -1) {
+      c_start = c_start + c_name.length + 1;
+      c_end = document.cookie.indexOf(";", c_start);
+      if (c_end == -1) {
+        c_end = document.cookie.length;
+      }
+      return unescape(document.cookie.substring(c_start, c_end));
+    }
+  }
+  return "";
+}
+</script>
+
 </html>
