@@ -18,6 +18,21 @@ var indieData = [{
     "value": 10
 }];
 
+
+function getIndieData() {
+
+    $.get('/aggregatescore/user/:id', function(data) {
+
+        var indieData = data;
+
+        console.log(indieData);
+        console.log(indieData.length);
+    })
+
+}
+
+getIndieData();
+
 var chart1 = AmCharts.makeChart("indie-chartdiv", {
     "type": "pie",
     "theme": "dark",

@@ -102,8 +102,6 @@ function getData() {
 
         var size = Object.keys(chartData).length;
 
-        console.log(size);
-
         /**
          * Create the chart
          */
