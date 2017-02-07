@@ -52,14 +52,15 @@ $("#login-submit").on("click", function(){
 		}).done(function(status){
 	 	if ( status ){
 			// move to next page
-			location.href = "../questionpage";
+			window.location.replace("../questionpage");
 	 	} else {
 	 		// error message or modal
 	 	}
 	})	
 })
 
-$("#register-submit").on("click", function(){
+$("#register-submit").on("click", function(event){
+	event.preventDefault();
 	var registerObj = {
 		location: $("#new-user-location").val(),
 		password: $("#new-user-password").val(),
@@ -68,15 +69,20 @@ $("#register-submit").on("click", function(){
 	}
 	
 	$.post('/newuser', registerObj, function(data, status){
+    console.log(data);
 		if (status === "success"){
 			createCookie("auth_token", data, 0 );
 			createCookie("user_email", $("#new-user-email").val(), 0 );
 		} else {
 			// error message or modal
 		}
-	}).done(function(status){
+	}).done(function(data,status){
 	 	// move to next page
-	 	location.href = "../questionpage";
+    // console.log()
+	 	window.location.replace("../questionpage");
+	 	// $.get("/questionpage", function(){
+
+	 	// });
 
 	 	
 	})	
