@@ -27,7 +27,7 @@ insert into Questions (question, category, created_at, updated_at) values
 ("When is Sunday?", "CAT E", now(), now()),
 ("When is May?", "CAT E", now(), now());
 
-drop table Rawscores
+
 
 insert into Rawscores (user_id, score, category, question_id, created_at, updated_at) values 
 (1,4, "CAT A", 1, now() , now() ),
@@ -41,18 +41,18 @@ insert into Rawscores (user_id, score, category, question_id, created_at, update
 (2,5, "CAT C",4, now() , now() ),
 (2, 3, "CAT C",5,now() , now() );
 
-
-insert into Aggregatescores (user_id, score, category, created_at, updated_at) values 
-(1,10, "CAT A", now() , now() ),
-(1, 3,"CAT B", now() , now() ),
-(1, 4, "CAT C", now() , now() ),
-(1,1, "CAT D", now() , now() ),
-(1, 3, "CAT E",  now() , now() ),
-(2,10, "CAT A",  now() , now() ),
-(2, 3,"CAT B", now() , now() ),
-(2, 4, "CAT C",  now() , now() ),
-(2,1, "CAT D", now() , now() ),
-(2, 3, "CAT E", now() , now() );
+-- 
+-- insert into Aggregatescores (user_id, score, category, created_at, updated_at) values 
+-- (1,10, "CAT A", now() , now() ),
+-- (1, 3,"CAT B", now() , now() ),
+-- (1, 4, "CAT C", now() , now() ),
+-- (1,1, "CAT D", now() , now() ),
+-- (1, 3, "CAT E",  now() , now() ),
+-- (2,10, "CAT A",  now() , now() ),
+-- (2, 3,"CAT B", now() , now() ),
+-- (2, 4, "CAT C",  now() , now() ),
+-- (2,1, "CAT D", now() , now() ),
+-- (2, 3, "CAT E", now() , now() );
 
 
 
@@ -63,6 +63,7 @@ insert into Nerdlevels  (nerd_level, max_score, min_score) values
 ("Senior Nerd", 20, 10.01),
 ("Junior Nerd", 10, 0);
 
+use  nerdz_db;
 select * from Users;
 select * from Rawscores;
 select * from Aggregatescores;
