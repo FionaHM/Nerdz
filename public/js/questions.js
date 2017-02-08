@@ -1,6 +1,6 @@
 // clear the div
 
-$('.add-questions').html("");  
+$('.add-questions').html("");
 
 // send auth-token in header
 getCookie('auth_token');
@@ -8,7 +8,7 @@ getCookie('auth_token');
       beforeSend: function (xhr)
       {
          xhr.setRequestHeader("Accept","application/vvv.website+json;version=1");
-         xhr.setRequestHeader("Authorization","Bearer "+getCookie('auth_token'));        
+         xhr.setRequestHeader("Authorization","Bearer "+getCookie('auth_token'));
       }
   });
 
@@ -68,5 +68,3 @@ function getCookie(c_name) {
     }
     return "";
 }
-
-

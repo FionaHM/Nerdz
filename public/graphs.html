@@ -47,20 +47,25 @@
 <script type="text/javascript">
 $("#submit").on("click", function() {
 
-  // set ajax to send token as Bearer in Header
-  // needed for all secure routes
-  $.ajaxSetup({
-    beforeSend: function(xhr) {
-      xhr.setRequestHeader("Accept", "application/vvv.website+json;version=1");
-      xhr.setRequestHeader("Authorization", "Bearer " + getCookie('auth_token'));
-    }
-  });
+
+	// set ajax to send token as Bearer in Header
+	// needed for all secure routes
+	$.ajaxSetup({
+	    beforeSend: function (xhr)
+	    {
+	       xhr.setRequestHeader("Accept","application/vvv.website+json;version=1");
+	       xhr.setRequestHeader("Authorization","Bearer "+getCookie('auth_token'));
+	    }
+	});
+
 
   $.get('/aggregatescore', function(data) {
     // console.log(data);
 
 
-  })
+
+	})
+
 })
 
 // function getIndieData() {
