@@ -3,12 +3,13 @@
 $('.add-questions').html("");
 
 // send auth-token in header
-getCookie('auth_token');
+// getCookie('auth_token');
+console.log(getCookie('auth_token'));
   $.ajaxSetup({
       beforeSend: function (xhr)
       {
          xhr.setRequestHeader("Accept","application/vvv.website+json;version=1");
-         xhr.setRequestHeader("Authorization","Bearer "+getCookie('auth_token'));
+         xhr.setRequestHeader("Authorization","Bearer "+ getCookie('auth_token'));
       }
   });
 

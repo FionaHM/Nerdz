@@ -8,10 +8,20 @@ module.exports = function(sequelize, DataTypes){
 		},
 		username: {
 			type: DataTypes.STRING,
+			unique: {
+                args: true,
+                message: 'Username must be unique.',
+                fields: [sequelize.fn('lower', sequelize.col('username'))]
+            },
 			allowNull: false
 		},
 		email: {
 			type: DataTypes.STRING,
+			unique: {
+                args: true,
+                message: 'Email must be unique.',
+                fields: [sequelize.fn('lower', sequelize.col('email'))]
+            },
 			allowNull: false,
 			// validate: {len: [1, 33], notEmpty: true }
 		},
