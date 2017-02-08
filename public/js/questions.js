@@ -34,14 +34,18 @@ $.get("/question", function(data) {
         }
         console.log(category);
         var id = i + 1;
+        var li = '<li id="li-' + i + '"data-target="#myCarousel" data-slide-to="' + i + '"></li>';
+        $('.carousel-indicators').append(li);
+        $('#li-' + 0).addClass("active");
 
         // $('#add-questions').append(data[i].question);
         var carouselDiv = '<div class="questions item" id="' + data[i].id + '" data-category="' + category + '" data-question="' + data[i].id + '">' + '</div>';
         var carouselContainer = '<div class="container" id="container-' + data[i].id + '">';
-        var carouselCaption = '<div class="carousel-caption" id="caption-' + data[i].id + '">' + data[i].question;
+        var carouselCaption = '<div class="carousel-caption" id="caption-' + data[i].id + '">' + '<h1>Question ' + data[i].id + '</h1><br>' + '<h4>' + data[i].question;
         var radios = '<br><label class="radio-inline"><input type="radio" name="optradio">1</label><label class="radio-inline"><input type="radio" name="optradio">2</label><label class="radio-inline"><input type="radio" name="optradio">3</label><label class="radio-inline"><input type="radio" name="optradio">4</label><label class="radio-inline"><input type="radio" name="optradio">5</label>';
         $('#add-questions').append(carouselDiv);
         $('#' + data[i].id).append(carouselContainer);
+        $('#' + data[0].id).addClass("active");
         $('#container-' + data[i].id).append(carouselCaption);
         $('#caption-' + data[i].id).append(radios);
 

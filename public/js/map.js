@@ -74,13 +74,14 @@ That's why wehave the coordinates stored here
 
 
 
-var latlong = {};
-var lati = 0;
-var longi = 0;
-latlong["USER"] = {
-    "latitude": 0,
-    "longitude": 0
-};
+// var latlong = {};
+// var lati = 0;
+// var longi = 0;
+// latlong["USER"] = {
+//     "latitude": 0,
+//     "longitude": 0
+// };
+
 
 // var MYLIBRARY = MYLIBRARY || (function() {
 //     var _args = {}; // private
@@ -100,6 +101,7 @@ latlong["USER"] = {
 //         }
 //     };
 // }());
+var latlong = {};
 latlong["ALA"] = {
     "latitude": 32.7990,
     "longitude": -86.8073
@@ -2425,6 +2427,8 @@ latlong["ZW"] = {
 function getData() {
     $.get("/map", function(data) {
         var mapData = data;
+
+        console.log(mapData);
         // console.log()
         // latlong["USER"] = {
         //     "latitude": 0,
@@ -2524,13 +2528,13 @@ function getData() {
                     square = minSquare;
                 }
 
-                if (dataItem.category === "CAT 1") {
+                if (dataItem.overall_category === "CAT 1") {
                     dataItem.color = "#e8d685";
-                } else if (dataItem.category === "CAT 2") {
+                } else if (dataItem.overall_category === "CAT 2") {
                     dataItem.color = "#c9f0e1";
-                } else if (dataItem.category === "CAT 3") {
+                } else if (dataItem.overall_category === "CAT 3") {
                     dataItem.color = "#ae85c9";
-                } else if (dataItem.category === "CAT 4") {
+                } else if (dataItem.overall_category === "CAT 4") {
                     dataItem.color = "#629b6d";
                 } else {
                     var colorArr = ["#e8d685", "#c9f0e1", "#ae85c9", "#629b6d", "#d48652"];
