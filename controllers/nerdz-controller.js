@@ -305,19 +305,57 @@ function router(app){
 	// add scores
 	app.post('/score', function (req, res) {		
 	    // loops through and updates rawscores table
-	    console.log(req.body.arr);
+	    // composite key : question_id, category, user_id
+	    // composite key should be unique
 		for (var i = 0; i < req.body.arr.length; i++){
 			// updates rawscores table
-			db.Rawscore.create({
-				score: req.body.arr[i].score,
-			   	category: req.body.arr[i].category,
+			// db.Rawscore.create({
+			// 	score: req.body.arr[i].score,
+			//    	category: req.body.arr[i].category,
+			//    	user_id: req.body.arr[i].user_id,
+			//    	question_id: req.body.arr[i].question_id
+	  //   	}).then(function(){
+	  //   		res.json();
+	  //   	}).catch(function(err){
+			// 	console.log(err);
+			// })
+			// not fully tested - need scores
+			db.Rawscore.find({ where: { category: req.body.arr[i].category,
 			   	user_id: req.body.arr[i].user_id,
-			   	question_id: req.body.arr[i].question_id
-	    	}).then(function(){
-	    		res.json();
-	    	}).catch(function(err){
-				console.log(err);
-			})
+			   	question_id: req.body.arr[i].question_id} })
+			  .on('success', function (score) {
+			    // Check if record exists in db
+			    console.log(score);
+			    if (score) {
+			    	console.log("updating...");
+				      score.updateAttributes({
+				        score: req.body.arr[i].score
+				      })
+				      .success(function () {
+					      	res.status(200).send("Successfully Updated Scores");
+							return;
+				      })
+			    } 
+			    else {
+			    	console.log("creating...");
+			    	//  if it does not exist then
+			    	//  create scores
+			    	db.Rawscore.create({
+						score: req.body.arr[i].score,
+					   	category: req.body.arr[i].category,
+					   	user_id: req.body.arr[i].user_id,
+					   	question_id: req.body.arr[i].question_id
+					}).then(function(){
+			    		res.status(200).send("Successfully Created Scores.");
+						return;
+			    	}).catch(function(err){
+			    		res.status(400).send("Database Problem");
+						return;
+						// console.log(err);
+					})
+
+			    }
+			  })
 		}
 	})
 
