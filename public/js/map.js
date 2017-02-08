@@ -75,6 +75,31 @@ That's why wehave the coordinates stored here
 
 
 var latlong = {};
+var lati = 0;
+var longi = 0;
+latlong["USER"] = {
+    "latitude": 0,
+    "longitude": 0
+};
+
+// var MYLIBRARY = MYLIBRARY || (function() {
+//     var _args = {}; // private
+
+//     return {
+//         init: function(Args) {
+//             _args = Args;
+//             // some other initialising
+//         },
+
+
+//         helloWorld: function() {
+//             // alert('Hello World!' + _args[0]);
+
+//             latlong["USER"].latitude = _args[0];
+//             latlong["USER"].longitude = _args[1];
+//         }
+//     };
+// }());
 latlong["ALA"] = {
     "latitude": 32.7990,
     "longitude": -86.8073
@@ -2396,11 +2421,18 @@ latlong["ZW"] = {
 //     "name": "Zimbabwe",
 //     "value": 12754378,
 //     "color": "#de4c4f"
-// }];
+// }, {}];
 function getData() {
     $.get("/map", function(data) {
         var mapData = data;
-        console.log(data);
+        // console.log()
+        // latlong["USER"] = {
+        //     "latitude": 0,
+        //     "longitude": 0
+        // };
+
+        // console.log(latlong["USER"].latitude);
+        // console.log(latlong["USER"].longitude);
 
         // AMMAP PART OF THIS AWESOME DEMO
         var map;
