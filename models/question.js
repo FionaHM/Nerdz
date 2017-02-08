@@ -24,6 +24,10 @@ module.exports = function(sequelize, DataTypes){
 			Question.hasMany(models.Rawscore, {
 				onDelete: "cascade",
 				constraints: false
+			}),
+			Question.hasMany(models.Category, {
+				onDelete: "cascade",
+				constraints: false
 			})
         }
       }
@@ -34,4 +38,3 @@ module.exports = function(sequelize, DataTypes){
 
 	return Question;
 };
-

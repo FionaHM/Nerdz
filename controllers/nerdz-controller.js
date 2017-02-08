@@ -10,7 +10,8 @@ function router(app){
 
 	// this is cookie setting data - for client side cookies
 	// httpOnly makes cookie data a bit more secure against from other scripts
-	app.use(session({secret: "supersecretcookies", cookie: { httpOnly : true,  maxAge: 60000 }, resave: false, saveUninitialized: false}));
+	var cookieSecret = process.env.COOKIE_SECRET ||  "supersecretcookies";
+	app.use(session({secret: cookieSecret, cookie: { httpOnly : true,  maxAge: 60000 }, resave: false, saveUninitialized: false}));
 	// Override with POST having ?_method=PUT or DELETE
 	app.use(methodOverride("_method"));
 
@@ -19,18 +20,19 @@ function router(app){
 	function getToken(req, res) {
 		// set token as null initially
 		var token = null;
-		console.log("header", req.headers.authorization);
+		// console.log("header", req.headers.authorization);
 		// checks the request header for the token
 	    if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
 	        token = req.headers.authorization.split(' ')[1];
 	    } 
-	    else if (req.query && req.query.token) {
-	      token = req.query.token;
-	    }
+	    // remove for now as token should be in header
+	    // else if (req.query && req.query.token) {
+	    //   token = req.query.token;
+	    // }
 	     else {
 	    	token = null;
 	    }
-	    console.log("token", token);
+	    // console.log("token", token);
 		// use jwt verify to verify the token (symmetric - synchronous)
 		// must use the same secret phrase as was used to generate token initally
 		var secret = process.env.JWT_SECRET ||  'putthisinaseparatefile';
@@ -38,7 +40,7 @@ function router(app){
 		// console.log("payload",decoded.password);
 		// console.log(decoded);
 		// ***** Put this back in later
-		jwt.verify(token, 'putthisinaseparatefile' , function(err, decoded) {
+		jwt.verify(token, secret , function(err, decoded) {
 			console.log("err", err);
 		    if(err) {
 		        return res.status(401).send({message: 'invalid_token'});
@@ -82,15 +84,17 @@ function router(app){
 		db.User.findOrCreate({
 			where: { username: username, email: email, password: password, location: location }
 	    }).then(function(data) {
-	    	console.log(data[0], "true?", data[1]);
-	    	var myToken = jwt.sign( { id: data.id, email: data.email, username: data.username}, "putthisinaseparatefile", { expiresIn: 60 * 60 });
+			// set the secret and generate the token
+	    	var secret = process.env.JWT_SECRET || "putthisinaseparatefile";
+	    	var myToken = jwt.sign( { id: data.id, email: data.email, username: data.username}, secret, { expiresIn: 60 * 30 });
 		    
 		     	// expires in one hour
 		     	// jwt.sign({data: 'foobar'}, 'secret', { expiresIn: 60 * 60 });
 		     	// this is stored as a cookie on client and sent in AJAX Header
 		  	res.json(myToken);
 		}).catch(function(err){
-			return res.status(401).send({message: err.errors[0].message});
+			message = err.errors[0].message;
+			return res.status(401).send(message);
 			// res.json(err.errors[0].message);
 		})
 	})
@@ -112,26 +116,35 @@ function router(app){
 		db.User.findOne({
 			where: { email: email }
 	    }).then(function(data) {
+	    	// if no data returned
+	    	if (data === null){
+	    		res.status(400).send("User Not Found");
+	    		return;
+	    	}
 	    	// compare the password entered to the stored password hash
-		    if (passwordHash.verify(password, data.password)){
+		    else {
+		    	if (passwordHash.verify(password, data.password)){
 		     	// generate the token using a secret phrase
 		     	var secret = process.env.JWT_SECRET || "putthisinaseparatefile"
 		     	// token current set to expire in one hour
 		     	// user id, username and email stored in the payload of the token
 		     	// this is needed for other apis to get user specific data
-		     	var myToken = jwt.sign( { id: data.id, email: data.email, username: data.username}, 'putthisinaseparatefile' , { expiresIn: 60 * 60 });
+		     	var myToken = jwt.sign( { id: data.id, email: data.email, username: data.username}, secret , { expiresIn: 60 * 30 });
 		     	console.log(myToken);
 		     	// send back the token 
-		     	// store it as a cookie on client - this will then be re
+		     	// store it as a cookie on client - this will then be
 		     	//  sent back with user requests as Bearer in the AJAX Header
 		  		res.json(myToken);
-		    } else {
-		    	res.status(400).send("Invalid Password");
-		    	// ***** to be completed once app is working as a unit
-		    }
+			    } else {
+			    	res.status(400).send("Invalid Password");
+			    	return;
+			    	// ***** to be completed once app is working as a unit
+			    }
+			}
 
 		}).catch(function(err){
-			console.log(err);
+			res.status(400).send("Database Error");
+			return;
 			// ***** to be completed once app is working as a unit
 			// res.redirect("/");
 		})
@@ -139,18 +152,37 @@ function router(app){
 
 
 	
-	// gets all questions from the database
+	// gets all questions from the database - with multiple categories per questiob
 	app.get('/questionpage', function (req, res) {
 		res.sendFile(path.join(__dirname + "/../public/questions.html"), function(err) {
         	console.log(__dirname + "/../public/questions.html");
     	});
 	})
 
-	// gets all questions from the database
+	// app.get('/questionnewpage', function (req, res) {
+	// 	res.sendFile(path.join(__dirname + "/../public/questionsnew.html"), function(err) {
+ //        	console.log(__dirname + "/../public/questionnew.html");
+ //    	});
+	// })
+	// gets all questions from the database  - with one category per question
+	// app.get('/question', function (req, res) {
+	// 	// getToken(req, res);
+	// 	// Query the database
+	// 	db.Question.findAll({}).then(function(data){
+	// 		res.json(data)
+	// 	}).catch(function(err){
+	// 		res.redirect("/");
+	// 	})
+	// })
+
+	// gets all questions from the database - with multiple categories per questiob
 	app.get('/question', function (req, res) {
 		// getToken(req, res);
 		// Query the database
-		db.Question.findAll({}).then(function(data){
+		db.Question.findAll({
+			include: [db.Category]
+		}).then(function(data){
+			// pull out each category and append to the question
 			res.json(data)
 		}).catch(function(err){
 			res.redirect("/");
@@ -273,6 +305,7 @@ function router(app){
 	// add scores
 	app.post('/score', function (req, res) {		
 	    // loops through and updates rawscores table
+	    console.log(req.body.arr);
 		for (var i = 0; i < req.body.arr.length; i++){
 			// updates rawscores table
 			db.Rawscore.create({
