@@ -9,14 +9,14 @@ insert into Users (username, email, password, location, overall_category, nerd_l
 ("user1" , "user1@test.com", "test123",  "CA", "CAT A", "Master Nerd", now() , now()),
 ("user2" , "user2@test.com", "test123", "IL", "CAT B", "Nerd",now() , now());
 
-insert into Categories (category_name) values 
+insert into Categories (category_name) values
 ("SCIENCE"),
 ("MUSIC"),
 ("TECHNOLOGY" ),
 ("CULTURE" ),
 ("ENGINEERING" );
 
-insert into Questions (question, category, created_at, updated_at) values 
+insert into Questions (question, category, created_at, updated_at) values
 ("I like science fiction.", "science, culture, engineering",now() , now() ),
 ("I sometimes prefer fictional people to real ones.", "science, technology", now(),now()),
 ("I have started writing a novel.", "culture, music", now(), now()),
@@ -45,7 +45,7 @@ insert into Questions (question, category, created_at, updated_at) values
 
 
 
-insert into Rawscores (user_id, score, category, question_id, created_at, updated_at) values 
+insert into Rawscores (user_id, score, category, question_id, created_at, updated_at) values
 (1,4, "SCIENCE", 1, now() , now() ),
 (1, 30, "MUSIC", 2, now() , now() ),
 (1, 4, "TECHNOLOGY", 3, now() , now() ),
@@ -70,7 +70,7 @@ select * from Nerdlevels;
 select * from Categories;
 select * from Questions;
 
--- this section is just random queries i am testing-- 
+-- this section is just random queries i am testing--
 
 -- select b.username, sum(a.score) as total_score, a.category from rawscores as a, users as b where b.id = a.user_id and a.user_id = 2 group by a.category
 
@@ -84,6 +84,6 @@ select * from Questions;
 
 -- select sum(a.score) as total from rawscores as a, users as b where b.id = a.user_id
 
--- select sum(a.score) as total from rawscores as a, users as b where b.id = a.user_id 
+-- select sum(a.score) as total from rawscores as a, users as b where b.id = a.user_id
 
 -- select b.username, sum(a.score) as total_score, a.category from rawscores as a, users as b where b.id = a.user_id group by  b.username, a.category
