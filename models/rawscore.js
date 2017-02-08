@@ -10,10 +10,16 @@ module.exports = function(sequelize, DataTypes){
 			type: DataTypes.DECIMAL,
 			allowNull: false
 		},
+		// creating a composite index out of 3 fields - the combination 
+		// must be unique - question_id + category + user_id
 		category: {
 			type: DataTypes.STRING,
-			allowNull: false
-		}
+			allowNull: false,
+			unique: 'compositeIndex'
+		},
+		question_id: { type: DataTypes.INTEGER,  unique: 'compositeIndex'},
+
+ 		user_id: { type: DataTypes.INTEGER, unique: 'compositeIndex'}
 		// category_id and user_id are foreign keys here
 	},{  // use snake case instead of camel case so foreign keys of format modelname_pkid e.g. burger_id or customer_id
     	underscored: true,
