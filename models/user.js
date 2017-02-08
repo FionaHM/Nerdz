@@ -51,10 +51,6 @@ module.exports = function(sequelize, DataTypes){
 			User.hasMany(models.Rawscore, {
 				onDelete: "cascade",
 				constraints: false
-			}),
-			User.hasMany(models.Aggregatescore, {
-				onDelete: "cascade",
-				constraints: false
 			});
         }
       }

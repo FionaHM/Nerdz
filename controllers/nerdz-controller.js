@@ -152,18 +152,37 @@ function router(app){
 
 
 	
-	// gets all questions from the database
+	// gets all questions from the database - with multiple categories per questiob
 	app.get('/questionpage', function (req, res) {
 		res.sendFile(path.join(__dirname + "/../public/questions.html"), function(err) {
         	console.log(__dirname + "/../public/questions.html");
     	});
 	})
 
-	// gets all questions from the database
+	// app.get('/questionnewpage', function (req, res) {
+	// 	res.sendFile(path.join(__dirname + "/../public/questionsnew.html"), function(err) {
+ //        	console.log(__dirname + "/../public/questionnew.html");
+ //    	});
+	// })
+	// gets all questions from the database  - with one category per question
+	// app.get('/question', function (req, res) {
+	// 	// getToken(req, res);
+	// 	// Query the database
+	// 	db.Question.findAll({}).then(function(data){
+	// 		res.json(data)
+	// 	}).catch(function(err){
+	// 		res.redirect("/");
+	// 	})
+	// })
+
+	// gets all questions from the database - with multiple categories per questiob
 	app.get('/question', function (req, res) {
 		// getToken(req, res);
 		// Query the database
-		db.Question.findAll({}).then(function(data){
+		db.Question.findAll({
+			include: [db.Category]
+		}).then(function(data){
+			// pull out each category and append to the question
 			res.json(data)
 		}).catch(function(err){
 			res.redirect("/");
@@ -286,6 +305,7 @@ function router(app){
 	// add scores
 	app.post('/score', function (req, res) {		
 	    // loops through and updates rawscores table
+	    console.log(req.body.arr);
 		for (var i = 0; i < req.body.arr.length; i++){
 			// updates rawscores table
 			db.Rawscore.create({
