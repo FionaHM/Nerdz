@@ -5,13 +5,12 @@ $('.add-questions').html("");
 // send auth-token in header
 // getCookie('auth_token');
 console.log(getCookie('auth_token'));
-  $.ajaxSetup({
-      beforeSend: function (xhr)
-      {
-         xhr.setRequestHeader("Accept","application/vvv.website+json;version=1");
-         xhr.setRequestHeader("Authorization","Bearer "+ getCookie('auth_token'));
-      }
-  });
+$.ajaxSetup({
+    beforeSend: function(xhr) {
+        xhr.setRequestHeader("Accept", "application/vvv.website+json;version=1");
+        xhr.setRequestHeader("Authorization", "Bearer " + getCookie('auth_token'));
+    }
+});
 
 
 //          var token = window.localStorage.getItem('token');
@@ -35,7 +34,15 @@ $.get("/question", function(data) {
         }
         console.log(category);
         var id = i + 1;
-        $('.add-questions').append('<div class="questions" id="' + data[i].id + '" data-category="' + category + '" data-question="' + data[i].id + '">' + data[i].question + '</div>');
+
+        var carouselDiv = '<div class="questions item" id="' + data[i].id + '" data-category="' + category + '" data-question="' + data[i].id + '">' + '</div>';
+        var carouselContainer = '<div id="container-"' + data[i].id + 'class="container">';
+        var carouselCaption = '<div id="caption-"' + data[i].id + 'class="carousel-caption">' + data[i].question;
+        var radios = '<label class="radio-inline"><input type="radio" name="optradio">1</label><label class="radio-inline"><input type="radio" name="optradio">2</label><label class="radio-inline"><input type="radio" name="optradio">3</label><label class="radio-inline"><input type="radio" name="optradio">4</label><label class="radio-inline"><input type="radio" name="optradio">5</label>';
+        $('#add-questions').append(carouselDiv);
+        carouselDiv.append(carouselContainer);
+        carouselContainer.append(carouselCaption);
+
     }
 });
 // submit the answers
