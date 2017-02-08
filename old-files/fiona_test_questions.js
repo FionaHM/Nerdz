@@ -5,12 +5,13 @@ $('.add-questions').html("");
 // send auth-token in header
 // getCookie('auth_token');
 console.log(getCookie('auth_token'));
-$.ajaxSetup({
-    beforeSend: function(xhr) {
-        xhr.setRequestHeader("Accept", "application/vvv.website+json;version=1");
-        xhr.setRequestHeader("Authorization", "Bearer " + getCookie('auth_token'));
-    }
-});
+  $.ajaxSetup({
+      beforeSend: function (xhr)
+      {
+         xhr.setRequestHeader("Accept","application/vvv.website+json;version=1");
+         xhr.setRequestHeader("Authorization","Bearer "+ getCookie('auth_token'));
+      }
+  });
 
 
 //          var token = window.localStorage.getItem('token');
@@ -28,23 +29,13 @@ $.get("/question", function(data) {
     for (var i = 0; i < data.length; i++) {
         var category = '';
         // pull out each category and append to the question
-        for (var j = 0; j < data[i].Categories.length; j++) {
+        for (var j = 0; j < data[i].Categories.length; j++){
             console.log(data[i].Categories[j].category_name);
             category += data[i].Categories[j].category_name + "/";
         }
         console.log(category);
         var id = i + 1;
-
-        // $('#add-questions').append(data[i].question);
-        var carouselDiv = '<div class="questions item" id="' + data[i].id + '" data-category="' + category + '" data-question="' + data[i].id + '">' + '</div>';
-        var carouselContainer = '<div class="container" id="container-' + data[i].id + '">';
-        var carouselCaption = '<div class="carousel-caption" id="caption-' + data[i].id + '">' + data[i].question;
-        var radios = '<br><label class="radio-inline"><input type="radio" name="optradio">1</label><label class="radio-inline"><input type="radio" name="optradio">2</label><label class="radio-inline"><input type="radio" name="optradio">3</label><label class="radio-inline"><input type="radio" name="optradio">4</label><label class="radio-inline"><input type="radio" name="optradio">5</label>';
-        $('#add-questions').append(carouselDiv);
-        $('#' + data[i].id).append(carouselContainer);
-        $('#container-' + data[i].id).append(carouselCaption);
-        $('#caption-' + data[i].id).append(radios);
-
+        $('.add-questions').append('<div class="questions" id="' + data[i].id + '" data-category="' + category + '" data-question="' + data[i].id + '">' + data[i].question + '</div>');
     }
 });
 // submit the answers
@@ -52,13 +43,13 @@ $('#submit').on("click", function() {
     var questionsArr = [];
     // loop through the answers and save to the database
     $('.questions').each(function(i, obj) {
-        console.log($('#' + id).attr("data-category"));
+        console.log( $('#' + id).attr("data-category"));
         // split the category and insert multiple rows with score prorated
         var id = i + 1;
         var catArr = $('#' + id).attr("data-category").split("/");
         console.log(catArr);
-        for (var j = 0; j < catArr.length - 1; j++) {
-            var score = (5 / (catArr.length - 1)); // 5 is DUMMY DATA
+        for (var j = 0; j < catArr.length-1; j++){
+            var score = (5 / (catArr.length-1)); // 5 is DUMMY DATA
             var questionObj = {
                 "score": score,
                 "question_id": $('#' + id).attr("data-question"),

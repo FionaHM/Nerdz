@@ -1,5 +1,5 @@
 var chart = AmCharts.makeChart("gauge-div", {
-    "theme": "chalk",
+    "theme": "none",
     "type": "gauge",
     "axes": [{
         "topTextFontSize": 20,
@@ -10,22 +10,43 @@ var chart = AmCharts.makeChart("gauge-div", {
         "gridInside": true,
         "inside": true,
         "radius": "60%",
-        "valueInterval": 10,
+        "valueInterval": 20,
         "tickColor": "#67b7dc",
         "startAngle": -90,
         "endAngle": 90,
-        "unit": "%",
+        // "unit": "%",
         "bandOutlineAlpha": 0,
         "bands": [{
-            "color": "#0080ff",
+            "color": "#fd1d02",
             "endValue": 100,
             "innerRadius": "105%",
             "radius": "170%",
             "gradientRatio": [0.5, 0, -0.5],
-            "startValue": 0
+            "startValue": 80
         }, {
-            "color": "#3cd3a3",
-            "endValue": 0,
+            "color": "#ff4105",
+            "endValue": 80,
+            "innerRadius": "105%",
+            "radius": "170%",
+            "gradientRatio": [0.5, 0, -0.5],
+            "startValue": 60
+        }, {
+            "color": "#f8ff01",
+            "endValue": 60,
+            "innerRadius": "105%",
+            "radius": "170%",
+            "gradientRatio": [0.5, 0, -0.5],
+            "startValue": 40
+        }, {
+            "color": "#9dc707",
+            "endValue": 40,
+            "innerRadius": "105%",
+            "radius": "170%",
+            "gradientRatio": [0.5, 0, -0.5],
+            "startValue": 20
+        }, {
+            "color": "#8ecfd5",
+            "endValue": 20,
             "innerRadius": "105%",
             "radius": "170%",
             "gradientRatio": [0.5, 0, -0.5],
@@ -40,14 +61,16 @@ var chart = AmCharts.makeChart("gauge-div", {
     }]
 });
 
-
+//test for nerd type and do stuff with it.
 setInterval(randomValue, 2000);
 
 // set random value
 function randomValue() {
-    var value = Math.round(Math.random() * 100);
+
+    // var value = Math.round(Math.random() * 100);
+    var value = 55;
     chart.arrows[0].setValue(value);
-    chart.axes[0].setTopText("Your \n Overall \n Nerdiness: \n" + value + " %");
+    chart.axes[0].setTopText("Your \n Overall \n Nerdiness: \n" + value);
     // adjust darker band to new value
-    chart.axes[0].bands[1].setEndValue(value);
+    // chart.axes[0].bands[1].setEndValue(value);
 }

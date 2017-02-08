@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="./css/chart-style.css">
   <link href="https://fonts.googleapis.com/css?family=Barrio|Indie+Flower|Oswald" rel="stylesheet">
   <script src="https://www.amcharts.com/lib/3/gauge.js"></script>
+  <script src="https://www.amcharts.com/lib/3/themes/none.js"></script>
   <script src="https://www.amcharts.com/lib/3/themes/dark.js"></script>
   <script src="https://www.amcharts.com/lib/3/themes/chalk.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -48,15 +49,14 @@
 $("#submit").on("click", function() {
 
 
-	// set ajax to send token as Bearer in Header
-	// needed for all secure routes
-	$.ajaxSetup({
-	    beforeSend: function (xhr)
-	    {
-	       xhr.setRequestHeader("Accept","application/vvv.website+json;version=1");
-	       xhr.setRequestHeader("Authorization","Bearer "+getCookie('auth_token'));
-	    }
-	});
+  // set ajax to send token as Bearer in Header
+  // needed for all secure routes
+  $.ajaxSetup({
+    beforeSend: function(xhr) {
+      xhr.setRequestHeader("Accept", "application/vvv.website+json;version=1");
+      xhr.setRequestHeader("Authorization", "Bearer " + getCookie('auth_token'));
+    }
+  });
 
 
   $.get('/aggregatescore', function(data) {
@@ -64,7 +64,7 @@ $("#submit").on("click", function() {
 
 
 
-	})
+  })
 
 })
 

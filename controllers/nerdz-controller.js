@@ -1,5 +1,5 @@
-var methodOverride = require("method-override");
 var db = require('../models');
+var methodOverride = require("method-override");
 var path = require("path");
 var passwordHash = require("password-hash");
 var expressJWT = require("express-jwt");
@@ -7,42 +7,102 @@ var jwt = require("jsonwebtoken");
 var session = require("express-session");
 
 function router(app){
-	// middleware that checks for jwt from api
 
-	// some routes wont require a jwt e.g. login route these are 
-	// specified in the unless clause
-	// comment out for now.......
-	
-	app.use(session({secret: "supersecretcookies", cookie: { httpOnly : true,  maxAge: 60000 }, resave: false, saveUninitialized: false}));
+	// this is cookie setting data - for client side cookies
+	// httpOnly makes cookie data a bit more secure against from other scripts
+	var cookieSecret = process.env.COOKIE_SECRET ||  "supersecretcookies";
+	app.use(session({secret: cookieSecret, cookie: { httpOnly : true,  maxAge: 60000 }, resave: false, saveUninitialized: false}));
 	// Override with POST having ?_method=PUT or DELETE
 	app.use(methodOverride("_method"));
 
-	// app.use(express.static(__dirname + '/../public'));
+	// this is the function to capture and verify incoming token - 
+	// this needs to be place at the start of each protected api route
+	function getToken(req, res) {
+		// set token as null initially
+		var token = null;
+		// console.log("header", req.headers.authorization);
+		// checks the request header for the token
+	    if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
+	        token = req.headers.authorization.split(' ')[1];
+	    } 
+	    // remove for now as token should be in header
+	    // else if (req.query && req.query.token) {
+	    //   token = req.query.token;
+	    // }
+	     else {
+	    	token = null;
+	    }
+	    // console.log("token", token);
+		// use jwt verify to verify the token (symmetric - synchronous)
+		// must use the same secret phrase as was used to generate token initally
+		var secret = process.env.JWT_SECRET ||  'putthisinaseparatefile';
+		// var decoded = jwt.verify(token, secret);
+		// console.log("payload",decoded.password);
+		// console.log(decoded);
+		// ***** Put this back in later
+		jwt.verify(token, secret , function(err, decoded) {
+			console.log("err", err);
+		    if(err) {
+		        return res.status(401).send({message: 'invalid_token'});
+		    } else {
+		    	console.log(decoded);
+		    	return decoded;
+		    }
+		});
+
+		; 
+	}
 
 
+	//  This is a GET function for the root path "/"" to serve 
+	// the main page, index.html.  This root path is not authenticated 
+	// with a json web token. 
 	app.get('/', function(req, res){
 		res.sendFile(path.join(__dirname + "/../public/index.html"));
 	})
 
-	// app.use(expressJWT({ secret: })
-	// path for main landing page
+	
+	// not sure if this route will be used in final app
 	app.get('/login', function(req, res){
 		res.sendFile(path.join(__dirname + "/../public/login.html"));
 	})
 
+	// used to generate use charts based on test scores
 	app.get('/graph', function(req, res){
 		res.sendFile(path.join(__dirname + "/../public/graphs.html"));
 	})
 
-	// app.get('/loginpage', function(req, res){
-	// 	res.sendFile(path.join(__dirname + "/../public/login.html"));
-	// })
-
-	app.post('/existinguser', function(req, res){
-		
+	// create user
+	app.post('/newuser', function (req, res) {
+		// capture the name of the user
+		var username = req.body.username;
 		var email = req.body.email;
-		var password = req.body.password;
-		
+		// hash the password before saving
+		var password = passwordHash.generate(req.body.password);
+		var location = req.body.location; 
+		// unique constraint on username and email
+		db.User.findOrCreate({
+			where: { username: username, email: email, password: password, location: location }
+	    }).then(function(data) {
+			// set the secret and generate the token
+	    	var secret = process.env.JWT_SECRET || "putthisinaseparatefile";
+	    	var myToken = jwt.sign( { id: data.id, email: data.email, username: data.username}, secret, { expiresIn: 60 * 30 });
+		    
+		     	// expires in one hour
+		     	// jwt.sign({data: 'foobar'}, 'secret', { expiresIn: 60 * 60 });
+		     	// this is stored as a cookie on client and sent in AJAX Header
+		  	res.json(myToken);
+		}).catch(function(err){
+			message = err.errors[0].message;
+			return res.status(401).send(message);
+			// res.json(err.errors[0].message);
+		})
+	})
+	// route to authenticate an existing user
+	app.post('/existinguser', function(req, res){
+		var email = req.body.email.trim();
+		var password = req.body.password.trim();
+		// some validation
 		if (!email){
 			res.status(400).send("email required");
 			return;
@@ -51,75 +111,78 @@ function router(app){
 			res.status(400).send("password required");
 			return;
 		}
-
+		// query the database to find the user
+		// email is used as unique identifier
 		db.User.findOne({
 			where: { email: email }
 	    }).then(function(data) {
-
-
-		    if (passwordHash.verify(password, data.password)){
-		     	// send back the token
-		     	// can use password hash in payload - but would need to get again
-		     	// jwt.sign(payload, secretOrPrivateKey, options, [callback])
-		     	// decoded.payload - compare to password
-		     	// console.log(data.password);
-		     	var myToken = jwt.sign( { id: data.id, email: data.email, username: data.username}, "putthisinaseparatefile", { expiresIn: 60 * 60 });
-		     	// expires in one hour
-		     	// jwt.sign({data: 'foobar'}, 'secret', { expiresIn: 60 * 60 });
-		     	// this is stored as a cookie on client and sent in AJAX Header
+	    	// if no data returned
+	    	if (data === null){
+	    		res.status(400).send("User Not Found");
+	    		return;
+	    	}
+	    	// compare the password entered to the stored password hash
+		    else {
+		    	if (passwordHash.verify(password, data.password)){
+		     	// generate the token using a secret phrase
+		     	var secret = process.env.JWT_SECRET || "putthisinaseparatefile"
+		     	// token current set to expire in one hour
+		     	// user id, username and email stored in the payload of the token
+		     	// this is needed for other apis to get user specific data
+		     	var myToken = jwt.sign( { id: data.id, email: data.email, username: data.username}, secret , { expiresIn: 60 * 30 });
+		     	console.log(myToken);
+		     	// send back the token 
+		     	// store it as a cookie on client - this will then be
+		     	//  sent back with user requests as Bearer in the AJAX Header
 		  		res.json(myToken);
-		    } else {
-		    	res.status(400).send("Invalid Password");
-		    }
-		    // true
-    
+			    } else {
+			    	res.status(400).send("Invalid Password");
+			    	return;
+			    	// ***** to be completed once app is working as a unit
+			    }
+			}
 
 		}).catch(function(err){
-			console.log(err);
+			res.status(400).send("Database Error");
+			return;
+			// ***** to be completed once app is working as a unit
 			// res.redirect("/");
 		})
-		// to be completed
 	})
 
 
-// this is the code to get and verify a token - needs to be used in each api route
-	function getToken(req) {
-
-		var token = null;
-	    if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
-	        token = req.headers.authorization.split(' ')[1];
-	    } else if (req.query && req.query.token) {
-	      token = req.query.token;
-	    } else {
-	    	token = null;
-	    }
-	    // console.log(token);
-	    // console.log(req.headers.authorization);
-	    // // var token = getToken(req);
-		// console.log(token) ;// bar
-		// verify a token symmetric - synchronous
-		var decoded = jwt.verify(token, 'putthisinaseparatefile');
-		// console.log("payload",decoded.password);
-		console.log(decoded);
-				// jwt.verify(token,'putthisinaseparatefile' , function(err, decoded) {
-  //       if(err) {
-  //           return res.status(401).send({message: 'invalid_token'});
-  //       }
-		return decoded; 
-	}
-
-	// gets all questions from the database
-	app.get('/questionpage', function (req, res) {
 	
+	// gets all questions from the database - with multiple categories per questiob
+	app.get('/questionpage', function (req, res) {
 		res.sendFile(path.join(__dirname + "/../public/questions.html"), function(err) {
         	console.log(__dirname + "/../public/questions.html");
     	});
 	})
 
-	// gets all questions from the database
+	// app.get('/questionnewpage', function (req, res) {
+	// 	res.sendFile(path.join(__dirname + "/../public/questionsnew.html"), function(err) {
+ //        	console.log(__dirname + "/../public/questionnew.html");
+ //    	});
+	// })
+	// gets all questions from the database  - with one category per question
+	// app.get('/question', function (req, res) {
+	// 	// getToken(req, res);
+	// 	// Query the database
+	// 	db.Question.findAll({}).then(function(data){
+	// 		res.json(data)
+	// 	}).catch(function(err){
+	// 		res.redirect("/");
+	// 	})
+	// })
+
+	// gets all questions from the database - with multiple categories per questiob
 	app.get('/question', function (req, res) {
+		// getToken(req, res);
 		// Query the database
-		db.Question.findAll({}).then(function(data){
+		db.Question.findAll({
+			include: [db.Category]
+		}).then(function(data){
+			// pull out each category and append to the question
 			res.json(data)
 		}).catch(function(err){
 			res.redirect("/");
@@ -134,7 +197,7 @@ function router(app){
 	})
 
 	app.get('/aggregatescore/user/:id', function (req, res) {
-   		// getToken(req); code for token validation 
+   		getToken(req, res); //code for token validation 
    		// get aggregate score for a user
    		var userid = req.params.id;  // passed in from client
    		aggregates(req, res, userid);
@@ -238,45 +301,61 @@ function router(app){
 	})
 
 
-	// create user
-	app.post('/newuser', function (req, res) {
-		// capture the name of the user
-		var username = req.body.username;
-		var email = req.body.email;
-		// hash the password before saving
-		var password = passwordHash.generate(req.body.password);
-		var location = req.body.location; 
-		// // find the customer in the Users table or create if it does not exist
- 	    db.User.findOrCreate({
-			where: { username: username, email: email, password: password, location: location }
-	    }).then(function(data) {
-	    	// console.log(data);
-	    	var myToken = jwt.sign( { id: data.id, email: data.email, username: data.username}, "putthisinaseparatefile", { expiresIn: 60 * 60 });
-		     	// expires in one hour
-		     	// jwt.sign({data: 'foobar'}, 'secret', { expiresIn: 60 * 60 });
-		     	// this is stored as a cookie on client and sent in AJAX Header
-		  	res.json(myToken);
-		}).catch(function(err){
-			console.log(err);
-			// res.redirect("/");
-		})
-	})
 
 	// add scores
 	app.post('/score', function (req, res) {		
 	    // loops through and updates rawscores table
+	    // composite key : question_id, category, user_id
+	    // composite key should be unique
 		for (var i = 0; i < req.body.arr.length; i++){
 			// updates rawscores table
-			db.Rawscore.create({
-				score: req.body.arr[i].score,
-			   	category: req.body.arr[i].category,
+			// db.Rawscore.create({
+			// 	score: req.body.arr[i].score,
+			//    	category: req.body.arr[i].category,
+			//    	user_id: req.body.arr[i].user_id,
+			//    	question_id: req.body.arr[i].question_id
+	  //   	}).then(function(){
+	  //   		res.json();
+	  //   	}).catch(function(err){
+			// 	console.log(err);
+			// })
+			// not fully tested - need scores
+			db.Rawscore.find({ where: { category: req.body.arr[i].category,
 			   	user_id: req.body.arr[i].user_id,
-			   	question_id: req.body.arr[i].question_id
-	    	}).then(function(){
-	    		res.json();
-	    	}).catch(function(err){
-				console.log(err);
-			})
+			   	question_id: req.body.arr[i].question_id} })
+			  .on('success', function (score) {
+			    // Check if record exists in db
+			    console.log(score);
+			    if (score) {
+			    	console.log("updating...");
+				      score.updateAttributes({
+				        score: req.body.arr[i].score
+				      })
+				      .success(function () {
+					      	res.status(200).send("Successfully Updated Scores");
+							return;
+				      })
+			    } 
+			    else {
+			    	console.log("creating...");
+			    	//  if it does not exist then
+			    	//  create scores
+			    	db.Rawscore.create({
+						score: req.body.arr[i].score,
+					   	category: req.body.arr[i].category,
+					   	user_id: req.body.arr[i].user_id,
+					   	question_id: req.body.arr[i].question_id
+					}).then(function(){
+			    		res.status(200).send("Successfully Created Scores.");
+						return;
+			    	}).catch(function(err){
+			    		res.status(400).send("Database Problem");
+						return;
+						// console.log(err);
+					})
+
+			    }
+			  })
 		}
 	})
 

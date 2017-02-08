@@ -8,10 +8,20 @@ module.exports = function(sequelize, DataTypes){
 		},
 		username: {
 			type: DataTypes.STRING,
+			unique: {
+                args: true,
+                message: 'Username must be unique.',
+                fields: [sequelize.fn('lower', sequelize.col('username'))]
+            },
 			allowNull: false
 		},
 		email: {
 			type: DataTypes.STRING,
+			unique: {
+                args: true,
+                message: 'Email must be unique.',
+                fields: [sequelize.fn('lower', sequelize.col('email'))]
+            },
 			allowNull: false,
 			// validate: {len: [1, 33], notEmpty: true }
 		},
@@ -39,10 +49,6 @@ module.exports = function(sequelize, DataTypes){
            // One to many relationship
 			// When a User is deleted, also delete any associated Burgers
 			User.hasMany(models.Rawscore, {
-				onDelete: "cascade",
-				constraints: false
-			}),
-			User.hasMany(models.Aggregatescore, {
 				onDelete: "cascade",
 				constraints: false
 			});

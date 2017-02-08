@@ -54,9 +54,6 @@ insert into Rawscores (user_id, score, category, question_id, created_at, update
 
 
 
-
-
-
 insert into Nerdlevels  (nerd_level, max_score, min_score) values
 ("Master Nerd", 50, 40.01),
 ("Super Nerd", 40, 30.01 ),
@@ -64,13 +61,16 @@ insert into Nerdlevels  (nerd_level, max_score, min_score) values
 ("Senior Nerd", 20, 10.01),
 ("Junior Nerd", 10, 0);
 
+use  nerdz_db;
 select * from Users;
 select * from Rawscores;
 select * from Nerdlevels;
 select * from Categories;
 select * from Questions;
 
--- this section is just random queries i am testing--
+
+
+-- this section is just random queries i am testing-- 
 
 -- select b.username, sum(a.score) as total_score, a.category from rawscores as a, users as b where b.id = a.user_id and a.user_id = 2 group by a.category
 
