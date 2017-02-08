@@ -85,7 +85,7 @@
                             </select>
                           </div>
                           <div class="col-md-9">
-                            <input type="text" class="form-control" placeholder="Name" name="new-username" id="new-username">
+                            <input type="text" class="form-control" required="required" placeholder="Name" name="new-username" id="new-username">
                           </div>
                         </div>
                       </div>
@@ -144,30 +144,30 @@
   LONG
   <div id="location-lat" class="map-page"></div>
   <div id="mapdiv" style="width: 900px; height: 600px; margin:auto"></div>
+  <div id="error-div"></div>
   <div style="text-align:center">
     <input type="button" class="btn" value="Release the Nerds" onclick="releaseBubbles()" />
     <input type="button" class="btn" value="Capture the Nerds" onclick="attachBubbles()" />
   </div>
   <script type="text/javascript">
-
   $("#login-submit").on("click", function() {
     var loginObj = {
       email: $("#existing-user-email").val(),
       password: $("#existing-user-password").val(),
     };
     $.post('/existinguser', loginObj, function(data, status) {
-      console.log(data);
-      console.log(status);
-      createCookie("auth_token", data, 0);
-      createCookie("user_email", $("#existing-user-email").val(), 0);
-      // move to next page - this will error if user doesnt have perms
-      window.location.replace("../questionpage");
-    })
-    .done(function(msg){  })
-    .fail(function(xhr, status, error) {
+        console.log(data);
+        console.log(status);
+        createCookie("auth_token", data, 0);
+        createCookie("user_email", $("#existing-user-email").val(), 0);
+        // move to next page - this will error if user doesnt have perms
+        window.location.replace("../questionpage");
+      })
+      .done(function(msg) {})
+      .fail(function(xhr, status, error) {
         // captures error so now we can handle
         console.log(xhr.responseText, xhr.statusText);
-    })
+      })
   })
 
   $("#register-submit").on("click", function(event) {
@@ -180,8 +180,8 @@
     }
 
     $.post('/newuser', registerObj, function(data, status, err) {
-      console.log(data);
-      if (status === "success") {
+        console.log(data);
+        if (status === "success") {
 
           createCookie("auth_token", data, 0);
           createCookie("user_email", $("#new-user-email").val(), 0);
@@ -189,14 +189,15 @@
           window.location.replace("../questionpage");
 
 
-      } 
+        }
 
-    })
-    .done(function(msg){  })
-    .fail(function(xhr, status, error) {
+      })
+      .done(function(msg) {})
+      .fail(function(xhr, status, error) {
         // captures error so now we can handle
         console.log(xhr.responseText, xhr.statusText);
-    })
+        alert('Error, please try again');
+      })
   })
 
 
