@@ -20,12 +20,10 @@
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <!-- Include all compiled plugins (below), or include individual files as needed -->
-  <script src="js/bootstrap.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 
 <body>
-  <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-    Login modal</button>
   <!-- Large modal -->
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -137,14 +135,19 @@
     </div>
   </div>
   <!-- End of Modal -->
+  <!-- must keep map div it is required for maps to work -->
+  <div id="map" class="map-page"></div>
+  STATE
+  <div id="location-state" class="map-page"></div>
+  LAT
+  <div id="location-lng" class="map-page"></div>
+  LONG
+  <div id="location-lat" class="map-page"></div>
   <div id="mapdiv" style="width: 900px; height: 600px; margin:auto"></div>
   <div style="text-align:center">
     <input type="button" class="btn" value="Release the Nerds" onclick="releaseBubbles()" />
     <input type="button" class="btn" value="Capture the Nerds" onclick="attachBubbles()" />
   </div>
-  <br> Jess Charts here
-  <a href="results.html">Click to go to charts</a>
-  <br>
   <script type="text/javascript">
   $("#login-submit").on("click", function() {
     var loginObj = {
@@ -225,9 +228,54 @@
     }
     return "";
   }
+
+  // Map Script
+  var latitude = 41.881832;
+  var longitude = -87.623177;
+
+
+  function initMap() {
+
+    var geocoder = new google.maps.Geocoder;
+
+    navigator.geolocation.getCurrentPosition(function(position) {
+        $('#location-lat').html(position.coords.latitude);
+        $('#location-lng').html(position.coords.longitude);
+        geocodeLatLng(geocoder, position.coords.latitude, position.coords.longitude);
+
+
+      })
+      // }
+
+    function geocodeLatLng(geocoder, lat, lng) {
+
+      var latlng = {
+        lat: lat,
+        lng: lng
+      };
+      geocoder.geocode({
+        'location': latlng
+      }, function(results, status) {
+        if (status === 'OK') {
+          if (results[1]) {
+            console.log(results[1].address_components[3].short_name);
+            $('#location-state').html(results[1].address_components[3].short_name);
+
+          } else {
+            window.alert('No results found');
+          }
+        } else {
+          window.alert('Geocoder failed due to: ' + status);
+        }
+      });
+    }
+
+  } // end of initmap
   </script>
-  <script src="./js/modal.js" type="text/javascript"></script>
   <script src="./js/map.js" type="text/javascript"></script>
+  <script src="./js/modal.js" type="text/javascript"></script>
+  <!--   <script src="./js/API.js"></script> -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAddiqSupF7BhNzmafgwWImSllcV_zGv7c&libraries=places&callback=initMap" async defer></script>
 </body>
 
 </html>
