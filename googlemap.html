@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="initial-scale=1.0">
+  <!-- Bootstrap CDN-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+</head>
+
+<body>
+  <!-- must keep map div it is required for maps to work -->
+  <div id="map" class="map-page"></div>
+  STATE
+  <div id="location-state" class="map-page"></div LNG <div id="location-lng" class="map-page"></div>
+  LAt
+  <div id="location-lat" class="map-page"></div>
+  </footer>
+  <script src="./js/API.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAddiqSupF7BhNzmafgwWImSllcV_zGv7c&libraries=places&callback=initMap" async defer></script>
+  <script>
+  // var latitude = 41.881832;
+  // var longitude =  -87.623177; 
+
+
+  function initMap() {
+
+    var geocoder = new google.maps.Geocoder;
+
+    navigator.geolocation.getCurrentPosition(function(position) {
+        $('#location-lat').html(position.coords.latitude);
+        $('#location-lng').html(position.coords.longitude);
+        geocodeLatLng(geocoder, position.coords.latitude, position.coords.longitude);
+      })
+      // }
+
+    function geocodeLatLng(geocoder, lat, lng) {
+
+      var latlng = {
+        lat: lat,
+        lng: lng
+      };
+      geocoder.geocode({
+        'location': latlng
+      }, function(results, status) {
+        if (status === 'OK') {
+          if (results[1]) {
+            console.log(results[1].address_components[3].short_name);
+            $('#location-state').html(results[1].address_components[3].short_name);
+
+          } else {
+            window.alert('No results found');
+          }
+        } else {
+          window.alert('Geocoder failed due to: ' + status);
+        }
+      });
+    }
+
+  } // end of initmap
+  </script>
+</body>
+
+</html>
