@@ -10,17 +10,17 @@ insert into Users (username, email, password, location, overall_category, nerd_l
 
 
 
-insert into Questions (question, created_at, updated_at) values 
-("What day is today", now() , now() ),
-("How old are you?", now(),now()),
-("When is Monday?", now(), now()),
-("When is Tuesday?", now(), now()),
-("When is Wednesday?", now(), now()),
-("When is Thursday?",  now(), now()),
-("When is Friday?", now(), now()),
-("When is Saturday?",  now(), now()),
-("When is Sunday?",  now(), now()),
-("When is May?", now(), now());
+insert into Questions (question, category, created_at, updated_at) values 
+("What day is today", "CAT A",now() , now() ),
+("How old are you?", "CAT A", now(),now()),
+("When is Monday?", "CAT C", now(), now()),
+("When is Tuesday?", "CAT C", now(), now()),
+("When is Wednesday?", "CAT B", now(), now()),
+("When is Thursday?", "CAT B", now(), now()),
+("When is Friday?", "CAT D", now(), now()),
+("When is Saturday?", "CAT D", now(), now()),
+("When is Sunday?", "CAT E", now(), now()),
+("When is May?", "CAT E", now(), now());
 
 insert into Categories (category_name, question_id) values 
 ("CAT A", 1),
@@ -30,11 +30,11 @@ insert into Categories (category_name, question_id) values
 ("CAT C", 3 ),
 ("CAT D" ,4),
 ("CAT E", 5 ),
-("CAT B" ,5),
+("CAT B" , 5),
 ("CAT C", 6),
 ("CAT D" ,6),
 ("CAT E", 7 ),
-("CAT B" ,7),
+("CAT B", 7),
 ("CAT C", 8 ),
 ("CAT D" ,9),
 ("CAT E", 10 );
@@ -42,15 +42,15 @@ insert into Categories (category_name, question_id) values
 
 insert into Rawscores (user_id, score, category, question_id, created_at, updated_at) values 
 (1,4, "CAT A", 1, now() , now() ),
-(1, 30, "CAT B", 2, now() , now() ),
-(1, 4, "CAT C", 3, now() , now() ),
-(1,1, "CAT D",4, now() , now() ),
-(1, 3, "CAT E", 5, now() , now() ),
-(2,4, "CAT C", 6, now() , now() ),
-(2, 3, "CAT E", 7, now() , now() ),
-(2, 3,"CAT C", 8, now() , now() ),
-(2,5, "CAT D",9, now() , now() ),
-(2, 3, "CAT E",10,now() , now() );
+(1, 30, "CAT A", 2, now() , now() ),
+(1, 4, "CAT B", 3, now() , now() ),
+(1,1, "CAT B",4, now() , now() ),
+(1, 3, "CAT C", 5, now() , now() ),
+(2,4, "CAT A", 1, now() , now() ),
+(2, 3, "CAT A", 2, now() , now() ),
+(2, 3,"CAT B", 3, now() , now() ),
+(2,5, "CAT C",4, now() , now() ),
+(2, 3, "CAT C",5,now() , now() );
 
 -- 
 -- insert into Aggregatescores (user_id, score, category, created_at, updated_at) values 
@@ -77,10 +77,10 @@ insert into Nerdlevels  (nerd_level, max_score, min_score) values
 use  nerdz_db;
 select * from Users;
 select * from Rawscores;
+select * from Aggregatescores;
 select * from Nerdlevels;
 select * from Categories;
 select * from Questions;
-
 
 -- this section is just random queries i am testing-- 
 

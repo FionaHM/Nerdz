@@ -26,15 +26,23 @@ $.ajaxSetup({
 $.get("/question", function(data) {
     // loop through the results and paint the dom
     for (var i = 0; i < data.length; i++) {
+        var category = '';
+        // pull out each category and append to the question
+        for (var j = 0; j < data[i].Categories.length; j++){
+            console.log(data[i].Categories[j].category_name);
+            category += data[i].Categories[j].category_name + "/";
+        }
+        console.log(category);
         var id = i + 1;
-        var carouselDiv = '<div class="questions item" id="' + data[i].id + '" data-category="' + data[i].category + '" data-question="' + data[i].id + '">' + '</div>';
+
+        var carouselDiv = '<div class="questions item" id="' + data[i].id + '" data-category="' + category + '" data-question="' + data[i].id + '">' + '</div>';
         var carouselContainer = '<div id="container-"' + data[i].id + 'class="container">';
         var carouselCaption = '<div id="caption-"' + data[i].id + 'class="carousel-caption">' + data[i].question;
         var radios = '<label class="radio-inline"><input type="radio" name="optradio">1</label><label class="radio-inline"><input type="radio" name="optradio">2</label><label class="radio-inline"><input type="radio" name="optradio">3</label><label class="radio-inline"><input type="radio" name="optradio">4</label><label class="radio-inline"><input type="radio" name="optradio">5</label>';
         $('#add-questions').append(carouselDiv);
         carouselDiv.append(carouselContainer);
         carouselContainer.append(carouselCaption);
-        carouselCaption.append(radios);
+
     }
 });
 // submit the answers
@@ -42,15 +50,21 @@ $('#submit').on("click", function() {
     var questionsArr = [];
     // loop through the answers and save to the database
     $('.questions').each(function(i, obj) {
+        console.log( $('#' + id).attr("data-category"));
+        // split the category and insert multiple rows with score prorated
         var id = i + 1;
-
-        var questionObj = {
-            "score": 3 + i, // DUMMY DATA
-            "question_id": $('#' + id).attr("data-question"),
-            "category": $('#' + id).attr("data-category"),
-            "user_id": 1 // DUMMY DATA
-        };
-        questionsArr.push(questionObj);
+        var catArr = $('#' + id).attr("data-category").split("/");
+        console.log(catArr);
+        for (var j = 0; j < catArr.length-1; j++){
+            var score = (5 / (catArr.length-1)); // 5 is DUMMY DATA
+            var questionObj = {
+                "score": score,
+                "question_id": $('#' + id).attr("data-question"),
+                "category": catArr[j],
+                "user_id": 1 // DUMMY DATA
+            };
+            questionsArr.push(questionObj);
+        }
     });
     console.log(questionsArr);
     var questionsObj = { arr: questionsArr };

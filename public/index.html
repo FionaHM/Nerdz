@@ -47,6 +47,7 @@
                 <div class="tab-pane active" id="Login">
                   <form role="form" class="form-horizontal">
                     <div class="form-group">
+                      <div id="err-message1"></div>
                       <label for="email" class="col-sm-2 control-label">
                         Email</label>
                       <div class="col-sm-10">
@@ -54,6 +55,7 @@
                       </div>
                     </div>
                     <div class="form-group">
+                      
                       <label for="password" class="col-sm-2 control-label">
                         Password</label>
                       <div class="col-sm-10">
@@ -91,6 +93,7 @@
                       </div>
                     </div>
                     <div class="form-group">
+                      <div id="err-message2"></div>
                       <label for="email" class="col-sm-2 control-label">
                         Email</label>
                       <div class="col-sm-10">
@@ -98,11 +101,13 @@
                       </div>
                     </div>
                     <div class="form-group">
+
                       <label for="password" class="col-sm-2 control-label">
                         Password</label>
                       <div class="col-sm-10">
                         <input type="password" class="form-control" name="new-user-password" id="new-user-password" placeholder="Password" />
                       </div>
+                      <div id="test"></div>
                     </div>
                     <div class="form-group">
                       <label for="country">State</label>
@@ -134,6 +139,7 @@
       </div>
     </div>
   </div>
+  
   <!-- End of Modal -->
   <!-- must keep map div it is required for maps to work -->
   <div id="map" class="map-page"></div>
@@ -150,22 +156,33 @@
     <input type="button" class="btn" value="Capture the Nerds" onclick="attachBubbles()" />
   </div>
   <script type="text/javascript">
-  $("#login-submit").on("click", function() {
+  $("#login-submit").on("click", function(event) {
+    event.preventDefault();
     var loginObj = {
       email: $("#existing-user-email").val(),
       password: $("#existing-user-password").val(),
     };
     $.post('/existinguser', loginObj, function(data, status) {
-        console.log(data);
-        console.log(status);
+
+      // console.log(xhr.responseText, xhr.statusText);
+      console.log(data);
+      if (data === null ){
+        // captures error so now we can handle
+        // invalid password or no user
+        $('#err-message1').html(xhr.responseText);
+        console.log(xhr.responseText, xhr.statusText);
+      } else {
         createCookie("auth_token", data, 0);
         createCookie("user_email", $("#existing-user-email").val(), 0);
         // move to next page - this will error if user doesnt have perms
         window.location.replace("../questionpage");
-      })
-      .done(function(msg) {})
-      .fail(function(xhr, status, error) {
+
+      }   
+    })
+    .done(function(msg){  })
+    .fail(function(xhr, status, error) {
         // captures error so now we can handle
+        $('#err-message1').html(xhr.responseText);
         console.log(xhr.responseText, xhr.statusText);
       })
   })
@@ -180,21 +197,23 @@
     }
 
     $.post('/newuser', registerObj, function(data, status, err) {
-        console.log(data);
-        if (status === "success") {
+
+      console.log(data);
+      if (status === "success") {
 
           createCookie("auth_token", data, 0);
           createCookie("user_email", $("#new-user-email").val(), 0);
           // move to next page - this will error if user doesnt have perms
           window.location.replace("../questionpage");
 
-
-        }
-
-      })
-      .done(function(msg) {})
-      .fail(function(xhr, status, error) {
+      } 
+    })
+    .done(function(msg){  
+      console.log(msg)
+    })
+    .fail(function(xhr, status, error) {
         // captures error so now we can handle
+        $('#err-message2').html(xhr.responseText);
         console.log(xhr.responseText, xhr.statusText);
         alert('Error, please try again');
       })
@@ -240,8 +259,8 @@
     var geocoder = new google.maps.Geocoder;
 
     navigator.geolocation.getCurrentPosition(function(position) {
-        $('#location-lat').html(position.coords.latitude);
-        $('#location-lng').html(position.coords.longitude);
+        // $('#location-lat').html(position.coords.latitude);
+        // $('#location-lng').html(position.coords.longitude);
         geocodeLatLng(geocoder, position.coords.latitude, position.coords.longitude);
         return [position.coords.latitude, position.coords.longitude];
 
@@ -261,7 +280,7 @@
         if (status === 'OK') {
           if (results[1]) {
             console.log(results[1].address_components[3].short_name);
-            $('#location-state').html(results[1].address_components[3].short_name);
+            // $('#location-state').html(results[1].address_components[3].short_name);
 
           } else {
             window.alert('No results found');
