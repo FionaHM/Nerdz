@@ -62,12 +62,14 @@ insert into Nerdlevels  (nerd_level, max_score, min_score) values
 ("Junior Nerd", 10, 0);
 
 use  nerdz_db;
-select * from Users;
+select * from Users
 select * from Rawscores;
 select * from Nerdlevels;
 select * from Categories;
 select * from Questions;
 
+
+delete from Users where email = 'fiona.hegarty@icloud,com'
 
 
 -- this section is just random queries i am testing-- 
