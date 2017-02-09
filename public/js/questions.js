@@ -12,16 +12,6 @@ $.ajaxSetup({
     }
 });
 
-
-//          var token = window.localStorage.getItem('token');
-
-// if (token) {
-//   $.ajaxSetup({
-//     headers: {
-//       'x-access-token': token
-//     }
-//   });
-// }
 // get the questions
 $.get("/question", function(data) {
     // loop through the results and paint the dom

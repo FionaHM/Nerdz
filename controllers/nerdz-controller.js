@@ -50,26 +50,26 @@ function router(app){
 		; 
 	}
 
-function verifyPassword(password, data, res){
-	// verify that the password is correct
-	if (passwordHash.verify(password, data.password)){
-	 	// generate the token using a secret phrase
-		returnToken(data, res);
-	} else {
-    	res.status(400).send("Invalid Password");
-    	return;
-    	// ***** to be completed once app is working as a unit
+	function verifyPassword(password, data, res){
+		// verify that the password is correct
+		if (passwordHash.verify(password, data.password)){
+		 	// generate the token using a secret phrase
+			returnToken(data, res);
+		} else {
+	    	res.status(400).send("Invalid Password");
+	    	return;
+	    	// ***** to be completed once app is working as a unit
+		}
 	}
-}
 
-function returnToken(data, res){
-    var secret = process.env.JWT_SECRET || "putthisinaseparatefile";
-	// token expires in 30 mins 
-	var myToken = jwt.sign( { id: data.id, email: data.email, username: data.username}, secret, { expiresIn: 60 * 30 });
- 	// this token is stored as a cookie on client and sent in AJAX Header
-  	res.json(myToken);
-  	return;
-}
+	function returnToken(data, res){
+	    var secret = process.env.JWT_SECRET || "putthisinaseparatefile";
+		// token expires in 30 mins 
+		var myToken = jwt.sign( { id: data.id, email: data.email, username: data.username}, secret, { expiresIn: 60 * 30 });
+	 	// this token is stored as a cookie on client and sent in AJAX Header
+	  	res.json(myToken);
+	  	return;
+	}
 	//****HTML ROUTES*******//
 
 	//  This is a GET function for the root path "/"" to serve 
