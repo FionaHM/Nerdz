@@ -1,8 +1,7 @@
 {
     "development": {
         "username": "root",
-
-        "password": "root",
+        "password": "01B00tKamp09",
         "database": "nerdz_db",
         "host": "127.0.0.1",
         "dialect": "mysql"
