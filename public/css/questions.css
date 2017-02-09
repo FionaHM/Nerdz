@@ -1,62 +1,55 @@
-/* GLOBAL STYLES
+  /* GLOBAL STYLES
 -------------------------------------------------- */
-
-
-/* Padding below the footer and lighter body text */
-
-
-html,
-body {
-  color: #e7e7e7;
-  font-size: 1em;
-  background: #000;
-}
-
-
-/* CUSTOMIZE THE CAROUSEL
+  /* Padding below the footer and lighter body text */
+  
+  html,
+  body {
+    color: #e7e7e7;
+    font-size: 1em;
+    background: #000;
+  }
+  /* CUSTOMIZE THE CAROUSEL
 -------------------------------------------------- */
-
-
-/* Carousel base class */
-
-.carousel {
-  height: 500px;
-  margin-bottom: 60px;
-  /*background-image: url("../img/background.gif");*/
-  background: black;
-  background-size: cover;
-  background-repeat: none;
-}
-
-.item {}
-
-
-/* Since positioning the image, we need to help out the caption */
-
-.carousel-caption {
-  margin-bottom: 120px;
-}
-
-
-/* Declare heights because of positioning of img element */
-
-.carousel .item {
-  height: 500px;
-}
-
-h1 {
-  font-family: 'Oswald', cursive;
-}
-
-h4 {
-  font-family: 'Oswald', cursive;
-}
-
-.carousel-inner > .item > img {
-  position: cover;
-  top: 0;
-  left: 0;
-  min-width: 100%;
-  height: 500px;
-  opacity: 0.2;
-}
+  /* Carousel base class */
+  
+  .carousel {
+    height: 500px;
+    margin-bottom: 60px;
+    /*background-image: url("../img/background.gif");*/
+    background: black;
+    background-size: cover;
+    background-repeat: none;
+  }
+  
+  #logout {
+    margin-top: 10px;
+  }
+  
+  .item {}
+  /* Since positioning the image, we need to help out the caption */
+  
+  .carousel-caption {
+    margin-bottom: 120px;
+  }
+  /* Declare heights because of positioning of img element */
+  
+  .carousel .item {
+    height: 500px;
+  }
+  
+  h1 {
+    font-family: 'Oswald', cursive;
+  }
+  
+  h4 {
+    font-family: 'Oswald', cursive;
+  }
+  
+  .carousel-inner > .item > img {
+    position: cover;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    height: 500px;
+    opacity: 0.2;
+  }
