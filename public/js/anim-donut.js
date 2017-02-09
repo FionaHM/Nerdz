@@ -109,7 +109,7 @@ function getData() {
 
         var chart = AmCharts.makeChart("chartdiv", {
             "type": "pie",
-            "theme": "none",
+            "theme": "light",
             "dataProvider": [],
             "valueField": "total_score",
             "titleField": "category",
@@ -118,11 +118,14 @@ function getData() {
             "radius": "30%",
             "pullOutRadius": 20,
             "marginTop": 30,
+            "labelTickColor": "#fff",
             "percentFormatter": {
                 precision: 0,
                 decimalSeparator: '.',
                 thousandsSeparator: ','
             },
+            "color": "#fff",
+            // "colors": ["#0D52D1", "#FF6600", "#FF0F00", "#04D215", "#F8FF01"],
             "allLabels": [{
                 "y": "54%",
                 "align": "center",
