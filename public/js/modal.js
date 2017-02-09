@@ -1,7 +1,7 @@
 setTimeout(function() {
 
     $('#myModal').modal('show');
-}, 1000 * 10);
+}, 1000);
 
 function showPassword() {
 
