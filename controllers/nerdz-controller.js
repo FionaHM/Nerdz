@@ -5,8 +5,11 @@ var passwordHash = require("password-hash");
 var expressJWT = require("express-jwt");
 var jwt = require("jsonwebtoken");
 var session = require("express-session");
-
-//**** Functions ***//
+var nodemailer = require("nodemailer");
+// secret for login auth token
+var jwtsecret = process.env.JWT_SECRET || "putthisinaseparatefile";
+// secret for login auth token
+var pwdsecret = process.env.PWD_SECRET || "icantbelieveyouforgotyourpassword";
 
 function router(app){
 	// this is cookie setting data - for client side cookies
@@ -16,59 +19,105 @@ function router(app){
 	// Override with POST having ?_method=PUT or DELETE
 	app.use(methodOverride("_method"));
 
+	//**** Functions ***//
+
+
+	function passwordResetEmail(email, token){
+		// this part creates a reusable transporter using SMTP of gmail
+		var transporter = nodemailer.createTransport({
+			service: 'gmail',
+			auth:{
+				user: 'nerdzquiz@gmail.com',
+				pass: 'JessicaFionaCharles' ///to be removed and changed
+			}
+		});
+		var link = "http://localhost:8080/forgot/"+token; //API TO RESET PASSWORD
+		var text = 'You are receiving this email because you requested a password reset for the Nerdz website. Please use the following link to reset your password.' + link + ' This link will expire in 5 minutes.';
+		var html = '<br><p>You are receiving this email because you requested a password reset for the Nerdz website.</p><p> Please use the following link to reset your password:' + link + '</p><br><strong> This link will expire in 5 minutes.</strong><br><h2>The Nerdz Team</h2>';
+		// setup email data
+		var  mailOptions = {
+			from: '" The Nerdz Team" <nerdzquiz@gmail.com>',
+			to: email,
+			subject: 'Password Reset',
+			text: text,
+			html: html
+		};
+
+		//send the email
+		transporter.sendMail(mailOptions, function(error, info){
+			if (error) {
+				return console.log(error)
+			}
+			console.log("Message %s send : %s", info.messageId, info.response);
+		})
+	}
 	// this is the function to capture and verify the incoming java web token - 
 	// this needs to be place at the start of each protected api route
 	// tokens are created at login
-	function getToken(req, res) {
-		// set token as null initially
-		var token = null;
-		// checks the request header for the token
-	    if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
-	        token = req.headers.authorization.split(' ')[1];
-	    } 
-	    // remove for now as token should be in header
-	    // else if (req.query && req.query.token) {
-	    //   token = req.query.token;
-	    // }
-	     else {
-	    	token = null;
-	    }
-		// use jwt verify to verify the token (symmetric - synchronous)
-		// must use the same secret phrase as was used to generate token initally
-		var secret = process.env.JWT_SECRET ||  'putthisinaseparatefile';
-		// verify the token
-		jwt.verify(token, secret , function(err, decoded) {
-		    if(err) {
-		    	// send an error request and deny access
-		        return res.status(401).send({message: 'invalid_token'});
-		    } else {
-		    	// pass the decoded token for use by the api
-		    	return decoded;
-		    }
-		});
+	// auth == login or pwd - pwdtoken is optional only for pwd reset
+	function decodeToken(req, res, secret, auth, pwdtoken) {
+		return new Promise(function(resolve, reject){
+			// set token as null initially
+			var token = null;
+			// checks the request header for the token
+			console.log("auth", auth);
+			if (auth == "login"){
+				if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
+		        	token = req.headers.authorization.split(' ')[1];
+		    	} else {
+		    		token = null;
+		    	}
+			} else if (auth == 'pwd'){
+				// if there is a token
+				if (pwdtoken) {
+		        	token = pwdtoken;
+		    	} else {
+		    		token = null;
+		    	}
+			}
 
-		; 
+			// use jwt verify to verify the token (symmetric - synchronous)
+			// must use the same secret phrase as was used to generate token initally
+			// verify the token
+			jwt.verify(token, secret , function(err, decoded) {
+			    if(err) {
+			    	// send an error request and deny access
+			        res.status(401).send({message: 'invalid_token'});
+			        reject(err);
+			    } else {
+			    	// console.log("decoded", decoded);
+			    	// pass the decoded token for use by the api
+			    	resolve(decoded);
+			    }
+			});
+		})
 	}
 
-	function verifyPassword(password, data, res){
+	function verifyPassword(password, data, res, secret){
 		// verify that the password is correct
 		if (passwordHash.verify(password, data.password)){
 		 	// generate the token using a secret phrase
-			returnToken(data, res);
+			returnToken(res, jwtsecret, "login", data);
 		} else {
 	    	res.status(400).send("Invalid Password");
 	    	return;
 	    	// ***** to be completed once app is working as a unit
 		}
 	}
+	// auth = login or pwd
+	function returnToken(res, secret, auth, data){
+		if (auth === "login"){
+			// this token is stored as a cookie on client and sent in AJAX Header
+	 	 	// token expires in 30 mins 
+			var myToken = jwt.sign( { id: data.id, email: data.email, username: data.username}, secret, { expiresIn: 60 * 30 });
+			res.json(myToken);	
+			return;
 
-	function returnToken(data, res){
-	    var secret = process.env.JWT_SECRET || "putthisinaseparatefile";
-		// token expires in 30 mins 
-		var myToken = jwt.sign( { id: data.id, email: data.email, username: data.username}, secret, { expiresIn: 60 * 30 });
-	 	// this token is stored as a cookie on client and sent in AJAX Header
-	  	res.json(myToken);
-	  	return;
+		} else if (auth === "pwd"){
+			// expires in 5 mins
+			var myToken = jwt.sign( { email: data }, secret, { expiresIn: 60 * 5 });
+			return myToken;	 
+		}
 	}
 	//****HTML ROUTES*******//
 
@@ -89,7 +138,82 @@ function router(app){
 		res.sendFile(path.join(__dirname + "/../public/graphs.html"));
 	})
 
-	//*** POST ROUTES **//
+	// test file for password
+	app.get('/pwdtest', function(req, res){
+		res.sendFile(path.join(__dirname + "/../public/password.html"));
+	})
+
+
+
+	function changePassword(email,password){
+		var password = passwordHash.generate(tmppwd);
+		db.User.update({password: password}, 
+				{where : { email : email }}, 
+				{fields: ['password']}).catch(function(err){
+		}).then(function(){
+			//nofity password has been changed
+			// message on screen for user chanege while logged in
+			// not sure when reset email..
+		})	
+	}
+
+	// takes in password reset and displays reset page
+	app.get('/forgot/:token', function(req, res){	
+		var token = req.params.token;
+		decodeToken(req, res, pwdsecret, 'pwd', token).then(function(decoded){
+			// use data in token to create temp password
+			var email = decoded.email;
+			// need to randomly generate
+			var tmppwd = "tmppwd"; // send email with tmp pwd needs to match pwd send in email
+			// tell user to update password
+			var password = passwordHash.generate(tmppwd);
+			changePassword(email,password);
+		}).catch(function(err){
+			//
+		});		
+	})
+
+
+//*** POST ROUTES **//
+
+	// for reset password link - used to generate use charts based on test scores
+	app.post('/password', function(req, res){
+		// email = req.body.email -- get from form
+		// var email ="jhornsten@comcast.net";
+		// var email ="fiona.hegarty@icloud.com";
+		var email = req.body.email.trim();
+		// verify valid user in database ****
+		db.User.findOne({ where: { email: email }})
+		  .then(function (user) {
+		    // Check if record exists in db
+		    var temppwd = "tmppwd"; // send email with tmp pwd
+		    // var password = passwordHash.generate(temppwd);
+		    // console.log(user);
+		    if (user) {
+		    	var token = returnToken(res, pwdsecret, "pwd", email);
+				passwordResetEmail(email, token);
+		    } else {
+		    	// res.status(400).send("Invalid Password");
+		    	res.status(400).send("No User found.");
+	    		return;
+		    }
+		})
+	
+	})
+
+	// user can change password when logged in with auth token
+	app.post('/password/reset/', function(req, res){	
+		decodeToken(req, res, jwtsecret, 'login').then(function(decoded){
+			// use data in token to create temp password
+			var email = decoded.email;
+			// need to randomly generate
+			var tmppwd = req.body.password; // send email with tmp pwd needs to match pwd send in email
+			// tell user to update password
+			var password = passwordHash.generate(tmppwd);
+			changePassword(email,password);
+		});		
+	})
+
 	// create a new user
 	app.post('/newuser', function (req, res) {
 		// capture the name of the user
@@ -107,7 +231,8 @@ function router(app){
 	    	// console.log("data", data);
 	    	// console.log("created", created);
 	    	if (created){  // should be true if newly created
-    			returnToken(data, res);
+    			returnToken(res, jwtsecret, "login", data);
+    			// returnToken(data, res, secret, auth)
 	    	} 
 	    	// else {
 	    	// 	verifyPassword(password, data, res);
@@ -200,16 +325,21 @@ function router(app){
 
 	// gets all questions from the database - with multiple categories per questiob
 	app.get('/question', function (req, res) {
-		// getToken(req, res);
-		// Query the database
-		db.Question.findAll({
-			include: [db.Category]
-		}).then(function(data){
-			// pull out each category and append to the question
-			res.json(data)
+		decodeToken(req, res, jwtsecret, "login", "").then(function(decoded){
+			console.log(decoded);
+			// Query the database
+			db.Question.findAll({
+				include: [db.Category]
+			}).then(function(data){
+				// pull out each category and append to the question
+				res.json(data)
+			}).catch(function(err){
+				res.redirect("/");
+			})
 		}).catch(function(err){
-			res.redirect("/");
+			console.log(err);
 		})
+		
 	})
 
    	app.get('/aggregatescore/', function (req, res) {
@@ -220,7 +350,7 @@ function router(app){
 	})
 
 	app.get('/aggregatescore/user/:id', function (req, res) {
-   		getToken(req, res); //code for token validation 
+   		// decodeToken(req, res); //code for token validation 
    		// get aggregate score for a user
    		var userid = req.params.id;  // passed in from client
    		aggregates(req, res, userid);
@@ -343,13 +473,17 @@ function router(app){
 			// 	console.log(err);
 			// })
 			// not fully tested - need scores
-			db.Rawscore.find({ where: { category: req.body.arr[i].category,
+			db.Rawscore.findOne({ where: { category: req.body.arr[i].category,
 			   	user_id: req.body.arr[i].user_id,
 			   	question_id: req.body.arr[i].question_id} })
-			  .on('success', function (score) {
+			  .then(function (score) {
 			    // Check if record exists in db
 			    console.log(score);
 			    if (score) {
+
+			 //    	db.User.update({password: password}, 
+				// {where : { email : email }}, 
+				// {fields: ['password']})
 			    	console.log("updating...");
 				      score.updateAttributes({
 				        score: req.body.arr[i].score
