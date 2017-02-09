@@ -1,8 +1,3 @@
-.nav-tabs {
-  margin-bottom: 15px;
-  border: none;
-}
-
 .modal-header {
   color: #eee;
   border: none;
@@ -43,4 +38,12 @@ div#OR {
 .modal-transparent {
   background: transparent;
   border: none;
+}
+
+.forget {
+  font-size: 12px;
+}
+
+.forget:hover {
+  text-decoration: none;
 }
