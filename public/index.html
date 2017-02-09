@@ -25,6 +25,10 @@
 </head>
 
 <body>
+  <div class="alert page-alert alert-warning alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Warning!</strong> Better check yourself, you're not looking too good.
+  </div>
   <!-- Large modal -->
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -48,7 +52,7 @@
                 <div class="tab-pane active" id="Login">
                   <form role="form" class="form-horizontal">
                     <div class="form-group">
-                      <div id="err-message1"></div>
+                      <!--  <div id="err-message1"></div> -->
                       <label for="email" class="control-label"></label>
                       <div class="col-sm-12">
                         <input type="email" required class="form-control" name="existing-user-email" id="existing-user-email" placeholder="Email" />
