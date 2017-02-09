@@ -1,3 +1,4 @@
+CREATE database nerdz_db;
 drop database nerdz_db;
 CREATE database nerdz_db;
 
@@ -8,62 +9,48 @@ insert into Users (username, email, password, location, overall_category, nerd_l
 ("user1" , "user1@test.com", "test123",  "CA", "CAT A", "Master Nerd", now() , now()),
 ("user2" , "user2@test.com", "test123", "IL", "CAT B", "Nerd",now() , now());
 
+insert into Categories (category_name) values
+("SCIENCE"),
+("MUSIC"),
+("TECHNOLOGY" ),
+("CULTURE" ),
+("ENGINEERING" );
+
+insert into Questions (question, category, created_at, updated_at) values
+("I like science fiction.", "science, culture, engineering",now() , now() ),
+("I sometimes prefer fictional people to real ones.", "science, technology", now(),now()),
+("I have started writing a novel.", "culture, music", now(), now()),
+("I come up with something new ", "science, engineering", now(), now()),
+("I like to read Biographys.", "culture", now(), now()),
+("Enjoy going to fiction conventions.", "scinence, engineering, technology", now(), now()),
+("I have a strong need to correct inaccurate information.", "engineering", now(), now()),
+("I like staying indoors.", "science, technology, engineering", now(), now()),
+("I prefer to spend time with machines than with people.", "technology, engineering", now(), now()),
+("I love to read science fiction novels.", "science, technology, engineering", now(), now()),
+("I have a collection of figurines.", "culture", now(), now()),
+("I believe in the importance of art.", "music, culture", now(), now()),
+("I go out of my way to attend music events.", "music, culture", now(), now()),
+("I am full of ideas about novels.", "culture", now(), now()),
+("I love writing poetry.", "music, culture", now(), now()),
+("I love musical theater.", "music, culture", now(), now()),
+("I believe in aliens.", "science, technology", now(), now()),
+("I love Dance.", "music, culture", now(), now()),
+("I have a large collection of movies.", "music, culture", now(), now()),
+("I am good at making impromptu speeches.", "science, culture", now(), now()),
+("I am a spiritual person.", "culture", now(), now()),
+("Learning body language is very important.", "culture", now(), now()),
+("I don't like to dress up in costumes.", "engineering", now(), now()),
+("I listen to music more than a hour a day", "engineering", now(), now()),
+("I show an attention to detail", "science, technology, engineering", now(), now());
 
 
-insert into Questions (question, created_at, updated_at) values 
-("What day is today", now() , now() ),
-("How old are you?", now(),now()),
-("When is Monday?", now(), now()),
-("When is Tuesday?", now(), now()),
-("When is Wednesday?", now(), now()),
-("When is Thursday?",  now(), now()),
-("When is Friday?", now(), now()),
-("When is Saturday?",  now(), now()),
-("When is Sunday?",  now(), now()),
-("When is May?", now(), now());
 
-insert into Categories (category_name, question_id) values 
-("CAT A", 1),
-("CAT B", 1),
-("CAT A", 2),
-("CAT B", 2),
-("CAT C", 3 ),
-("CAT D" ,4),
-("CAT E", 5 ),
-("CAT B" ,5),
-("CAT C", 6),
-("CAT D" ,6),
-("CAT E", 7 ),
-("CAT B" ,7),
-("CAT C", 8 ),
-("CAT D" ,9),
-("CAT E", 10 );
-
-
-insert into Rawscores (user_id, score, category, question_id, created_at, updated_at) values 
-(1,4, "CAT A", 1, now() , now() ),
-(1, 30, "CAT B", 2, now() , now() ),
-(1, 4, "CAT C", 3, now() , now() ),
-(1,1, "CAT D",4, now() , now() ),
-(1, 3, "CAT E", 5, now() , now() ),
-(2,4, "CAT C", 6, now() , now() ),
-(2, 3, "CAT E", 7, now() , now() ),
-(2, 3,"CAT C", 8, now() , now() ),
-(2,5, "CAT D",9, now() , now() ),
-(2, 3, "CAT E",10,now() , now() );
-
--- 
--- insert into Aggregatescores (user_id, score, category, created_at, updated_at) values 
--- (1,10, "CAT A", now() , now() ),
--- (1, 3,"CAT B", now() , now() ),
--- (1, 4, "CAT C", now() , now() ),
--- (1,1, "CAT D", now() , now() ),
--- (1, 3, "CAT E",  now() , now() ),
--- (2,10, "CAT A",  now() , now() ),
--- (2, 3,"CAT B", now() , now() ),
--- (2, 4, "CAT C",  now() , now() ),
--- (2,1, "CAT D", now() , now() ),
--- (2, 3, "CAT E", now() , now() );
+insert into Rawscores (user_id, score, category, question_id, created_at, updated_at) values
+(1,4, "SCIENCE", 1, now() , now() ),
+(1, 30, "MUSIC", 2, now() , now() ),
+(1, 4, "TECHNOLOGY", 3, now() , now() ),
+(1,1, "CULTURE",4, now() , now() ),
+(1, 3, "ENGINEERING", 5, now() , now() );
 
 
 
@@ -82,6 +69,7 @@ select * from Categories;
 select * from Questions;
 
 
+
 -- this section is just random queries i am testing-- 
 
 -- select b.username, sum(a.score) as total_score, a.category from rawscores as a, users as b where b.id = a.user_id and a.user_id = 2 group by a.category
@@ -96,6 +84,6 @@ select * from Questions;
 
 -- select sum(a.score) as total from rawscores as a, users as b where b.id = a.user_id
 
--- select sum(a.score) as total from rawscores as a, users as b where b.id = a.user_id 
+-- select sum(a.score) as total from rawscores as a, users as b where b.id = a.user_id
 
 -- select b.username, sum(a.score) as total_score, a.category from rawscores as a, users as b where b.id = a.user_id group by  b.username, a.category
