@@ -6,8 +6,9 @@ var expressJWT = require("express-jwt");
 var jwt = require("jsonwebtoken");
 var session = require("express-session");
 
-function router(app){
+//**** Functions ***//
 
+function router(app){
 	// this is cookie setting data - for client side cookies
 	// httpOnly makes cookie data a bit more secure against from other scripts
 	var cookieSecret = process.env.COOKIE_SECRET ||  "supersecretcookies";
@@ -15,12 +16,12 @@ function router(app){
 	// Override with POST having ?_method=PUT or DELETE
 	app.use(methodOverride("_method"));
 
-	// this is the function to capture and verify incoming token - 
+	// this is the function to capture and verify the incoming java web token - 
 	// this needs to be place at the start of each protected api route
+	// tokens are created at login
 	function getToken(req, res) {
 		// set token as null initially
 		var token = null;
-		// console.log("header", req.headers.authorization);
 		// checks the request header for the token
 	    if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
 	        token = req.headers.authorization.split(' ')[1];
@@ -32,20 +33,16 @@ function router(app){
 	     else {
 	    	token = null;
 	    }
-	    // console.log("token", token);
 		// use jwt verify to verify the token (symmetric - synchronous)
 		// must use the same secret phrase as was used to generate token initally
 		var secret = process.env.JWT_SECRET ||  'putthisinaseparatefile';
-		// var decoded = jwt.verify(token, secret);
-		// console.log("payload",decoded.password);
-		// console.log(decoded);
-		// ***** Put this back in later
+		// verify the token
 		jwt.verify(token, secret , function(err, decoded) {
-			console.log("err", err);
 		    if(err) {
+		    	// send an error request and deny access
 		        return res.status(401).send({message: 'invalid_token'});
 		    } else {
-		    	console.log(decoded);
+		    	// pass the decoded token for use by the api
 		    	return decoded;
 		    }
 		});
@@ -53,6 +50,27 @@ function router(app){
 		; 
 	}
 
+function verifyPassword(password, data, res){
+	// verify that the password is correct
+	if (passwordHash.verify(password, data.password)){
+	 	// generate the token using a secret phrase
+		returnToken(data, res);
+	} else {
+    	res.status(400).send("Invalid Password");
+    	return;
+    	// ***** to be completed once app is working as a unit
+	}
+}
+
+function returnToken(data, res){
+    var secret = process.env.JWT_SECRET || "putthisinaseparatefile";
+	// token expires in 30 mins 
+	var myToken = jwt.sign( { id: data.id, email: data.email, username: data.username}, secret, { expiresIn: 60 * 30 });
+ 	// this token is stored as a cookie on client and sent in AJAX Header
+  	res.json(myToken);
+  	return;
+}
+	//****HTML ROUTES*******//
 
 	//  This is a GET function for the root path "/"" to serve 
 	// the main page, index.html.  This root path is not authenticated 
@@ -61,7 +79,6 @@ function router(app){
 		res.sendFile(path.join(__dirname + "/../public/index.html"));
 	})
 
-	
 	// not sure if this route will be used in final app
 	app.get('/login', function(req, res){
 		res.sendFile(path.join(__dirname + "/../public/login.html"));
@@ -72,35 +89,41 @@ function router(app){
 		res.sendFile(path.join(__dirname + "/../public/graphs.html"));
 	})
 
-	// create user
+	//*** POST ROUTES **//
+	// create a new user
 	app.post('/newuser', function (req, res) {
 		// capture the name of the user
-		var username = req.body.username;
-		var email = req.body.email;
+		var username = req.body.username.toLowerCase();
+		var email = req.body.email.toLowerCase();
 		// hash the password before saving
 		var password = passwordHash.generate(req.body.password);
 		var location = req.body.location; 
 		// unique constraint on username and email
+		// checkif user exists
 		db.User.findOrCreate({
 			where: { username: username, email: email, password: password, location: location }
-	    }).then(function(data) {
-			// set the secret and generate the token
-	    	var secret = process.env.JWT_SECRET || "putthisinaseparatefile";
-	    	var myToken = jwt.sign( { id: data.id, email: data.email, username: data.username}, secret, { expiresIn: 60 * 30 });
-		    
-		     	// expires in one hour
-		     	// jwt.sign({data: 'foobar'}, 'secret', { expiresIn: 60 * 60 });
-		     	// this is stored as a cookie on client and sent in AJAX Header
-		  	res.json(myToken);
+	    }).spread(function(data, created) {
+	    	// if found verify that password is correct and generate token if 
+	    	// console.log("data", data);
+	    	// console.log("created", created);
+	    	if (created){  // should be true if newly created
+    			returnToken(data, res);
+	    	} 
+	    	// else {
+	    	// 	verifyPassword(password, data, res);
+	    	// }
+
 		}).catch(function(err){
+			// console.log(err);
 			message = err.errors[0].message;
 			return res.status(401).send(message);
 			// res.json(err.errors[0].message);
 		})
 	})
+
 	// route to authenticate an existing user
 	app.post('/existinguser', function(req, res){
-		var email = req.body.email.trim();
+		var email = req.body.email.trim().toLowerCase();
 		var password = req.body.password.trim();
 		// some validation
 		if (!email){
