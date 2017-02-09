@@ -34,15 +34,31 @@ $.get("/question", function(data) {
         }
         console.log(category);
         var id = i + 1;
+        //adds the little circle carousel-indicators to the bottom of the carousel
+        var li = '<li id="li-' + i + '"data-target="#myCarousel" data-slide-to="' + i + '"></li>';
+        $('.carousel-indicators').append(li);
+        //first slide selected by default
+        $('#li-' + 0).addClass("active");
 
-        // $('#add-questions').append(data[i].question);
+        //Builds up a carousel item for each question
         var carouselDiv = '<div class="questions item" id="' + data[i].id + '" data-category="' + category + '" data-question="' + data[i].id + '">' + '</div>';
         var carouselContainer = '<div class="container" id="container-' + data[i].id + '">';
-        var carouselCaption = '<div class="carousel-caption" id="caption-' + data[i].id + '">' + data[i].question;
-        var radios = '<br><label class="radio-inline"><input type="radio" name="optradio">1</label><label class="radio-inline"><input type="radio" name="optradio">2</label><label class="radio-inline"><input type="radio" name="optradio">3</label><label class="radio-inline"><input type="radio" name="optradio">4</label><label class="radio-inline"><input type="radio" name="optradio">5</label>';
+        var carouselCaption = '<div class="carousel-caption" id="caption-' + data[i].id + '">' + '<h1>Question ' + data[i].id + '</h1><br>' + '<h4>' + data[i].question;
+        // var radios = '<br><label class="radio-inline"><input type="radio" value="1" name="optradio-' + data[i].id + '">1</label><label class="radio-inline"><input type="radio" value="2" name="optradio-' + data[i].id + '">2</label><label class="radio-inline"><input checked type="radio" value="3" name="optradio-' + data[i].id + '">3</label><label class="radio-inline"><input type="radio" value="4" name="optradio-' + data[i].id + '">4</label><label class="radio-inline"><input type="radio" value="5" name="optradio-' + data[i].id + '">5</label>';
+
+
+        var radios = '<br><br><br><input checked type="radio" class="radio" id="radio-' + data[i].id + '-1" value="1" name="optradio-' + data[i].id + '" /><label for="radio-' + data[i].id + '-1" class="animated jello"></label><input type="radio" class="radio" id="radio-' + data[i].id + '-2" value="2" name="optradio-' + data[i].id + '" /><label for="radio-' + data[i].id + '-2" class="animated jello"></label><input type="radio" class="radio" id="radio-' + data[i].id + '-3" value="3" name="optradio-' + data[i].id + '" /><label check for="radio-' + data[i].id + '-3" class="animated jello"></label><input type="radio" class="radio" id="radio-' + data[i].id + '-4" value="4" name="optradio-' + data[i].id + '" /><label for="radio-' + data[i].id + '-4" class="animated jello"></label><input type="radio" class="radio" id="radio-' + data[i].id + '-5" value="5" name="optradio-' + data[i].id + '" /><label for="radio-' + data[i].id + '-5" class="animated jello"></label>';
+
+
         $('#add-questions').append(carouselDiv);
         $('#' + data[i].id).append(carouselContainer);
+        //displays first question by default when loaded
+        $('#' + data[0].id).addClass("active");
+        //carouselCaption contains the Question number and the Question
         $('#container-' + data[i].id).append(carouselCaption);
+        //radio buttons added for each question
+        // $('#caption-' + data[i].id).append('<div id="radios-' + data[i].id + '">');
+        // $('#radios-' + data[i].id).append(radios);
         $('#caption-' + data[i].id).append(radios);
 
     }

@@ -4,23 +4,12 @@
 
 /* Padding below the footer and lighter body text */
 
+
 html,
 body {
   color: #e7e7e7;
   font-size: 1em;
-  background-color: #111;
-}
-
-.navbar-left {
-  margin-left: 250px;
-}
-
-.form-control {
-  margin: 3px;
-}
-
-.navbar-brand {
-  font-family: 'Barrio', cursive;
+  background: #000;
 }
 
 
@@ -33,11 +22,13 @@ body {
 .carousel {
   height: 500px;
   margin-bottom: 60px;
+  /*background-image: url("../img/background.gif");*/
+  background: black;
+  background-size: cover;
+  background-repeat: none;
 }
 
-.item {
-  background-image: url("./img/atom.gif" alt="atom gif");
-}
+.item {}
 
 
 /* Since positioning the image, we need to help out the caption */
@@ -51,7 +42,14 @@ body {
 
 .carousel .item {
   height: 500px;
-  font-family: 'Barrio', cursive;
+}
+
+h1 {
+  font-family: 'Oswald', cursive;
+}
+
+h4 {
+  font-family: 'Oswald', cursive;
 }
 
 .carousel-inner > .item > img {
