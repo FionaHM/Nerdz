@@ -1,0 +1,13 @@
+
+
+<body>
+
+	<form method="POST" action="/password/mail/reset" id="submit-form" class="text-center">
+		{{#if token}}
+		<input type="hidden" value="{{ token }}" name="token" />
+		{{/if}}
+		<p class="input-form"><div class="form-input-title">New Password</div><input type="password" name="newpassword" id="newpassword" maxlength="32"></textarea></p>
+		<p class="input-form"><div class="form-input-title">Confirm Password</div><input id="confirmpassword" type="password" name="confirmpassword" maxlength="32"></textarea></p>
+		<p class="input-form"><button class="btn btn-info" type="submit" id="submit-button">Reset Email</button><br></p>
+	</form>
+</body>

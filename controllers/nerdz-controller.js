@@ -6,6 +6,8 @@ var expressJWT = require("express-jwt");
 var jwt = require("jsonwebtoken");
 var session = require("express-session");
 var nodemailer = require("nodemailer");
+// using template for password reset
+var exprhbs = require('express-handlebars'); 
 // secret for login auth token
 var jwtsecret = process.env.JWT_SECRET || "putthisinaseparatefile";
 // secret for login auth token
@@ -20,6 +22,11 @@ function router(app){
 	// Override with POST having ?_method=PUT or DELETE
 	app.use(methodOverride("_method"));
 
+	// this tells express what template engine to use and the default template lives (main)
+	app.engine('handlebars', exprhbs({defaultLayout: 'main'}));
+	// this sets the view engine to handlebars
+	app.set('view engine', 'handlebars');
+
 	//**** Functions ***//
 
 
@@ -32,7 +39,7 @@ function router(app){
 				pass: 'JessicaFionaCharles' ///to be removed and changed
 			}
 		});
-		var link = "http://localhost:8080/forgot/"+token; //API TO RESET PASSWORD
+		var link = " http://localhost:8080/forgot/"+token; //API TO RESET PASSWORD
 		var text = 'You are receiving this email because you requested a password reset for the Nerdz website. Please use the following link to reset your password.' + link + ' This link will expire in 5 minutes.';
 		var html = '<br><p>You are receiving this email because you requested a password reset for the Nerdz website.</p><p> Please use the following link to reset your password:' + link + '</p><br><strong> This link will expire in 5 minutes.</strong><br><h2>The Nerdz Team</h2>';
 		// setup email data
@@ -63,7 +70,7 @@ function router(app){
 			// checks the request header for the token
 			console.log("auth", auth);
 			if (auth == "login"){
-				console.log(req.headers.authorization);
+				// console.log(req.headers.authorization);
 				if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
 		        	token = req.headers.authorization.split(' ')[1];
 		    	} else {
@@ -166,7 +173,7 @@ function router(app){
 
 
 	function changePassword(email,password){
-		var password = passwordHash.generate(tmppwd);
+		// var password = passwordHash.generate(tmppwd);
 		db.User.update({password: password}, 
 				{where : { email : email }}, 
 				{fields: ['password']}).catch(function(err){
@@ -180,14 +187,19 @@ function router(app){
 	// takes in password reset and displays reset page
 	app.get('/forgot/:token', function(req, res){	
 		var token = req.params.token;
+		console.log(token);
 		decodeToken(req, res, pwdsecret, 'pwd', token).then(function(decoded){
 			// use data in token to create temp password
-			var email = decoded.email;
+			var tokenObj = { "token": token};
+			console.log(tokenObj);
+			res.render('index', { "token": token });
+			// res.render('index', {resultsObj: resultsObj});
 			// need to randomly generate
-			var tmppwd = "tmppwd"; // send email with tmp pwd needs to match pwd send in email
+			// var tmppwd = "tmppwd"; // send email with tmp pwd needs to match pwd send in email
 			// tell user to update password
-			var password = passwordHash.generate(tmppwd);
-			changePassword(email,password);
+			// var password = passwordHash.generate(tmppwd);
+			// changePassword(email,password);
+
 		}).catch(function(err){
 			//
 		});		
@@ -196,7 +208,7 @@ function router(app){
 
 //*** POST ROUTES **//
 
-	// for reset password link - used to generate use charts based on test scores
+	// for creating the email to send out
 	app.post('/password', function(req, res){
 		// email = req.body.email -- get from form
 		// var email ="jhornsten@comcast.net";
@@ -206,7 +218,7 @@ function router(app){
 		db.User.findOne({ where: { email: email }})
 		  .then(function (user) {
 		    // Check if record exists in db
-		    var temppwd = "tmppwd"; // send email with tmp pwd
+		    // var temppwd = "tmppwd"; // send email with tmp pwd
 		    // var password = passwordHash.generate(temppwd);
 		    // console.log(user);
 		    if (user) {
@@ -226,11 +238,37 @@ function router(app){
 		decodeToken(req, res, jwtsecret, 'login').then(function(decoded){
 			// use data in token to create temp password
 			var email = decoded.email;
-			// need to randomly generate
-			var tmppwd = req.body.password; // send email with tmp pwd needs to match pwd send in email
+			//// take password from body
+			var tmppwd = req.body.password; 
 			// tell user to update password
 			var password = passwordHash.generate(tmppwd);
 			changePassword(email,password);
+		}).catch(function(err){
+			// console.log(err)
+		})
+	})
+
+
+// user can change password when logged in with auth token
+	app.post('/password/mail/reset', function(req, res){	
+		var token = req.body.token;
+		// console.log("token", token);
+		decodeToken(req, res, pwdsecret, 'pwd', token).then(function(decoded){
+			// use data in token to create temp password
+			var email = decoded.email;
+			//// take password from body
+			console.log("in here");
+			var newpassword = req.body.newpassword.trim(); 
+			var confirmpassword = req.body.confirmpassword.trim(); 
+			console.log(newpassword,confirmpassword );
+			if (newpassword === confirmpassword){
+				// tell user to update password
+				var password = passwordHash.generate(newpassword);
+				changePassword(email,password);
+			} else {
+				res.status(400).send("Passwords don't match.")
+			}
+			
 		}).catch(function(err){
 			// console.log(err)
 		})
