@@ -110,6 +110,7 @@ function router(app){
 			// this token is stored as a cookie on client and sent in AJAX Header
 	 	 	// token expires in 30 mins 
 			var myToken = jwt.sign( { id: data.id, email: data.email, username: data.username}, secret, { expiresIn: 60 * 30 });
+			console.log(token);
 			res.json(myToken);	
 			return;
 
@@ -125,11 +126,13 @@ function router(app){
 	// the main page, index.html.  This root path is not authenticated 
 	// with a json web token. 
 	app.get('/', function(req, res){
+		console.log("in index");
 		res.sendFile(path.join(__dirname + "/../public/index.html"));
 	})
 
 	// not sure if this route will be used in final app
 	app.get('/login', function(req, res){
+		console.log("in login");
 		res.sendFile(path.join(__dirname + "/../public/login.html"));
 	})
 
@@ -142,6 +145,11 @@ function router(app){
 	app.get('/pwdtest', function(req, res){
 		res.sendFile(path.join(__dirname + "/../public/password.html"));
 	})
+
+	app.get('/graph', function(req, res){
+		res.sendFile(path.join(__dirname + "/../public/graphs.html"));
+	})
+	
 
 
 
@@ -302,6 +310,7 @@ function router(app){
 	
 	// gets all questions from the database - with multiple categories per questiob
 	app.get('/questionpage', function (req, res) {
+		console.log("in questionpage");
 		res.sendFile(path.join(__dirname + "/../public/questions.html"), function(err) {
         	console.log(__dirname + "/../public/questions.html");
     	});
@@ -325,6 +334,7 @@ function router(app){
 
 	// gets all questions from the database - with multiple categories per questiob
 	app.get('/question', function (req, res) {
+		console.log("in question");
 		decodeToken(req, res, jwtsecret, "login", "").then(function(decoded){
 			console.log(decoded);
 			// Query the database
@@ -471,35 +481,56 @@ function router(app){
 
 	// add scores
 	app.post('/score', function (req, res) {	
-		 console.log("are we in her");
+
 		decodeToken(req, res, jwtsecret, 'login', "").then(function(decoded){
 		// loops through and updates rawscores table
 	    // composite key : question_id, category, user_id
 	    // composite key should be unique
-	    	console.log("are we in her", req.body.arr.length);
-			for (var i = 0; i < req.body.arr.length; i++){
+	    for (var i = 0; i < req.body.arr.length; i++){
+	   //  	  	scoreObj = {category : req.body.arr[i].category;
+				// user_id : decoded.id;
+			 // 	question_id: req.body.arr[i].question_id;
+			 // 	score : req.body.arr[i].score}
+			// updates rawscores table
+			db.Rawscore.findAll({
+				where : { category : req.body.arr[i].category,
+				user_id : decoded.id,
+			 	question_id: req.body.arr[i].question_id }
+			}).then(function(rawscore, i){
+				console.log("rawscore", req.body.arr[i].score);
+/// not sure why this bit not workind!
+				if (rawscore[0] !== ""){
+					console.log("updATE");
+					db.Rawscore.update(
+						{score : req.body.arr[i].score}, 
+						{where : { category : req.body.arr[i].category,
+						user_id : decoded.id,
+					 	question_id: req.body.arr[i].question_id
+					 	 }}, 
+						{fields: ['score']}
+					).catch(function(err){
+						console.log(err);
+					});
 
-				// updates rawscores table
-				db.Rawscore.create({
-					score: req.body.arr[i].score,
-				   	category: req.body.arr[i].category,
-				   	user_id: decoded.id,
-				   	question_id: req.body.arr[i].question_id
-		    	}).catch(function(err){
-					console.log(err);
-				})
-			
-			}
-		}).then(function(){
-				console.log("arrgh");
-				res.sendFile(path.join(__dirname + "/../public/graphs.html"));
-
-			
+				} else {
+					db.Rawscore.create({
+						score: score,
+					   	category: category,
+					   	// user_id: decoded.id,
+					   	user_id: user_id,
+					   	question_id: question_id
+			    	}).catch(function(err){
+						// console.log(err);
+					})
+				}
+			});		
+		}
+		res.end();
 		}).catch(function(err){
-			//
+			console.log("arrgh - error");
+			console.log(err);
+			// res.sendFile(path.join(__dirname + "/../public/graphs.html"));
 		});
-
-
 
 	})
 

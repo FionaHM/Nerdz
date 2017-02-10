@@ -54,7 +54,8 @@ $.get("/question", function(data) {
     }
 });
 // submit the answers
-$('#sendscores').on("click", function() {
+$('#sendscores').on("click", function(event) {
+    event.preventDefault();
     var questionsArr = [];
     // loop through the answers and save to the database
     $('.questions').each(function(i, obj) {
@@ -64,7 +65,7 @@ $('#sendscores').on("click", function() {
         var catArr = $('#' + id).attr("data-category").split("/");
         // console.log(catArr);
         for (var j = 0; j < catArr.length - 1; j++) {
-            var score = (5 / ( 2 - 1)); // 5 is DUMMY DATA
+            var score = (5 / ( catArr.length - 1)); // 5 is DUMMY DATA
             var questionObj = {
                 "score": score,
                 "question_id": $('#' + id).attr("data-question"),
@@ -74,10 +75,14 @@ $('#sendscores').on("click", function() {
             questionsArr.push(questionObj);
         }
     });
-    console.log(questionsArr);
+    //
     var questionsObj = { arr: questionsArr };
-    console.log("obje", questionsObj);
-    $.post("/score", questionsObj);
+    //
+    $.post("/score", questionsObj, function(){
+
+        window.location.replace("../graph");
+
+    });
 
 
 })
