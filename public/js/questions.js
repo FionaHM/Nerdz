@@ -1,10 +1,10 @@
 // clear the div
 
-$('.add-questions').html("");
+// $('.add-questions').html("");
 
 // send auth-token in header
 // getCookie('auth_token');
-console.log(getCookie('auth_token'));
+// console.log(getCookie('auth_token'));
 $.ajaxSetup({
     beforeSend: function(xhr) {
         xhr.setRequestHeader("Accept", "application/vvv.website+json;version=1");
@@ -54,29 +54,29 @@ $.get("/question", function(data) {
     }
 });
 // submit the answers
-$('#submit').on("click", function() {
+$('#sendscores').on("click", function() {
     var questionsArr = [];
     // loop through the answers and save to the database
     $('.questions').each(function(i, obj) {
-        console.log($('#' + id).attr("data-category"));
+        // console.log($('#' + id).attr("data-category"));
         // split the category and insert multiple rows with score prorated
         var id = i + 1;
         var catArr = $('#' + id).attr("data-category").split("/");
-        console.log(catArr);
+        // console.log(catArr);
         for (var j = 0; j < catArr.length - 1; j++) {
-            var score = (5 / (catArr.length - 1)); // 5 is DUMMY DATA
+            var score = (5 / ( 2 - 1)); // 5 is DUMMY DATA
             var questionObj = {
                 "score": score,
                 "question_id": $('#' + id).attr("data-question"),
                 "category": catArr[j],
-                "user_id": 1 // DUMMY DATA
+                // "user_id": 1 // DUMMY DATA
             };
             questionsArr.push(questionObj);
         }
     });
     console.log(questionsArr);
     var questionsObj = { arr: questionsArr };
-
+    console.log("obje", questionsObj);
     $.post("/score", questionsObj);
 
 

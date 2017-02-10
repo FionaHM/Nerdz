@@ -133,10 +133,10 @@ function router(app){
 		res.sendFile(path.join(__dirname + "/../public/login.html"));
 	})
 
-	// used to generate use charts based on test scores
-	app.get('/graph', function(req, res){
-		res.sendFile(path.join(__dirname + "/../public/graphs.html"));
-	})
+	// // used to generate use charts based on test scores
+	// app.get('/graph', function(req, res){
+	// 	res.sendFile(path.join(__dirname + "/../public/graphs.html"));
+	// })
 
 	// test file for password
 	app.get('/pwdtest', function(req, res){
@@ -349,11 +349,17 @@ function router(app){
    		aggregates(req, res, userid);
 	})
 
-	app.get('/aggregatescore/user/:id', function (req, res) {
+	app.get('/aggregatescore/user/', function (req, res) {
+		decodeToken(req, res, jwtsecret, 'login', "").then(function(decoded){
+			// get aggregate score for a user
+			var userid = decoded.id;  // passed in from client
+			console.log("userid", userid);
+	   		aggregates(req, res, userid);
+		}).catch(function(err){
+			//
+		});		
    		// decodeToken(req, res); //code for token validation 
-   		// get aggregate score for a user
-   		var userid = req.params.id;  // passed in from client
-   		aggregates(req, res, userid);
+
 	})
 
 	function aggregates(req, res, userid){
@@ -443,113 +449,96 @@ function router(app){
 
 	// get category for user id 
 	app.get('/category/:id', function (req, res) {
-		var userid = req.params.id;  // passed in from client
+		decodeToken(req, res, jwtsecret, 'login').then(function(decoded){
+			// get aggregate score for a user
+			var userid = decoded.id;  // passed in from client
+			var queryString = "select sum(score) as total, a.category from rawscores as a  where a.user_id = " + userid + " group by a.category order by total desc limit 1"
+	   		// select b.username, sum(a.score), a.category from rawscores as a, users as b where b.id = a.user_id and a.user_id = 1 group by a.category
+			db.sequelize.query(queryString, { type: db.sequelize.QueryTypes.SELECT})
+	  		.then(function(results) {
+	  			res.json(results);
+	  		})
+		}).catch(function(err){
+			//
+		});	
+
+		// var userid = req.params.id;  // passed in from client
 		// select a count of users by category and take the highest only (limit 1)
-   		var queryString = "select sum(score) as total, a.category from rawscores as a  where a.user_id = " + userid + " group by a.category order by total desc limit 1"
-   		// select b.username, sum(a.score), a.category from rawscores as a, users as b where b.id = a.user_id and a.user_id = 1 group by a.category
-		db.sequelize.query(queryString, { type: db.sequelize.QueryTypes.SELECT})
-  		.then(function(results) {
-  			res.json(results);
-  		})
+   		
 	})
 
 
 
 	// add scores
-	app.post('/score', function (req, res) {		
-	    // loops through and updates rawscores table
+	app.post('/score', function (req, res) {	
+		 console.log("are we in her");
+		decodeToken(req, res, jwtsecret, 'login', "").then(function(decoded){
+		// loops through and updates rawscores table
 	    // composite key : question_id, category, user_id
 	    // composite key should be unique
-		for (var i = 0; i < req.body.arr.length; i++){
-			// updates rawscores table
-			// db.Rawscore.create({
-			// 	score: req.body.arr[i].score,
-			//    	category: req.body.arr[i].category,
-			//    	user_id: req.body.arr[i].user_id,
-			//    	question_id: req.body.arr[i].question_id
-	  //   	}).then(function(){
-	  //   		res.json();
-	  //   	}).catch(function(err){
-			// 	console.log(err);
-			// })
-			// not fully tested - need scores
-			db.Rawscore.findOne({ where: { category: req.body.arr[i].category,
-			   	user_id: req.body.arr[i].user_id,
-			   	question_id: req.body.arr[i].question_id} })
-			  .then(function (score) {
-			    // Check if record exists in db
-			    console.log(score);
-			    if (score) {
+	    	console.log("are we in her", req.body.arr.length);
+			for (var i = 0; i < req.body.arr.length; i++){
 
-			 //    	db.User.update({password: password}, 
-				// {where : { email : email }}, 
-				// {fields: ['password']})
-			    	console.log("updating...");
-				      score.updateAttributes({
-				        score: req.body.arr[i].score
-				      })
-				      .success(function () {
-					      	res.status(200).send("Successfully Updated Scores");
-							return;
-				      })
-			    } 
-			    else {
-			    	console.log("creating...");
-			    	//  if it does not exist then
-			    	//  create scores
-			    	db.Rawscore.create({
-						score: req.body.arr[i].score,
-					   	category: req.body.arr[i].category,
-					   	user_id: req.body.arr[i].user_id,
-					   	question_id: req.body.arr[i].question_id
-					}).then(function(){
-			    		res.status(200).send("Successfully Created Scores.");
-						return;
-			    	}).catch(function(err){
-			    		res.status(400).send("Database Problem");
-						return;
-						// console.log(err);
-					})
+				// updates rawscores table
+				db.Rawscore.create({
+					score: req.body.arr[i].score,
+				   	category: req.body.arr[i].category,
+				   	user_id: decoded.id,
+				   	question_id: req.body.arr[i].question_id
+		    	}).catch(function(err){
+					console.log(err);
+				})
+			
+			}
+		}).then(function(){
+				console.log("arrgh");
+				res.sendFile(path.join(__dirname + "/../public/graphs.html"));
 
-			    }
-			  })
-		}
+			
+		}).catch(function(err){
+			//
+		});
+
+
+
 	})
 
 	// update the category and nerd_level in users table based on user_id
-	app.post('/category/nerd/:id', function (req, res) {
-		var userid = req.params.id;  // passed in from client
-		// select a count of users by category and take the highest only (limit 1)
-   		var queryString = "select sum(score) as total, a.category from rawscores as a  where a.user_id = " + userid + " group by a.category order by total desc limit 1"
-   		// the category, then the nerd level then update user table
-		db.sequelize.query(queryString, { type: db.sequelize.QueryTypes.SELECT})
-  		.then(function(results) {
-			var score = results[0].total;
-			var category = results[0].category;
-  			db.Nerdlevel.findAll({
-  				where: {min_score: {lte: score}},
-  				attributes: ['nerd_level'],
-  				order: 'max_score DESC',
-  				limit: 1
-  			}).then(function(data){
-			  	// finally update the nerd_level in the user table
-				db.User.update(
-					{nerd_level: data[0].nerd_level, 
-					overall_category: category }, 
-					{where : { id : userid }}, 
-					{fields: ['nerd_level', 'overall_category']}
-				).catch(function(err){
-					console.log(err);
-				});
-			}).catch(function(err){
-				// res.redirect("/");
-			})
-  		})
+	app.post('/category/nerd/', function (req, res) {
+		decodeToken(req, res, jwtsecret, 'login', "").then(function(decoded){
+			var userid = decoded.id;  // passed in from client
+			// select a count of users by category and take the highest only (limit 1)
+	   		var queryString = "select sum(score) as total, a.category from rawscores as a  where a.user_id = " + userid + " group by a.category order by total desc limit 1"
+	   		// the category, then the nerd level then update user table
+			db.sequelize.query(queryString, { type: db.sequelize.QueryTypes.SELECT})
+	  		.then(function(results) {
+				var score = results[0].total;
+				var category = results[0].category;
+	  			db.Nerdlevel.findAll({
+	  				where: {min_score: {lte: score}},
+	  				attributes: ['nerd_level'],
+	  				order: 'max_score DESC',
+	  				limit: 1
+	  			}).then(function(data){
+				  	// finally update the nerd_level in the user table
+					db.User.update(
+						{nerd_level: data[0].nerd_level, 
+						overall_category: category }, 
+						{where : { id : userid }}, 
+						{fields: ['nerd_level', 'overall_category']}
+					).catch(function(err){
+						console.log(err);
+					});
+				}).catch(function(err){
+					// res.redirect("/");
+				})
+	  		})
+		}).catch(function(err){
+			//
+		});	
+
+
 	})
-
-
-
-
 
 }	
 
