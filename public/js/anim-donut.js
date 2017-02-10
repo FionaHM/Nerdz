@@ -113,6 +113,7 @@ function getData() {
             "dataProvider": [],
             "valueField": "total_score",
             "titleField": "category",
+            "creditsPosition": "bottom-right",
             "startDuration": 0,
             "innerRadius": "60%",
             "radius": "30%",

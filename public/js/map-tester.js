@@ -2512,10 +2512,10 @@ function getData() {
             //map continents color
             // make areas barely visible
             map.areasSettings = {
-                unlistedAreasColor: "#15A892"
+                // unlistedAreasColor: "#15A892"
 
-                // unlistedAreasAlpha: 0.1,
-                // unlistedAreasOutlineAlpha: 0
+                unlistedAreasAlpha: 0.1,
+                unlistedAreasOutlineAlpha: 0
             };
 
             // data provider.We use continents map to show real world map in background.

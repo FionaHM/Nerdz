@@ -190,6 +190,7 @@ label:after {
 #radio-25-1 + label {
   left: -40vw;
   background: #4285F4;
+  color: black;
   animation-delay: 0s;
 }
 
@@ -438,7 +439,7 @@ label:after {
 #radio-23-3 + label:before,
 #radio-24-3 + label:before,
 #radio-25-3 + label:before {
-  /* background: #E91E63; */
+  /*  background: #E91E63;*/
   transform: scale(0);
   animation-name: unchecked-radio-3;
   animation-duration: .2s;
@@ -469,8 +470,7 @@ label:after {
 #radio-22-3:checked + label:before,
 #radio-23-3:checked + label:before,
 #radio-24-3:checked + label:before,
-#radio-25-3:checked + label:before,
-{
+#radio-25-3:checked + label:before {
   animation-name: checked-radio-3;
   animation-duration: .4s;
   animation-timing-function: ease-in-out;
@@ -658,6 +658,11 @@ label:after {
 #radio-25-5:checked + label:before {
   transform: scale(1);
   transition: all .4s;
+}
+
+#no1 {
+  color: black;
+  z-index: 3;
 }
 
 [type="radio"] {
