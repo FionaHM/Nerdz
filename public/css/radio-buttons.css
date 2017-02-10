@@ -172,7 +172,22 @@ label:after {
 #radio-7-1 + label,
 #radio-8-1 + label,
 #radio-9-1 + label,
-#radio-10-1 + label {
+#radio-10-1 + label,
+#radio-11-1 + label,
+#radio-12-1 + label,
+#radio-13-1 + label,
+#radio-14-1 + label,
+#radio-15-1 + label,
+#radio-16-1 + label,
+#radio-17-1 + label,
+#radio-18-1 + label,
+#radio-19-1 + label,
+#radio-20-1 + label,
+#radio-21-1 + label,
+#radio-22-1 + label,
+#radio-23-1 + label,
+#radio-24-1 + label,
+#radio-25-1 + label {
   left: -40vw;
   background: #4285F4;
   animation-delay: 0s;
@@ -187,7 +202,22 @@ label:after {
 #radio-7-1 + label:before,
 #radio-8-1 + label:before,
 #radio-9-1 + label:before,
-#radio-10-1 + label:before {
+#radio-10-1 + label:before,
+#radio-11-1 + label:before,
+#radio-12-1 + label:before,
+#radio-13-1 + label:before,
+#radio-14-1 + label:before,
+#radio-15-1 + label:before,
+#radio-16-1 + label:before,
+#radio-17-1 + label:before,
+#radio-18-1 + label:before,
+#radio-19-1 + label:before,
+#radio-20-1 + label:before,
+#radio-21-1 + label:before,
+#radio-22-1 + label:before,
+#radio-23-1 + label:before,
+#radio-24-1 + label:before,
+#radio-25-1 + label:before {
   transform: scale(0);
 }
 
@@ -200,7 +230,22 @@ label:after {
 #radio-7-1:checked + label:before,
 #radio-8-1:checked + label:before,
 #radio-9-1:checked + label:before,
-#radio-10-1:checked + label:before {
+#radio-10-1:checked + label:before,
+#radio-11-1:checked + label:before,
+#radio-12-1:checked + label:before,
+#radio-13-1:checked + label:before,
+#radio-14-1:checked + label:before,
+#radio-15-1:checked + label:before,
+#radio-16-1:checked + label:before,
+#radio-17-1:checked + label:before,
+#radio-18-1:checked + label:before,
+#radio-19-1:checked + label:before,
+#radio-20-1:checked + label:before,
+#radio-21-1:checked + label:before,
+#radio-22-1:checked + label:before,
+#radio-23-1:checked + label:before,
+#radio-24-1:checked + label:before,
+#radio-25-1:checked + label:before {
   transform: scale(1);
   transition: all .4s;
 }
@@ -217,7 +262,22 @@ label:after {
 #radio-7-2 + label,
 #radio-8-2 + label,
 #radio-9-2 + label,
-#radio-10-2 + label {
+#radio-10-2 + label,
+#radio-11-2 + label,
+#radio-12-2 + label,
+#radio-13-2 + label,
+#radio-14-2 + label,
+#radio-15-2 + label,
+#radio-16-2 + label,
+#radio-17-2 + label,
+#radio-18-2 + label,
+#radio-19-2 + label,
+#radio-20-2 + label,
+#radio-21-2 + label,
+#radio-22-2 + label,
+#radio-23-2 + label,
+#radio-24-2 + label,
+#radio-25-2 + label {
   left: -20vw;
   background: #EA4335;
   border-color: #EA4335!important;
@@ -233,7 +293,22 @@ label:after {
 #radio-7-2:checked + label,
 #radio-8-2:checked + label,
 #radio-9-2:checked + label,
-#radio-10-2:checked + label {
+#radio-10-2:checked + label,
+#radio-11-2:checked + label,
+#radio-12-2:checked + label,
+#radio-13-2:checked + label,
+#radio-14-2:checked + label,
+#radio-15-2:checked + label,
+#radio-16-2:checked + label,
+#radio-17-2:checked + label,
+#radio-18-2:checked + label,
+#radio-19-2:checked + label,
+#radio-20-2:checked + label,
+#radio-21-2:checked + label,
+#radio-22-2:checked + label,
+#radio-23-2:checked + label,
+#radio-24-2:checked + label,
+#radio-25-2:checked + label {
   background: white;
   border: 1vw solid;
   box-shadow: inset rgba(0, 0, 0, 0.117647) 0 0 .6vw 0, inset rgba(0, 0, 0, 0.239216) 0 .6vw .8vw 0;
@@ -249,7 +324,22 @@ label:after {
 #radio-7-2:checked + label:before,
 #radio-8-2:checked + label:before,
 #radio-9-2:checked + label:before,
-#radio-10-2:checked + label:before {
+#radio-10-2:checked + label:before,
+#radio-11-2:checked + label:before,
+#radio-12-2:checked + label:before,
+#radio-13-2:checked + label:before,
+#radio-14-2:checked + label:before,
+#radio-15-2:checked + label:before,
+#radio-16-2:checked + label:before,
+#radio-17-2:checked + label:before,
+#radio-18-2:checked + label:before,
+#radio-19-2:checked + label:before,
+#radio-20-2:checked + label:before,
+#radio-21-2:checked + label:before,
+#radio-22-2:checked + label:before,
+#radio-23-2:checked + label:before,
+#radio-24-2:checked + label:before,
+#radio-25-2:checked + label:before {
   width: 1vw;
   height: 1vw;
   background: #EA4335;
@@ -268,7 +358,22 @@ label:after {
 #radio-7-2:not(:checked) + label:before,
 #radio-8-2:not(:checked) + label:before,
 #radio-9-2:not(:checked) + label:before,
-#radio-10-2:not(:checked) + label:before {
+#radio-10-2:not(:checked) + label:before,
+#radio-11-2:not(:checked) + label:before,
+#radio-12-2:not(:checked) + label:before,
+#radio-13-2:not(:checked) + label:before,
+#radio-14-2:not(:checked) + label:before,
+#radio-15-2:not(:checked) + label:before,
+#radio-16-2:not(:checked) + label:before,
+#radio-17-2:not(:checked) + label:before,
+#radio-18-2:not(:checked) + label:before,
+#radio-19-2:not(:checked) + label:before,
+#radio-20-2:not(:checked) + label:before,
+#radio-21-2:not(:checked) + label:before,
+#radio-22-2:not(:checked) + label:before,
+#radio-23-2:not(:checked) + label:before,
+#radio-24-2:not(:checked) + label:before,
+#radio-25-2:not(:checked) + label:before {
   width: 3vw;
   height: 3vw;
   background: #EA4335;
@@ -287,7 +392,22 @@ label:after {
 #radio-7-3 + label,
 #radio-8-3 + label,
 #radio-9-3 + label,
-#radio-10-3 + label {
+#radio-10-3 + label,
+#radio-11-3 + label,
+#radio-12-3 + label,
+#radio-13-3 + label,
+#radio-14-3 + label,
+#radio-15-3 + label,
+#radio-16-3 + label,
+#radio-17-3 + label,
+#radio-18-3 + label,
+#radio-19-3 + label,
+#radio-20-3 + label,
+#radio-21-3 + label,
+#radio-22-3 + label,
+#radio-23-3 + label,
+#radio-24-3 + label,
+#radio-25-3 + label {
   left: 0vw;
   background: #FBBC05;
   animation-delay: .4s;
@@ -302,7 +422,22 @@ label:after {
 #radio-7-3 + label:before,
 #radio-8-3 + label:before,
 #radio-9-3 + label:before,
-#radio-10-3 + label:before {
+#radio-10-3 + label:before,
+#radio-11-3 + label:before,
+#radio-12-3 + label:before,
+#radio-13-3 + label:before,
+#radio-14-3 + label:before,
+#radio-15-3 + label:before,
+#radio-16-3 + label:before,
+#radio-17-3 + label:before,
+#radio-18-3 + label:before,
+#radio-19-3 + label:before,
+#radio-20-3 + label:before,
+#radio-21-3 + label:before,
+#radio-22-3 + label:before,
+#radio-23-3 + label:before,
+#radio-24-3 + label:before,
+#radio-25-3 + label:before {
   /* background: #E91E63; */
   transform: scale(0);
   animation-name: unchecked-radio-3;
@@ -319,7 +454,23 @@ label:after {
 #radio-7-3:checked + label:before,
 #radio-8-3:checked + label:before,
 #radio-9-3:checked + label:before,
-#radio-10-3:checked + label:before {
+#radio-10-3:checked + label:before,
+#radio-11-3:checked + label:before,
+#radio-12-3:checked + label:before,
+#radio-13-3:checked + label:before,
+#radio-14-3:checked + label:before,
+#radio-15-3:checked + label:before,
+#radio-16-3:checked + label:before,
+#radio-17-3:checked + label:before,
+#radio-18-3:checked + label:before,
+#radio-19-3:checked + label:before,
+#radio-20-3:checked + label:before,
+#radio-21-3:checked + label:before,
+#radio-22-3:checked + label:before,
+#radio-23-3:checked + label:before,
+#radio-24-3:checked + label:before,
+#radio-25-3:checked + label:before,
+{
   animation-name: checked-radio-3;
   animation-duration: .4s;
   animation-timing-function: ease-in-out;
@@ -338,7 +489,22 @@ label:after {
 #radio-7-4 + label,
 #radio-8-4 + label,
 #radio-9-4 + label,
-#radio-10-4 + label {
+#radio-10-4 + label,
+#radio-11-4 + label,
+#radio-12-4 + label,
+#radio-13-4 + label,
+#radio-14-4 + label,
+#radio-15-4 + label,
+#radio-16-4 + label,
+#radio-17-4 + label,
+#radio-18-4 + label,
+#radio-19-4 + label,
+#radio-20-4 + label,
+#radio-21-4 + label,
+#radio-22-4 + label,
+#radio-23-4 + label,
+#radio-24-4 + label,
+#radio-25-4 + label {
   left: 20vw;
   background: #34A853;
   animation-delay: .6s;
@@ -353,7 +519,22 @@ label:after {
 #radio-7-4 + label:before,
 #radio-8-4 + label:before,
 #radio-9-4 + label:before,
-#radio-10-4 + label:before {
+#radio-10-4 + label:before,
+#radio-11-4 + label:before,
+#radio-12-4 + label:before,
+#radio-13-4 + label:before,
+#radio-14-4 + label:before,
+#radio-15-4 + label:before,
+#radio-16-4 + label:before,
+#radio-17-4 + label:before,
+#radio-18-4 + label:before,
+#radio-19-4 + label:before,
+#radio-20-4 + label:before,
+#radio-21-4 + label:before,
+#radio-22-4 + label:before,
+#radio-23-4 + label:before,
+#radio-24-4 + label:before,
+#radio-25-4 + label:before {
   /* background: #8BC34A; */
   animation: unchecked-radio-4 .5s both;
 }
@@ -367,7 +548,22 @@ label:after {
 #radio-7-4:checked + label:before,
 #radio-8-4:checked + label:before,
 #radio-9-4:checked + label:before,
-#radio-10-4:checked + label:before {
+#radio-10-4:checked + label:before,
+#radio-11-4:checked + label:before,
+#radio-12-4:checked + label:before,
+#radio-13-4:checked + label:before,
+#radio-14-4:checked + label:before,
+#radio-15-4:checked + label:before,
+#radio-16-4:checked + label:before,
+#radio-17-4:checked + label:before,
+#radio-18-4:checked + label:before,
+#radio-19-4:checked + label:before,
+#radio-20-4:checked + label:before,
+#radio-21-4:checked + label:before,
+#radio-22-4:checked + label:before,
+#radio-23-4:checked + label:before,
+#radio-24-4:checked + label:before,
+#radio-25-4:checked + label:before {
   animation-name: checked-radio-4;
   animation-duration: .6s;
   animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
@@ -386,7 +582,22 @@ label:after {
 #radio-7-5 + label,
 #radio-8-5 + label,
 #radio-9-5 + label,
-#radio-10-5 + label {
+#radio-10-5 + label,
+#radio-11-5 + label,
+#radio-12-5 + label,
+#radio-13-5 + label,
+#radio-14-5 + label,
+#radio-15-5 + label,
+#radio-16-5 + label,
+#radio-17-5 + label,
+#radio-18-5 + label,
+#radio-19-5 + label,
+#radio-20-5 + label,
+#radio-21-5 + label,
+#radio-22-5 + label,
+#radio-23-5 + label,
+#radio-24-5 + label,
+#radio-25-5 + label {
   left: 40vw;
   background: purple;
   animation-delay: 0s;
@@ -401,7 +612,22 @@ label:after {
 #radio-7-5 + label:before,
 #radio-8-5 + label:before,
 #radio-9-5 + label:before,
-#radio-10-5 + label:before {
+#radio-10-5 + label:before,
+#radio-11-5 + label:before,
+#radio-12-5 + label:before,
+#radio-13-5 + label:before,
+#radio-14-5 + label:before,
+#radio-15-5 + label:before,
+#radio-16-5 + label:before,
+#radio-17-5 + label:before,
+#radio-18-5 + label:before,
+#radio-19-5 + label:before,
+#radio-20-5 + label:before,
+#radio-21-5 + label:before,
+#radio-22-5 + label:before,
+#radio-23-5 + label:before,
+#radio-24-5 + label:before,
+#radio-25-5 + label:before {
   transform: scale(0);
 }
 
@@ -414,7 +640,22 @@ label:after {
 #radio-7-5:checked + label:before,
 #radio-8-5:checked + label:before,
 #radio-9-5:checked + label:before,
-#radio-10-5:checked + label:before {
+#radio-10-5:checked + label:before,
+#radio-11-5:checked + label:before,
+#radio-12-5:checked + label:before,
+#radio-13-5:checked + label:before,
+#radio-14-5:checked + label:before,
+#radio-15-5:checked + label:before,
+#radio-16-5:checked + label:before,
+#radio-17-5:checked + label:before,
+#radio-18-5:checked + label:before,
+#radio-19-5:checked + label:before,
+#radio-20-5:checked + label:before,
+#radio-21-5:checked + label:before,
+#radio-22-5:checked + label:before,
+#radio-23-5:checked + label:before,
+#radio-24-5:checked + label:before,
+#radio-25-5:checked + label:before {
   transform: scale(1);
   transition: all .4s;
 }
