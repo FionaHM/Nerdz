@@ -41,6 +41,10 @@ module.exports = function(sequelize, DataTypes){
 		nerd_level: {
 			type: DataTypes.STRING,
 			allowNull: true
+		},
+		dummy_data: {
+			type: DataTypes.BOOLEAN,
+			allowNull: true
 		}
 	},{  // use snake case instead of camel case so foreign keys of format modelname_pkid e.g. burger_id or customer_id
     	underscored: true,

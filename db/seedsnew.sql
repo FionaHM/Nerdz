@@ -52,6 +52,9 @@ insert into Rawscores (user_id, score, category, question_id, created_at, update
 (2,5, "CAT C",4, now() , now() ),
 (2, 3, "CAT C",5,now() , now() );
 
+insert into Rawscores (user_id, score, category, question_id, created_at, updated_at) values
+(1,4,"CAT A", 8, now(), now());
+
 -- 
 -- insert into Aggregatescores (user_id, score, category, created_at, updated_at) values 
 -- (1,10, "CAT A", now() , now() ),
