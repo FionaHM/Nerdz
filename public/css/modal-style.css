@@ -16,6 +16,29 @@
 .form-control {
   background: #66615b;
   border: none;
+  color: #eee;
+}
+
+a:link {
+  text-decoration: none;
+  background: transparent;
+  padding: 20px;
+  color: #ddd;
+}
+
+a:visited {
+  text-decoration: none;
+  color: #ddd;
+}
+
+a:hover {
+  text-decoration: none;
+  color: ##456b4c;
+}
+
+a:active {
+  text-decoration: none;
+  color: #456b4c;
 }
 
 div#OR {
