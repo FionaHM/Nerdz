@@ -43,8 +43,8 @@
             <div class="col-md-12">
               <!-- Nav tabs -->
               <ul class="nav nav-pills nav-pills-success inverted nav-justified">
-                <li class="active"><a href="#Login" data-toggle="tab">Login</a></li>
-                <li><a href="#Registration" data-toggle="tab">Registration</a></li>
+                <a class="active" href="#Login" data-toggle="tab">Login</a>
+                <a href="#Registration" data-toggle="tab">Registration</a>
               </ul>
               <!-- Tab panes -->
               <div class="tab-content">
@@ -147,11 +147,11 @@
         </div>
         <div class="modal-body">
           <p>Type your email account</p>
-          <input type="email" name="recovery-email" id="recovery-email" class="form-control" autocomplete="off">
+          <input type="email" name="recoveryemail" id="recoveryemail" class="form-control" autocomplete="off">
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-custom">Recovery</button>
+          <button id="resetpassword" type="button" class="btn btn-custom">Recovery</button>
         </div>
       </div>
       <!-- /.modal-content -->
@@ -188,7 +188,7 @@
           createCookie("auth_token", data, 0);
           createCookie("user_email", $("#existing-user-email").val(), 0);
           // move to next page - this will error if user doesnt have perms
-           console.log("am i here");
+          console.log("am i here");
           window.location.replace("../questionpage");
 
         }
@@ -313,6 +313,7 @@
   MYLIBRARY.helloWorld();
   </script> -->
   <script src="./js/modal.js" type="text/javascript"></script>
+  <script src="./js/password.js" type="text/javascript"></script>
   <!--   <script src="./js/API.js"></script> -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAddiqSupF7BhNzmafgwWImSllcV_zGv7c&libraries=places&callback=initMap" async defer></script>
   <script src="./js/map-tester.js" type="text/javascript"></script>
