@@ -69,6 +69,8 @@ select * from Categories;
 select * from Questions;
 
 
+delete from Rawscores where user_id= 529
+
 delete from Users where email = 'fiona.hegarty@icloud,com'
 
 

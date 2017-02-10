@@ -188,6 +188,7 @@
           createCookie("auth_token", data, 0);
           createCookie("user_email", $("#existing-user-email").val(), 0);
           // move to next page - this will error if user doesnt have perms
+           console.log("am i here");
           window.location.replace("../questionpage");
 
         }
@@ -217,6 +218,7 @@
           createCookie("auth_token", data, 0);
           createCookie("user_email", $("#new-user-email").val(), 0);
           // move to next page - this will error if user doesnt have perms
+          console.log("am i here");
           window.location.replace("../questionpage");
 
         }
