@@ -63,6 +63,7 @@ function router(app){
 			// checks the request header for the token
 			console.log("auth", auth);
 			if (auth == "login"){
+				console.log(req.headers.authorization);
 				if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
 		        	token = req.headers.authorization.split(' ')[1];
 		    	} else {
@@ -111,7 +112,7 @@ function router(app){
 			// this token is stored as a cookie on client and sent in AJAX Header
 	 	 	// token expires in 30 mins 
 			var myToken = jwt.sign( { id: data.id, email: data.email, username: data.username}, secret, { expiresIn: 60 * 30 });
-			console.log(token);
+			// console.log(token);
 			res.json(myToken);	
 			return;
 
@@ -154,6 +155,12 @@ function router(app){
 	app.get('/geekornerd', function(req, res){
 		res.sendFile(path.join(__dirname + "/../public/geeksornerds.html"));
 	})
+
+	app.get('/flashcards', function(req, res){
+		// get flashcard data from database and retrun
+
+	})
+	
 	
 
 
@@ -224,7 +231,9 @@ function router(app){
 			// tell user to update password
 			var password = passwordHash.generate(tmppwd);
 			changePassword(email,password);
-		});		
+		}).catch(function(err){
+			// console.log(err)
+		})
 	})
 
 	// create a new user
@@ -252,7 +261,7 @@ function router(app){
 	    	// }
 
 		}).catch(function(err){
-			// console.log(err);
+			console.log(err);
 			message = err.errors[0].message;
 			return res.status(401).send(message);
 			// res.json(err.errors[0].message);
@@ -315,33 +324,22 @@ function router(app){
 	
 	// gets all questions from the database - with multiple categories per questiob
 	app.get('/questionpage', function (req, res) {
-		console.log("in questionpage");
-		res.sendFile(path.join(__dirname + "/../public/questions.html"), function(err) {
-        	console.log(__dirname + "/../public/questions.html");
-    	});
-	})
+		// decodeToken(req, res, jwtsecret, "login").then(function(decoded){
+			// Query the database
+			res.sendFile(path.join(__dirname + "/../public/questions.html"), function(err) {
+	        	// console.log(__dirname + "/../public/questions.html");
+	    	});
+		// }).catch(function(err){
+		// 	console.log(err);
+		// })
 
-	// app.get('/questionnewpage', function (req, res) {
-	// 	res.sendFile(path.join(__dirname + "/../public/questionsnew.html"), function(err) {
- //        	console.log(__dirname + "/../public/questionnew.html");
- //    	});
-	// })
-	// gets all questions from the database  - with one category per question
-	// app.get('/question', function (req, res) {
-	// 	// getToken(req, res);
-	// 	// Query the database
-	// 	db.Question.findAll({}).then(function(data){
-	// 		res.json(data)
-	// 	}).catch(function(err){
-	// 		res.redirect("/");
-	// 	})
-	// })
+
+	})
 
 	// gets all questions from the database - with multiple categories per questiob
 	app.get('/question', function (req, res) {
-		console.log("in question");
-		decodeToken(req, res, jwtsecret, "login", "").then(function(decoded){
-			console.log(decoded);
+		decodeToken(req, res, jwtsecret, "login").then(function(decoded){
+			// console.log(decoded);
 			// Query the database
 			db.Question.findAll({
 				include: [db.Category]
@@ -352,7 +350,9 @@ function router(app){
 				res.redirect("/");
 			})
 		}).catch(function(err){
-			console.log(err);
+			// redirect to login if unauth?
+			// console.log("redirect somewhere?")
+			// res.redirect('/');
 		})
 		
 	})
@@ -365,10 +365,11 @@ function router(app){
 	})
 
 	app.get('/aggregatescore/user/', function (req, res) {
-		decodeToken(req, res, jwtsecret, 'login', "").then(function(decoded){
+		decodeToken(req, res, jwtsecret, "login", "").then(function(decoded){
 			// get aggregate score for a user
+			 console.log(decoded);
 			var userid = decoded.id;  // passed in from client
-			console.log("userid", userid);
+			// console.log("userid", userid);
 	   		aggregates(req, res, userid);
 		}).catch(function(err){
 			//
@@ -412,7 +413,7 @@ function router(app){
   					  category: results[i].category})
 						resultsObj = { [j] : resultsArr };
 						// resultsObj[j] = resultsArr;
-						console.log(resultsObj);
+						// console.log(resultsObj);
   					} else {
   						
   						outputArr.push(resultsObj);
@@ -426,7 +427,7 @@ function router(app){
   						resultsArr.push(resultsObj);
   						// add score data
   						resultsArr.push({total_score: results[i].total_score,
-  					  category: results[i].category})
+  					    category: results[i].category})
   						resultsObj = { [j] : resultsArr };
   						// resultsObj[j] = resultsArr;
 
@@ -477,9 +478,6 @@ function router(app){
 			//
 		});	
 
-		// var userid = req.params.id;  // passed in from client
-		// select a count of users by category and take the highest only (limit 1)
-   		
 	})
 
 
@@ -492,43 +490,17 @@ function router(app){
 	    // composite key : question_id, category, user_id
 	    // composite key should be unique
 	    for (var i = 0; i < req.body.arr.length; i++){
-	   //  	  	scoreObj = {category : req.body.arr[i].category;
-				// user_id : decoded.id;
-			 // 	question_id: req.body.arr[i].question_id;
-			 // 	score : req.body.arr[i].score}
-			// updates rawscores table
-			db.Rawscore.findAll({
-				where : { category : req.body.arr[i].category,
-				user_id : decoded.id,
-			 	question_id: req.body.arr[i].question_id }
-			}).then(function(rawscore, i){
-				console.log("rawscore", req.body.arr[i].score);
-/// not sure why this bit not workind!
-				if (rawscore[0] !== ""){
-					console.log("updATE");
-					db.Rawscore.update(
-						{score : req.body.arr[i].score}, 
-						{where : { category : req.body.arr[i].category,
+	    	// inserts if not there but updates if data there already
+	    	db.Rawscore.upsert({category : req.body.arr[i].category,
 						user_id : decoded.id,
-					 	question_id: req.body.arr[i].question_id
-					 	 }}, 
-						{fields: ['score']}
-					).catch(function(err){
-						console.log(err);
-					});
-
-				} else {
-					db.Rawscore.create({
-						score: score,
-					   	category: category,
-					   	// user_id: decoded.id,
-					   	user_id: user_id,
-					   	question_id: question_id
-			    	}).catch(function(err){
-						// console.log(err);
-					})
-				}
-			});		
+					 	question_id: req.body.arr[i].question_id, 
+					 	score : req.body.arr[i].score 
+			}).then(function(test){
+				// console.log(test);
+	        }).catch(function(err){
+	        	// console.log(err);
+	        })
+	   
 		}
 		res.end();
 		}).catch(function(err){
