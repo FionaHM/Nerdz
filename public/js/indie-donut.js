@@ -30,12 +30,12 @@ function getIndieData() {
 
         var chart1 = AmCharts.makeChart("indie-chartdiv", {
             "type": "pie",
-            "theme": "dark",
+            "theme": "none",
             "dataProvider": indieData,
             "valueField": "total_score",
             "titleField": "category",
             "labelRadius": 5,
-
+            "color": "fff",
             "radius": "30%",
             "innerRadius": "60%",
             "marginTop": 30,
