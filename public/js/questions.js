@@ -22,7 +22,7 @@ $.get("/question", function(data) {
             console.log(data[i].Categories[j].category_name);
             category += data[i].Categories[j].category_name + "/";
         }
-        console.log(category);
+        // console.log(category);
         var id = i + 1;
         //adds the little circle carousel-indicators to the bottom of the carousel
         var li = '<li id="li-' + i + '"data-target="#myCarousel" data-slide-to="' + i + '"></li>';
@@ -52,7 +52,16 @@ $.get("/question", function(data) {
         $('#caption-' + data[i].id).append(radios);
 
     }
-});
+}).done(function(msg) {
+        console.log(msg)
+}).fail(function(xhr, status, error) {
+        // captures error so now we can handle
+        console.log(xhr.responseText, xhr.statusText);
+        // redirect to login
+        window.location.replace("../");
+        // alert('Error, please try again');
+})
+
 // submit the answers
 $('#sendscores').on("click", function(event) {
     event.preventDefault();
@@ -65,7 +74,8 @@ $('#sendscores').on("click", function(event) {
         var catArr = $('#' + id).attr("data-category").split("/");
         // console.log(catArr);
         for (var j = 0; j < catArr.length - 1; j++) {
-            var score = (5 / ( catArr.length - 1)); // 5 is DUMMY DATA
+            console.log(catArr.length);
+            var score = (44 / ( catArr.length - 1)); // 5 is DUMMY DATA
             var questionObj = {
                 "score": score,
                 "question_id": $('#' + id).attr("data-question"),

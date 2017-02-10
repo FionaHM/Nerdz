@@ -75,45 +75,45 @@
     </div>
   </div>
   <script src="js/questions.js" type="text/javascript"></script>
-  <script src="js/logout.js" type="text/javascript"></script>
+<!--   <script src="js/token.js" type="text/javascript"></script>
+ -->  <script src="js/logout.js" type="text/javascript"></script>
 </body>
 <script>
-// $("#logout").on("click", function() {
-//   // logout
-//   console.log("testsett");
-//   delete_cookie("auth_token", null);
-//   console.log("token", getCookie("auth_token"));
-//   if (getCookie("auth_token") ===  ""){
-//       $("#logout").hide();
-//       var message = "Successfully logged out - please close your browser."
-//       console.log(message);
-//       // go back to the base login page
-//        window.location.replace("/");
+    // $.ajaxSetup({
+    //     beforeSend: function(xhr) {
+    //       xhr.setRequestHeader("Accept", "application/vvv.website+json;version=1");
+    //       xhr.setRequestHeader("Authorization", "Bearer " + getCookie('auth_token'));
+    //     }
+    // });
 
-//   }
+    // function getCookie(c_name) {
+    //     if (document.cookie.length > 0) {
+    //         c_start = document.cookie.indexOf(c_name + "=");
+    //         if (c_start != -1) {
+    //                 c_start = c_start + c_name.length + 1;
+    //                 c_end = document.cookie.indexOf(";", c_start);
+    //                     if (c_end == -1) {
+    //                     c_end = document.cookie.length;
+    //                 }
+    //             return unescape(document.cookie.substring(c_start, c_end));
+    //         }
+    //     }
+    //     return "";
+    // }
 
-// });
+    // // copied from stackoverflow.com
+    // var createCookie = function(name, value, days) {
+    //     var expires;
+    //     if (days) {
+    //       var date = new Date();
+    //       date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    //       expires = "; expires=" + date.toGMTString();
+    //     } else {
+    //       expires = "";
+    //     }
+    //     document.cookie = name + "=" + value + expires + "; path=/";
+    // }
 
-// function delete_cookie(name, value) {
-//   // document.cookie = name + "=" + value + expires + "; path=/";
-//     document.cookie = name + "=" + value + ";expires=Thu, 01 Jan 1970 00:00:01 GMT;";
-// };
-
-// // copied from stackoverflow.com
-//   function getCookie(c_name) {
-//     if (document.cookie.length > 0) {
-//       c_start = document.cookie.indexOf(c_name + "=");
-//       if (c_start != -1) {
-//         c_start = c_start + c_name.length + 1;
-//         c_end = document.cookie.indexOf(";", c_start);
-//         if (c_end == -1) {
-//           c_end = document.cookie.length;
-//         }
-//         return unescape(document.cookie.substring(c_start, c_end));
-//       }
-//     }
-//     return "";
-//   }
 </script>
 
 </html>

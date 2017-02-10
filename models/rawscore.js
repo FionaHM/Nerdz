@@ -7,7 +7,7 @@ module.exports = function(sequelize, DataTypes){
 			allowNull: false
 		},
 		score : {
-			type: DataTypes.DECIMAL,
+			type: DataTypes.DECIMAL(4, 2) ,
 			allowNull: false
 		},
 		// creating a composite index out of 3 fields - the combination 
