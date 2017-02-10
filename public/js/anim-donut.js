@@ -109,7 +109,7 @@ function getData() {
 
         var chart = AmCharts.makeChart("chartdiv", {
             "type": "pie",
-            "theme": "light",
+            "theme": "none",
             "dataProvider": [],
             "valueField": "total_score",
             "titleField": "category",
