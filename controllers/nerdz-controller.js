@@ -11,6 +11,7 @@ var jwtsecret = process.env.JWT_SECRET || "putthisinaseparatefile";
 // secret for login auth token
 var pwdsecret = process.env.PWD_SECRET || "icantbelieveyouforgotyourpassword";
 
+
 function router(app){
 	// this is cookie setting data - for client side cookies
 	// httpOnly makes cookie data a bit more secure against from other scripts
@@ -572,6 +573,7 @@ function router(app){
 	})
 
 }	
+
 
 
 
