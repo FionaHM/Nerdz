@@ -150,6 +150,10 @@ function router(app){
 	app.get('/graph', function(req, res){
 		res.sendFile(path.join(__dirname + "/../public/graphs.html"));
 	})
+
+	app.get('/geekornerd', function(req, res){
+		res.sendFile(path.join(__dirname + "/../public/geeksornerds.html"));
+	})
 	
 
 
