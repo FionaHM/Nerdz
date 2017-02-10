@@ -24,8 +24,8 @@ function getIndieData() {
 
     $.ajaxSetup({
         beforeSend: function(xhr) {
-          xhr.setRequestHeader("Accept", "application/vvv.website+json;version=1");
-          xhr.setRequestHeader("Authorization", "Bearer " + getCookie('auth_token'));
+            xhr.setRequestHeader("Accept", "application/vvv.website+json;version=1");
+            xhr.setRequestHeader("Authorization", "Bearer " + getCookie('auth_token'));
         }
     });
 
@@ -33,11 +33,11 @@ function getIndieData() {
         if (document.cookie.length > 0) {
             c_start = document.cookie.indexOf(c_name + "=");
             if (c_start != -1) {
-                    c_start = c_start + c_name.length + 1;
-                    c_end = document.cookie.indexOf(";", c_start);
-                        if (c_end == -1) {
-                        c_end = document.cookie.length;
-                    }
+                c_start = c_start + c_name.length + 1;
+                c_end = document.cookie.indexOf(";", c_start);
+                if (c_end == -1) {
+                    c_end = document.cookie.length;
+                }
                 return unescape(document.cookie.substring(c_start, c_end));
             }
         }
@@ -58,10 +58,13 @@ function getIndieData() {
             "valueField": "total_score",
             "titleField": "category",
             "labelRadius": 5,
+            "creditsPosition": "bottom-right",
+            "labelTickColor": "#fff",
             "color": "fff",
             "radius": "30%",
             "innerRadius": "60%",
             "marginTop": 30,
+            "color": "#fff",
             "percentFormatter": {
                 precision: 0,
                 decimalSeparator: '.',
@@ -94,7 +97,7 @@ function getIndieData() {
         // redirect to login
         // window.location.replace("../");
         // alert('Error, please try again');
-})
+    })
 
 }
 

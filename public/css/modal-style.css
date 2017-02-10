@@ -23,11 +23,15 @@ p {
   color: #eee;
 }
 
+*:focus {
+  outline: none !important
+}
+
+;
 a:link {
   text-decoration: none;
   background: transparent;
   padding: 20px;
-  color: "#ddd";
 }
 
 a:visited {
@@ -43,6 +47,14 @@ a:hover {
 a:active {
   text-decoration: none;
   color: #456b4c;
+}
+
+a.forget,
+a.forget:hover,
+a.forget:active,
+a.forget:visited {
+  border: none;
+  text-decoration: none;
 }
 
 div#OR {
@@ -74,4 +86,11 @@ div#OR {
 
 .forget:hover {
   text-decoration: none;
+}
+
+#forget-modal-content {
+  background-image: url("../img/map-shot.png");
+  background-repeat: none;
+  background-size: cover;
+  height: 500px;
 }

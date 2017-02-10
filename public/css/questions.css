@@ -7,6 +7,9 @@
     color: #e7e7e7;
     font-size: 1em;
     background: #000;
+    background-image: url("../img/map-shot.png");
+    background-repeat: no-repeat;
+    background-size: cover;
   }
   /* CUSTOMIZE THE CAROUSEL
 -------------------------------------------------- */
@@ -15,10 +18,9 @@
   .carousel {
     height: 500px;
     margin-bottom: 60px;
-    /*background-image: url("../img/background.gif");*/
-    background: black;
+    background-image: url("../img/map-shot.png");
+    background-repeat: no-repeat;
     background-size: cover;
-    background-repeat: none;
   }
   
   #logout {

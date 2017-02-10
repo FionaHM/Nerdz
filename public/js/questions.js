@@ -5,6 +5,13 @@
 // send auth-token in header
 // getCookie('auth_token');
 // console.log(getCookie('auth_token'));
+
+//Interval controls speed of carousel. Wrap: false stops it from cycling back to first question
+$('#myCarousel').carousel({
+    interval: 8000,
+    wrap: false
+});
+
 $.ajaxSetup({
     beforeSend: function(xhr) {
         xhr.setRequestHeader("Accept", "application/vvv.website+json;version=1");
@@ -14,6 +21,7 @@ $.ajaxSetup({
 
 // get the questions
 $.get("/question", function(data) {
+
     // loop through the results and paint the dom
     for (var i = 0; i < data.length; i++) {
         var category = '';
@@ -37,7 +45,7 @@ $.get("/question", function(data) {
         // var radios = '<br><label class="radio-inline"><input type="radio" value="1" name="optradio-' + data[i].id + '">1</label><label class="radio-inline"><input type="radio" value="2" name="optradio-' + data[i].id + '">2</label><label class="radio-inline"><input checked type="radio" value="3" name="optradio-' + data[i].id + '">3</label><label class="radio-inline"><input type="radio" value="4" name="optradio-' + data[i].id + '">4</label><label class="radio-inline"><input type="radio" value="5" name="optradio-' + data[i].id + '">5</label>';
 
 
-        var radios = '<br><br><br><input checked type="radio" class="radio" id="radio-' + data[i].id + '-1" value="1" name="optradio-' + data[i].id + '" /><label for="radio-' + data[i].id + '-1" class="animated jello"></label><input type="radio" class="radio" id="radio-' + data[i].id + '-2" value="2" name="optradio-' + data[i].id + '" /><label for="radio-' + data[i].id + '-2" class="animated jello"></label><input type="radio" class="radio" id="radio-' + data[i].id + '-3" value="3" name="optradio-' + data[i].id + '" /><label check for="radio-' + data[i].id + '-3" class="animated jello"></label><input type="radio" class="radio" id="radio-' + data[i].id + '-4" value="4" name="optradio-' + data[i].id + '" /><label for="radio-' + data[i].id + '-4" class="animated jello"></label><input type="radio" class="radio" id="radio-' + data[i].id + '-5" value="5" name="optradio-' + data[i].id + '" /><label for="radio-' + data[i].id + '-5" class="animated jello"></label>';
+        var radios = '<br><br><br><input checked type="radio" class="radio" id="radio-' + data[i].id + '-1" value="1" name="optradio-' + data[i].id + '" /><label for="radio-' + data[i].id + '-1" class="animated bounce"><h2 id="no1"></h2></label><input type="radio" class="radio" id="radio-' + data[i].id + '-2" value="2" name="optradio-' + data[i].id + '" /><label for="radio-' + data[i].id + '-2" class="animated bounce"></label><input type="radio" class="radio" id="radio-' + data[i].id + '-3" value="3" name="optradio-' + data[i].id + '" /><label check for="radio-' + data[i].id + '-3" class="animated bounce"></label><input type="radio" class="radio" id="radio-' + data[i].id + '-4" value="4" name="optradio-' + data[i].id + '" /><label for="radio-' + data[i].id + '-4" class="animated bounce"></label><input type="radio" class="radio" id="radio-' + data[i].id + '-5" value="5" name="optradio-' + data[i].id + '" /><label for="radio-' + data[i].id + '-5" class="animated bounce"></label>';
 
 
         $('#add-questions').append(carouselDiv);
@@ -53,13 +61,13 @@ $.get("/question", function(data) {
 
     }
 }).done(function(msg) {
-        console.log(msg)
+    console.log(msg)
 }).fail(function(xhr, status, error) {
-        // captures error so now we can handle
-        console.log(xhr.responseText, xhr.statusText);
-        // redirect to login
-        window.location.replace("../");
-        // alert('Error, please try again');
+    // captures error so now we can handle
+    console.log(xhr.responseText, xhr.statusText);
+    // redirect to login
+    window.location.replace("../");
+    // alert('Error, please try again');
 })
 
 // submit the answers
@@ -75,7 +83,7 @@ $('#sendscores').on("click", function(event) {
         // console.log(catArr);
         for (var j = 0; j < catArr.length - 1; j++) {
             console.log(catArr.length);
-            var score = (44 / ( catArr.length - 1)); // 5 is DUMMY DATA
+            var score = (44 / (catArr.length - 1)); // 5 is DUMMY DATA
             var questionObj = {
                 "score": score,
                 "question_id": $('#' + id).attr("data-question"),
@@ -88,7 +96,7 @@ $('#sendscores').on("click", function(event) {
     //
     var questionsObj = { arr: questionsArr };
     //
-    $.post("/score", questionsObj, function(){
+    $.post("/score", questionsObj, function() {
 
         window.location.replace("../graph");
 
@@ -96,6 +104,7 @@ $('#sendscores').on("click", function(event) {
 
 
 })
+
 
 // copied from stackoverflow.com
 function getCookie(c_name) {

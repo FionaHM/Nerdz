@@ -1,7 +1,11 @@
-// setTimeout(function() {
+$('#loginbtn').on('click', function() {
 
-$('#myModal').modal('show');
-// }, 1000 * 10);
+    $('#myModal').modal('show');
+
+});
+
+
+
 
 function showPassword() {
 
@@ -20,25 +24,3 @@ function showPassword() {
     }
 
 }
-
-
-
-// .modal-backdrop classes
-
-// $(".modal-transparent").on('show.bs.modal', function() {
-//     setTimeout(function() {
-//         $(".modal-backdrop").addClass("modal-backdrop-transparent");
-//     }, 0);
-// });
-// $(".modal-transparent").on('hidden.bs.modal', function() {
-//     $(".modal-backdrop").addClass("modal-backdrop-transparent");
-// });
-
-// $(".modal-fullscreen").on('show.bs.modal', function() {
-//     setTimeout(function() {
-//         $(".modal-backdrop").addClass("modal-backdrop-fullscreen");
-//     }, 0);
-// });
-// $(".modal-fullscreen").on('hidden.bs.modal', function() {
-//     $(".modal-backdrop").addClass("modal-backdrop-fullscreen");
-// });
