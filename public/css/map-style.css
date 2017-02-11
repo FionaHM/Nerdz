@@ -5,6 +5,10 @@ body {
   background-color: #111;
 }
 
+#brand-img {
+  margin-top: -7px;
+}
+
 .description {
   color: #aaa;
   font-size: 0.8em;
@@ -37,7 +41,7 @@ a:active {
 }
 
 .navbar-brand {
-  font-family: 'Barrio', cursive;
+  font-family: 'Share Tech', sans-serif;
   color: #eee;
 }
 

@@ -2,6 +2,12 @@
 -------------------------------------------------- */
   /* Padding below the footer and lighter body text */
   
+  .modal-header {
+    color: #eee;
+    border: none;
+    font-family: 'Share Tech', sans-serif;
+  }
+  
   html,
   body {
     color: #e7e7e7;
