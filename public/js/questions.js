@@ -6,6 +6,7 @@
 // getCookie('auth_token');
 // console.log(getCookie('auth_token'));
 
+
 //Interval controls speed of carousel. Wrap: false stops it from cycling back to first question
 $('#myCarousel').carousel({
     interval: 8000,
@@ -38,24 +39,21 @@ $.get("/question", function(data) {
         $('.carousel-indicators').append(li);
 
         //first slide selected by default
-        $('#li-' + 0).addClass("active");
+        // $('#li-' + 0).addClass("active");
 
         //Builds up a carousel item for each question
-        var carouselDiv = '<div class="questions item" id="' + data[i].id + '" data-category="' + category + '" data-question="' + data[i].id + '">' + '</div>';
+        var carouselDiv = '<div class="item questions" id="' + data[i].id + '"data-question="' + data[i].id + '">' + '</div>';
         var carouselContainer = '<div class="container" id="container-' + data[i].id + '">';
         var carouselCaption = '<div class="carousel-caption" id="caption-' + data[i].id + '">' + '<h1>Question ' + data[i].id + '</h1><br>' + '<h4>' + data[i].question;
-        // var radios = '<br><label class="radio-inline"><input type="radio" value="1" name="optradio-' + data[i].id + '">1</label><label class="radio-inline"><input type="radio" value="2" name="optradio-' + data[i].id + '">2</label><label class="radio-inline"><input checked type="radio" value="3" name="optradio-' + data[i].id + '">3</label><label class="radio-inline"><input type="radio" value="4" name="optradio-' + data[i].id + '">4</label><label class="radio-inline"><input type="radio" value="5" name="optradio-' + data[i].id + '">5</label>';
 
 
-
-
-        var radios = '<br><br><br><input checked type="radio" class="radio" id="radio-' + data[i].id + '-1" value="1" name="optradio-' + data[i].id + '" /><label for="radio-' + data[i].id + '-1" class="animated bounce"></label><input type="radio" class="radio" id="radio-' + data[i].id + '-2" value="2" name="optradio-' + data[i].id + '" /><label for="radio-' + data[i].id + '-2" class="animated bounce"></label><input type="radio" class="radio" id="radio-' + data[i].id + '-3" value="3" name="optradio-' + data[i].id + '" /><label check for="radio-' + data[i].id + '-3" class="animated bounce"></label><input type="radio" class="radio" id="radio-' + data[i].id + '-4" value="4" name="optradio-' + data[i].id + '" /><label for="radio-' + data[i].id + '-4" class="animated bounce"></label><input type="radio" class="radio" id="radio-' + data[i].id + '-5" value="5" name="optradio-' + data[i].id + '" /><label for="radio-' + data[i].id + '-5" class="animated bounce"></label>';
+        var radios = '<br><br><br><input checked type="radio" class="radio" data-category="' + category + '" id="radio-' + data[i].id + '-1" value="1" name="optradio-' + data[i].id + '" /><label for="radio-' + data[i].id + '-1" class="animated bounce"></label><input type="radio" class="radio" data-category="' + category + '" id="radio-' + data[i].id + '-2" value="2" name="optradio-' + data[i].id + '" /><label for="radio-' + data[i].id + '-2" class="animated bounce"></label><input type="radio" class="radio" data-category="' + category + '" id="radio-' + data[i].id + '-3" value="3" name="optradio-' + data[i].id + '" /><label check for="radio-' + data[i].id + '-3" class="animated bounce"></label><input type="radio" class="radio" data-category="' + category + '" id="radio-' + data[i].id + '-4" value="4" name="optradio-' + data[i].id + '" /><label for="radio-' + data[i].id + '-4" class="animated bounce"></label><input type="radio" class="radio" data-category="' + category + '" id="radio-' + data[i].id + '-5" value="5" name="optradio-' + data[i].id + '" /><label for="radio-' + data[i].id + '-5" class="animated bounce"></label>';
         // 'class="questions " id="' + data[i].id + '" data-category="' + category + '" data-question="' + data[i].id + '
-    
+
         $('#add-questions').append(carouselDiv);
         $('#' + data[i].id).append(carouselContainer);
         //displays first question by default when loaded
-        $('#' + data[0].id).addClass("active");
+        // $('#' + data[0].id).addClass("active");
         //carouselCaption contains the Question number and the Question
         $('#container-' + data[i].id).append(carouselCaption);
         //radio buttons added for each question
@@ -67,19 +65,20 @@ $.get("/question", function(data) {
     var lastLi = '<li id="li-' + last + '"data-target="#myCarousel" data-slide-to="' + last + '"></li>';
 
     var last = (data.length + 1);
-    var lastDiv = '<div class="questions item" id="' + last + '" data-category="' + category + '" data-question="' + last + '">' + '</div>';
+    var lastDiv = '<div class=" item" id="' + last + '" data-category="' + category + '" data-question="' + last + '">' + '</div>';
     var lastContainer = '<div class="container" id="container-' + last + '">';
     var finalMessage = 'Click the button to see your results!';
-    var submitButton = '<form action="" method="POST"><button id="sendscores1">Submit Answers</button></form>';
+    var submitButton = '<button id="sendscores">Submit Answers</button>';
     var lastCaption = '<div class="carousel-caption" id="caption-' + last + '">' + '<h1>' + finalMessage + '<br>' + submitButton;
 
-    $('.carousel-indicators').append(lastLi);
+
     $('#add-questions').append(lastDiv);
     $('#' + last).append(lastContainer);
     $('#container-' + last).append(lastCaption);
+    $('.carousel-indicators').append(lastLi);
 
 }).done(function(msg) {
-    console.log(msg)
+    // console.log(msg)
 }).fail(function(xhr, status, error) {
     // captures error so now we can handle
     console.log(xhr.responseText, xhr.statusText);
@@ -90,29 +89,41 @@ $.get("/question", function(data) {
 
 // submit the answers
 $('#sendscores').on("click", function(event) {
+
     event.preventDefault();
     var questionsArr = [];
     // loop through the answers and save to the database
     $('.questions').each(function(i, obj) {
+        console.log("this: ", this);
         // console.log($('#' + id).attr("data-category"));
         // split the category and insert multiple rows with score prorated
         var id = i + 1;
-        var catArr = $('#' + id).attr("data-category").split("/");
-        // console.log(catArr);
-        // var radioButtonId = '#radio-' + data[i].id + '-1';
-        for (var j = 0; j < catArr.length - 1; j++) {
-            // console.log(catArr.length);
-            // var score = ($(radioButtonId).val() / (catArr.length - 1)); // 5 is DUMMY DATA
-            var score = (5 / (catArr.length - 1)); // 5 is DUMMY DATA
+        var radioName = 'name="optradio-' + (id) + '"';
 
-            console.log("score", score);
+        // var cat = $('input[' + radioName + ']:checked').attr("data-category");
+        var catArr = $('input[' + radioName + ']:checked').attr("data-category").split("/");
+        // var cat = $('#' + id).attr("data-category");
+        console.log("catArr", catArr);
+        // // var radioButtonId = '#radio-' + data[i].id + '-1';
+        for (var j = 0; j < catArr.length - 1; j++) {
+            //     // console.log(catArr.length);
+            // var score = ($(radioButtonId).val() / (catArr.length - 1)); // 5 is DUMMY DATA
+            // var score = (5 / (2 - 1)); // 5 is DUMMY DATA
+            var num = $('#' + id).attr("data-question");
+
+            var score = $('input[' + radioName + ']:checked').val();
+            console.log("score: ", score);
+
+            // console.log("score", score);
             var questionObj = {
                 "score": score,
                 "question_id": $('#' + id).attr("data-question"),
-                "category": catArr[j],
-                // "user_id": 1 // DUMMY DATA
+                "category": catArr[j]
+                    // "category": cat,
+                    // "user_id": 1 // DUMMY DATA
             };
             questionsArr.push(questionObj);
+            // console.log(questionsObj);
         }
     });
     //
@@ -126,7 +137,6 @@ $('#sendscores').on("click", function(event) {
 
 
 })
-
 
 // copied from stackoverflow.com
 function getCookie(c_name) {

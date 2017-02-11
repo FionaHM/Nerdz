@@ -598,7 +598,7 @@ label:after {
 #radio-24-5 + label,
 #radio-25-5 + label {
   left: 40vw;
-  background: purple;
+  background: #800080;
   animation-delay: 0s;
 }
 

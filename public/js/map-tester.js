@@ -2453,7 +2453,7 @@ function getData() {
         var map;
         // min and max bullet sizes - adjust them to your needs
         var minBulletSize = 7;
-        var maxBulletSize = 8;
+        var maxBulletSize = 80;
 
         // set dark theme
         AmCharts.theme = AmCharts.themes.chalk;
@@ -2531,6 +2531,7 @@ function getData() {
             // create circle for each country
             for (var i = 0; i < mapData.length; i++) {
                 var dataItem = mapData[i];
+                console.log(dataItem);
                 var value = dataItem.total;
 
                 if (mapData[i].location === null) {
@@ -2542,16 +2543,18 @@ function getData() {
                     square = minSquare;
                 }
 
-                if (dataItem.category === "CAT 1") {
-                    dataItem.color = "#e8d685";
-                } else if (dataItem.category === "CAT 2") {
-                    dataItem.color = "#c9f0e1";
-                } else if (dataItem.category === "CAT 3") {
-                    dataItem.color = "#ae85c9";
-                } else if (dataItem.category === "CAT 4") {
-                    dataItem.color = "#629b6d";
+                if (dataItem.category === "SCIENCE") {
+                    dataItem.color = "#4285F4";
+                } else if (dataItem.category === "CULTURE") {
+                    dataItem.color = "#EA4335";
+                } else if (dataItem.category === "ENGINEERING") {
+                    dataItem.color = "#FBBC05";
+                } else if (dataItem.category === "TECHNOLOGY") {
+                    dataItem.color = "#34A853";
+                } else if (dataItem.category === "MUSIC") {
+                    dataItem.color = "#800080";
                 } else {
-                    var colorArr = ["#e8d685", "#c9f0e1", "#ae85c9", "#629b6d", "#d48652"];
+                    var colorArr = ["#4285F4", "#EA4335", "#FBBC05", "#34A853", "#800080"];
 
                     var randomColor = colorArr[Math.floor(Math.random() * colorArr.length)];
                     dataItem.color = randomColor;
@@ -2565,14 +2568,14 @@ function getData() {
                 var lab = "M22.562,25.85l-4.729-6.564v-5.647h0.88c0,0,1.017,0.333,1.017-0.918v-1.016c0,0-0.06-0.879-1.076-0.879l-5.411,0.039c0,0-1.016,0.333-1.016,0.879v0.977c0,0-0.079,0.899,0.938,0.899h0.978v5.725l-4.787,6.584c0,0-4.015,4.553,0.146,4.611h13.002C22.504,30.538,26.725,30.898,22.562,25.85zM15.535,8.948c0.277,0,0.502-0.225,0.502-0.503c0-0.278-0.225-0.503-0.502-0.503c-0.278,0-0.503,0.225-0.503,0.503C15.032,8.723,15.256,8.948,15.535,8.948zM12.706,7.111c0.793,0,1.437-0.643,1.437-1.436c0-0.792-0.644-1.436-1.437-1.436S11.27,4.882,11.27,5.675C11.27,6.469,11.913,7.111,12.706,7.111zM18.342,6.096c1.297,0,2.346-1.05,2.346-2.344c0-1.295-1.049-2.345-2.346-2.345c-1.294,0-2.344,1.049-2.344,2.345C15.998,5.046,17.048,6.096,18.342,6.096z";
 
                 dataProvider.images.push({
-                    svgPath: person,
-                    // type: "circle",
+                    // svgPath: person,
+                    type: "circle",
                     width: size,
                     height: size,
                     color: dataItem.color,
                     longitude: latlong[id].longitude,
                     latitude: latlong[id].latitude,
-                    title: dataItem.location,
+                    title: dataItem.overall_category,
                     value: value
                 });
             }

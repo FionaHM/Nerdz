@@ -18,8 +18,6 @@
 //     "value": 10
 // }];
 
-var id = 2;
-
 function getIndieData() {
 
     $.ajaxSetup({
@@ -49,7 +47,7 @@ function getIndieData() {
 
         var indieData = data["1"];
 
-
+        console.log(indieData);
 
         var chart1 = AmCharts.makeChart("indie-chartdiv", {
             "type": "pie",
