@@ -34,14 +34,14 @@ insert into Questions (question, category, created_at, updated_at) values
 ("I love writing poetry.", "music, culture", now(), now()),
 ("I love musical theater.", "music, culture", now(), now()),
 ("I believe in aliens.", "science, technology", now(), now()),
-("I love Dance.", "music, culture", now(), now()),
+("I love dance.", "music, culture", now(), now()),
 ("I have a large collection of movies.", "music, culture", now(), now()),
 ("I am good at making impromptu speeches.", "science, culture", now(), now()),
 ("I am a spiritual person.", "culture", now(), now()),
 ("Learning body language is very important.", "culture", now(), now()),
 ("I don't like to dress up in costumes.", "engineering", now(), now()),
 ("I listen to music more than a hour a day", "engineering", now(), now()),
-("I show an attention to detail", "science, technology, engineering", now(), now());
+("I show attention to detail", "science, technology, engineering", now(), now());
 
 
 

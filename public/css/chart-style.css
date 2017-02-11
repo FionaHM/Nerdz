@@ -5,6 +5,12 @@
   background: #000;
 }
 
+.modal-header {
+  color: #eee;
+  border: none;
+  font-family: 'Share Tech', sans-serif;
+}
+
 h1 {
   font-size: 8vw;
   font-family: 'Share Tech', sans-serif;

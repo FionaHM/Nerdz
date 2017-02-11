@@ -49,7 +49,7 @@ function getIndieData() {
 
         var indieData = data["1"];
 
-        console.log(indieData);
+
 
         var chart1 = AmCharts.makeChart("indie-chartdiv", {
             "type": "pie",
@@ -75,7 +75,7 @@ function getIndieData() {
                 "align": "center",
                 "size": 25,
                 "bold": true,
-                "text": "You",
+                "text": indieData["0"].name,
                 "color": "#fff"
             }, {
                 "y": "49%",
