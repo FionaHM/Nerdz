@@ -32,9 +32,11 @@ $.get("/question", function(data) {
         }
         // console.log(category);
         var id = i + 1;
+        var last = (data.length + 1);
         //adds the little circle carousel-indicators to the bottom of the carousel
         var li = '<li id="li-' + i + '"data-target="#myCarousel" data-slide-to="' + i + '"></li>';
         $('.carousel-indicators').append(li);
+
         //first slide selected by default
         $('#li-' + 0).addClass("active");
 
@@ -60,6 +62,20 @@ $.get("/question", function(data) {
         $('#caption-' + data[i].id).append(radios);
 
     }
+    var lastLi = '<li id="li-' + last + '"data-target="#myCarousel" data-slide-to="' + last + '"></li>';
+
+    var last = (data.length + 1);
+    var lastDiv = '<div class="questions item" id="' + last + '" data-category="' + category + '" data-question="' + last + '">' + '</div>';
+    var lastContainer = '<div class="container" id="container-' + last + '">';
+    var finalMessage = 'Click the button to see your results!';
+    var submitButton = '<form action="" method="POST"><button id="sendscores1">Submit Answers</button></form>';
+    var lastCaption = '<div class="carousel-caption" id="caption-' + last + '">' + '<h1>' + finalMessage + '<br>' + submitButton;
+
+    $('.carousel-indicators').append(lastLi);
+    $('#add-questions').append(lastDiv);
+    $('#' + last).append(lastContainer);
+    $('#container-' + last).append(lastCaption);
+
 }).done(function(msg) {
     console.log(msg)
 }).fail(function(xhr, status, error) {
