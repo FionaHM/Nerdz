@@ -2429,7 +2429,7 @@ latlong["USER"] = {
 // function getData() {
 
 var user;
-$('#navbar').on('click', '#your-city', getUser);
+
 
 
 function getUser() {
@@ -2539,7 +2539,7 @@ $.get("/map", function(data) {
         // make areas barely visible
         map.areasSettings = {
             // unlistedAreasColor: "#15A892"
-
+            colorSteps: 1000,
             unlistedAreasAlpha: 0.1,
             unlistedAreasOutlineAlpha: 0
         };
@@ -2611,7 +2611,32 @@ $.get("/map", function(data) {
         // Listen for the init event and initialize box2d part
         map.addListener("init", initBox2D)
 
+        $('#navbar').on('click', '#your-city', centerOnUser);
+
+        function centerOnUser() {
+
+            var info = $('#your-city').val();
+            // var arr = [];
+
+            // arr.push(info.split(','));
+            // console.log(arr);
+
+            // var long = parseFloat(arr[0]);
+            // var lat = parseFloat(arr[1]);
+
+            // console.log(long);
+            // console.log(lat);
+
+            var lat = latlong[info].latitude;
+            var long = latlong[info].longitude;
+            console.log(lat, long);
+
+            map.zoomToLongLat(map.zoomLevel() * 5, long, lat);
+
+        }
+
         map.write("mapdiv");
+        // map.zoomToLongLat = (100, 100, 100, instantly);
     });
 
 
