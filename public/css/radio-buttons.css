@@ -1,3 +1,20 @@
+/*blue: #4285F4*/
+
+
+/*red: #EA4335*/
+
+
+/*new red: #cc3333*/
+
+
+/*yellow: #FBBC05*/
+
+
+/*green: #34A853*/
+
+
+/*purple: #800080*/
+
 @keyframes fade {
   0%,
   50% {
@@ -161,7 +178,7 @@ label:after {
 }
 
 
-/**** BLUE Radio button code ****/
+/**** RED jh Radio button code ****/
 
 #radio-1-1 + label,
 #radio-2-1 + label,
@@ -189,8 +206,98 @@ label:after {
 #radio-24-1 + label,
 #radio-25-1 + label {
   left: -40vw;
-  background: #4285F4;
+  background: #cc3333;
   animation-delay: 0s;
+}
+
+#radio-1-1+ label:hover,
+#radio-2-1+ label:hover,
+#radio-3-1+ label:hover,
+#radio-4-1+ label:hover,
+#radio-5-1+ label:hover,
+#radio-6-1+ label:hover,
+#radio-7-1+ label:hover,
+#radio-8-1+ label:hover,
+#radio-9-1+ label:hover,
+#radio-10-1+ label:hover,
+#radio-11-1+ label:hover,
+#radio-12-1+ label:hover,
+#radio-13-1+ label:hover,
+#radio-14-1+ label:hover,
+#radio-15-1+ label:hover,
+#radio-16-1+ label:hover,
+#radio-17-1+ label:hover,
+#radio-18-1+ label:hover,
+#radio-19-1+ label:hover,
+#radio-20-1+ label:hover,
+#radio-21-1+ label:hover,
+#radio-22-1+ label:hover,
+#radio-23-1+ label:hover,
+#radio-24-1+ label:hover,
+#radio-25-1+ label:hover {
+  background-image: url("../img/white-x.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+#radio-1-3+ label:hover,
+#radio-2-3+ label:hover,
+#radio-3-3+ label:hover,
+#radio-4-3+ label:hover,
+#radio-5-3+ label:hover,
+#radio-6-3+ label:hover,
+#radio-7-3+ label:hover,
+#radio-8-3+ label:hover,
+#radio-9-3+ label:hover,
+#radio-10-3+ label:hover,
+#radio-11-3+ label:hover,
+#radio-12-3+ label:hover,
+#radio-13-3+ label:hover,
+#radio-14-3+ label:hover,
+#radio-15-3+ label:hover,
+#radio-16-3+ label:hover,
+#radio-17-3+ label:hover,
+#radio-18-3+ label:hover,
+#radio-19-3+ label:hover,
+#radio-20-3+ label:hover,
+#radio-21-3+ label:hover,
+#radio-22-3+ label:hover,
+#radio-23-3+ label:hover,
+#radio-24-3+ label:hover,
+#radio-25-3+ label:hover {
+  background-image: url("../img/pearl-ok.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+#radio-1-5+ label:hover,
+#radio-2-5+ label:hover,
+#radio-3-5+ label:hover,
+#radio-4-5+ label:hover,
+#radio-5-5+ label:hover,
+#radio-6-5+ label:hover,
+#radio-7-5+ label:hover,
+#radio-8-5+ label:hover,
+#radio-9-5+ label:hover,
+#radio-10-5+ label:hover,
+#radio-11-5+ label:hover,
+#radio-12-5+ label:hover,
+#radio-13-5+ label:hover,
+#radio-14-5+ label:hover,
+#radio-15-5+ label:hover,
+#radio-16-5+ label:hover,
+#radio-17-5+ label:hover,
+#radio-18-5+ label:hover,
+#radio-19-5+ label:hover,
+#radio-20-5+ label:hover,
+#radio-21-5+ label:hover,
+#radio-22-5+ label:hover,
+#radio-23-5+ label:hover,
+#radio-24-5+ label:hover,
+#radio-25-5+ label:hover {
+  background-image: url("../img/white-check.png");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 #radio-1-1 + label:before,
@@ -251,7 +358,7 @@ label:after {
 }
 
 
-/**** RED radio button code ****/
+/**** GREEN jh radio button code ****/
 
 #radio-1-2 + label,
 #radio-2-2 + label,
@@ -279,8 +386,8 @@ label:after {
 #radio-24-2 + label,
 #radio-25-2 + label {
   left: -20vw;
-  background: #EA4335;
-  border-color: #EA4335!important;
+  background: #34A853;
+  border-color: #34A853!important;
   animation-delay: .2s;
 }
 
@@ -342,7 +449,7 @@ label:after {
 #radio-25-2:checked + label:before {
   width: 1vw;
   height: 1vw;
-  background: #EA4335;
+  background: #34A853;
   transition: all .4s;
 }
 
@@ -376,7 +483,7 @@ label:after {
 #radio-25-2:not(:checked) + label:before {
   width: 3vw;
   height: 3vw;
-  background: #EA4335;
+  background: #34A853;
   box-shadow: none;
 }
 
@@ -477,7 +584,7 @@ label:after {
 }
 
 
-/**** GREEN radio button code ****/
+/**** BLUE jh radio button code ****/
 
 #radio-1-4 + label,
 #radio-2-4 + label,
@@ -505,7 +612,7 @@ label:after {
 #radio-24-4 + label,
 #radio-25-4 + label {
   left: 20vw;
-  background: #34A853;
+  background: #4285F4;
   animation-delay: .6s;
 }
 
