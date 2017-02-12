@@ -163,9 +163,13 @@ function router(app) {
         res.sendFile(path.join(__dirname + "/../public/geeksornerds.html"));
     })
 
-    app.get('/flashcards', function(req, res) {
+    app.get('/flashcards', function(req, res){
         // get flashcard data from database and retrun
-
+                db.Flashcard.findAll({}).then(function(data){
+                    res.json(data)
+                }).catch(function(err){
+                    res.redirect("/");
+                })
     })
 
 
@@ -558,7 +562,7 @@ function router(app) {
     })
 
     // update the category and nerd_level in users table based on user_id
-    app.get('/category/nerd/', function(req, res) {
+    app.get('/category/nerd', function(req, res) {
         decodeToken(req, res, jwtsecret, 'login', "").then(function(decoded) {
             var userid = decoded.id; // passed in from client
             // select a count of users by category and take the highest only (limit 1)
@@ -574,19 +578,22 @@ function router(app) {
                         order: 'max_score DESC',
                         limit: 1
                     }).then(function(data) {
+                        res.json(data);
+                        // no need to update for now
+                        // mremove columsn from table
                         // finally update the nerd_level in the user table
-                        db.User.update({
-                            nerd_level: data[0].nerd_level,
-                            overall_category: category
-                        }, { where: { id: userid } }, { fields: ['nerd_level', 'overall_category'] }).catch(function(err) {
-                            console.log(err);
-                        });
+                        // db.User.update({
+                        //     nerd_level: data[0].nerd_level,
+                        //     overall_category: category
+                        // }, { where: { id: userid } }, { fields: ['nerd_level', 'overall_category'] }).catch(function(err) {
+                        //     console.log(err);
+                        // });
                     }).catch(function(err) {
-                        res.redirect("/");
+                        res.status(400).send("Nerd Level Not Found");
                     })
                 })
         }).catch(function(err) {
-            res.redirect("/");
+             res.status(400).send("Max Score Not Found");
         });
 
 
