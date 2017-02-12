@@ -40,8 +40,8 @@ $.get('/cat', function(data) {
     var nerdCategories = [{
 
         category: "CULTURE",
-        answer: '<p>You are a Culture Nerd! Friends sometimes tire of the way you burst into song at random moments, but there is no denying you bring creativity and zest for life to every gathering. While you may occasionally retire to your room to ruminate on the poetry of Rilke, your gregarious nature and love of beauty keep you from becoming too solitary.</p>',
-        img: '<img class="img-circle img-responsive" src="./img/band-nerd.png">',
+        answer: '<p>Friends sometimes tire of the way you burst into song at random moments, but there is no denying you bring creativity and zest for life to every gathering. While you may occasionally retire to your room to ruminate on the poetry of Rilke, your gregarious nature and love of beauty keep you from becoming too solitary.</p>',
+        img: '<img class="media-object img-responsive" src="./img/band-nerd.png">',
         color: '#EA4335'
     }, {
         category: 'ENGINEERING',
@@ -70,23 +70,24 @@ $.get('/cat', function(data) {
 
     switch (nerdType) {
         case nerdCategories[0].category:
-            nerdDiv.html(nerdCategories[0].answer);
+
+            nerdDiv.append(nerdCategories[0].answer);
             nerdTitle.css('color', nerdCategories[0].color);
             break;
         case nerdCategories[1].category:
-            nerdDiv.html(nerdCategories[1].answer);
+            nerdDiv.append(nerdCategories[1].answer);
             nerdTitle.css('color', nerdCategories[1].color);
             break;
         case nerdCategories[2].category:
-            nerdDiv.html(nerdCategories[2].answer);
+            nerdDiv.append(nerdCategories[2].answer);
             nerdTitle.css('color', nerdCategories[2].color);
             break;
         case nerdCategories[3].category:
-            nerdDiv.html(nerdCategories[3].answer);
+            nerdDiv.append(nerdCategories[3].answer);
             nerdTitle.css('color', nerdCategories[3].color);
             break;
         case nerdCategories[4].category:
-            nerdDiv.html(nerdCategories[4].answer);
+            nerdDiv.append(nerdCategories[4].answer);
             nerdTitle.css('color', nerdCategories[4].color);
             break;
         default:
