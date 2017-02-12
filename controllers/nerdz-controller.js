@@ -510,23 +510,21 @@ function router(app) {
 
     // get category for user id 
     app.get('/cat', function(req, res) {
-        // decodeToken(req, res, jwtsecret, 'login').then(function(decoded) {
+        decodeToken(req, res, jwtsecret, 'login').then(function(decoded) {
         // get aggregate score for a user
-        // var userid = decoded.id; // passed in from client
-        var userid = 777; // passed in from client
+        var userid = decoded.id; // passed in from client
+        // var userid = ; // passed in from client
         var queryString = "select sum(score) as total, a.category from rawscores as a  where a.user_id = " + userid + " group by a.category order by total desc limit 1"
             // select b.username, sum(a.score), a.category from rawscores as a, users as b where b.id = a.user_id and a.user_id = 1 group by a.category
         db.sequelize.query(queryString, { type: db.sequelize.QueryTypes.SELECT })
             .then(function(results) {
                 console.log(results);
                 res.json(results);
-            })
-            // }).catch(function(err) {
-        console.log(err);
-        // });
-
+            }).catch(function(err) {
+                 console.log(err);
+            });
+        })
     })
-
 
 
     // add scores
@@ -560,7 +558,7 @@ function router(app) {
     })
 
     // update the category and nerd_level in users table based on user_id
-    app.post('/category/nerd/', function(req, res) {
+    app.get('/category/nerd/', function(req, res) {
         decodeToken(req, res, jwtsecret, 'login', "").then(function(decoded) {
             var userid = decoded.id; // passed in from client
             // select a count of users by category and take the highest only (limit 1)
