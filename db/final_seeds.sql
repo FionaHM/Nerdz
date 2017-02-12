@@ -129,7 +129,7 @@ delete from Users where email = 'fiona.hegarty@icloud,com'
 -- select sum(a.score) as total from rawscores as a, users as b where b.id = a.user_id and a.user_id = 1;
 -- select count(b.id)/5 as total, b.overall_category, b.location from users as b group by b.location, b.overall_category
 -- select count(b.id), b.overall_category, b.location from users as b group by b.location, b.overall_category;
--- select sum(score) as total, a.category from rawscores as a  where a.user_id = 2 group by a.category order by total desc limit 1;
+select sum(score) as total, a.category from rawscores as a  where a.user_id = 777 group by a.category order by total desc limit 1;
 
 -- select nerd_level from nerdlevels where min_score < 13 order by max_score desc limit 1
 
@@ -138,3 +138,4 @@ delete from Users where email = 'fiona.hegarty@icloud,com'
 -- select sum(a.score) as total from rawscores as a, users as b where b.id = a.user_id
 
 -- select b.username, sum(a.score) as total_score, a.category from rawscores as a, users as b where b.id = a.user_id group by  b.username, a.category
+-- 

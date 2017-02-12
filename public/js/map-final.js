@@ -2432,14 +2432,7 @@ latlong["USER"] = {
 function getData() {
     $.get("/map", function(data) {
         var mapData = data;
-        var user = {
-            "location": "USER",
-            "name": "user",
-            "total": 50000
-        };
 
-        mapData.push(user);
-        // console.log()
         // latlong["USER"] = {
         //     "latitude": 0,
         //     "longitude": 0
@@ -2453,10 +2446,17 @@ function getData() {
         var map;
         // min and max bullet sizes - adjust them to your needs
         var minBulletSize = 7;
-        var maxBulletSize = 80;
+        var maxBulletSize = 20;
 
         // set dark theme
         AmCharts.theme = AmCharts.themes.chalk;
+
+        // var user = {
+        //     "location": $('#new-user-location').val(),
+        //     "name": "You are here",
+        //     "total": 1
+        // };
+        // mapData.push(user);
 
         // get min and max values
         var min = Infinity;
@@ -2481,7 +2481,9 @@ function getData() {
             // map.creditsPosition = "top-right";
 
             //Zoom button color
-            map.zoomControl.buttonFillColor = "#15A892";
+            map.zoomControl.buttonFillColor = "#629b6d";
+            map.zoomControl.buttonColorHover = "#456d4d";
+            map.zoomControl.buttonRollOverColor = "#456d4d";
             // style tooltip
             map.balloon = {
                 adjustBorderColor: false,

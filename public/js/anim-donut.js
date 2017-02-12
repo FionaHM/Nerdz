@@ -1,100 +1,3 @@
-// /**
-//  * Define data for each year
-//  */
-// var chartData = {
-//     "1": [{
-//         "name": "Charles"
-//     }, {
-//         "category": "Culture",
-//         "total_score": 20
-//     }, {
-//         "category": "Tech",
-//         "total_score": 20
-//     }, {
-//         "category": "Collector",
-//         "total_score": 20
-//     }, {
-//         "category": "Fantasy",
-//         "total_score": 10
-//     }, {
-//         "category": "Well-Rounded",
-//         "total_score": 30
-//     }],
-//     "2": [{
-//         "name": "Fiona"
-//     }, {
-//         "category": "Culture",
-//         "total_score": 10
-//     }, {
-//         "category": "Tech",
-//         "total_score": 50
-//     }, {
-//         "category": "Collector",
-//         "total_score": 20
-//     }, {
-//         "category": "Fantasy",
-//         "total_score": 15
-//     }, {
-//         "category": "Well-Rounded",
-//         "total_score": 5
-//     }],
-//     "3": [{
-//         "name": "Jessica"
-//     }, {
-//         "category": "Culture",
-//         "total_score": 40
-//     }, {
-//         "category": "Tech",
-//         "total_score": 20
-//     }, {
-//         "category": "Collector",
-//         "total_score": 10
-//     }, {
-//         "category": "Fantasy",
-//         "total_score": 20
-//     }, {
-//         "category": "Well-Rounded",
-//         "total_score": 10
-//     }],
-//     "4": [{
-//         "name": "Phil"
-//     }, {
-//         "category": "Culture",
-//         "total_score": 50
-//     }, {
-//         "category": "Tech",
-//         "total_score": 20
-//     }, {
-//         "category": "Collector",
-//         "total_score": 10
-//     }, {
-//         "category": "Fantasy",
-//         "total_score": 10
-//     }, {
-//         "category": "Well-Rounded",
-//         "total_score": 10
-//     }],
-//     "5": [{
-//         "name": "Mitali"
-//     }, {
-//         "category": "Culture",
-//         "total_score": 5
-//     }, {
-//         "category": "Tech",
-//         "total_score": 55
-//     }, {
-//         "category": "Collector",
-//         "total_score": 20
-//     }, {
-//         "category": "Fantasy",
-//         "total_score": 10
-//     }, {
-//         "category": "Well-Rounded",
-//         "total_score": 10
-//     }]
-// };
-
-
 function getData() {
     $.get("/aggregatescore", function(data) {
 
@@ -126,11 +29,11 @@ function getData() {
                 thousandsSeparator: ','
             },
             "color": "#fff",
-            // "colors": ["#0D52D1", "#FF6600", "#FF0F00", "#04D215", "#F8FF01"],
+            "colors": ["#3120fc", "#EA4335", "#FBBC05", "#34A853", "#800080", "#47a2fd"],
             "allLabels": [{
                 "y": "54%",
                 "align": "center",
-                "size": 25,
+                "size": 15,
                 "bold": true,
                 "text": "1",
                 "color": "#fff"
@@ -162,7 +65,7 @@ function getData() {
                         chart.animateData(data, {
                             duration: 1000,
                             complete: function() {
-                                setTimeout(loop, 3000);
+                                setTimeout(loop, 500);
                             }
                         });
                     }

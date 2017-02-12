@@ -5,6 +5,10 @@ body {
   background-color: #111;
 }
 
+.warning {
+  color: #EA4335;
+}
+
 #brand-img {
   margin-top: -7px;
 }
