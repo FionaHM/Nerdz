@@ -364,7 +364,9 @@
         // $('#location-lng').html(position.coords.longitude);
         geocodeLatLng(geocoder, position.coords.latitude, position.coords.longitude);
 
-        return [position.coords.latitude, position.coords.longitude];
+
+
+        return [position.coords.longitude, position.coords.latitude];
 
       })
       // }
@@ -385,9 +387,9 @@
             $('#cities').html(results[1].address_components[3].short_name);
             // $('#location-state').html(results[1].address_components[3].short_name);
 
-            var you = results[1].address_components[3].short_name;
+            var you = [results[1].address_components[3].short_name];
 
-            $("#navbar").append('<button class="btn btn-success" value="' + you + '"id="your-city" name="your-city">You are in ' + you + '</button>');
+            $("#navbar").append('<button class="btn btn-success" value="' + you + '"id="your-city" name="your-city">Zoom to your nerd herd in ' + you + '</button>');
 
           } else {
             window.alert('No results found');
