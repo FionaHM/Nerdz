@@ -1,3 +1,10 @@
+$.get('/category/nerd', function(data) {
+
+    console.log(data);
+
+});
+
+
 var chart = AmCharts.makeChart("gauge-div", {
     "theme": "none",
     "type": "gauge",
