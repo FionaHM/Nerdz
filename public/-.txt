@@ -1,0 +1,102 @@
+ <!DOCTYPE html>
+<html>
+
+<head>
+  <title> Nerdz </title>
+  <link href="https://fonts.googleapis.com/css?family=Barrio|Indie+Flower|Oswald" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/chart-style.css">
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+  <div id="logout" name="logout">Logout</button>
+<!-- This is where the timer goes -->
+  <div class="row hide-initially" id="timer-div">
+    <div class="col-md-12 text-center hide-initially">
+          <h2>Time Remaining <div id="timer"></div></h2>
+    </div>
+  </div>
+<!-- This is where the data goes -->
+<div class="row">
+  <div class="col-md-6">
+  <!-- this is where geek data goes -->
+        <div class="geekornerd" id="geek"></div>
+  </div>
+  <div class="col-md-6">
+  <!-- this is where nerd data goes -->
+        <div class="geekornerd" id="nerd"></div>
+  </div>
+
+
+
+</div>
+
+</body>
+<script type="text/javascript">
+// gets data from database on load of page or could have start button??
+$.get("/flashcards", function(gamedata){
+    // on even numbers show a new card
+
+    var timeoutInterval = 20;
+    var i=0;
+    var counter=0;
+
+    function displayGameData(){
+        //display initial time
+        $('#timer').html('<h2>' + timeoutInterval + ' seconds </h2>');
+        // call the countdown function every 5 seconds
+        setInterval(countDown, 1000);
+        // the cards are in gamedata
+    }
+
+    // The decrement function.
+    function countDown(){
+        // Decrease number by one second.
+        timeoutInterval--;
+        // increase the counter i
+        counter++;
+
+        // Show the number in the #timer tag.
+        $('#timer').html('<h2>' + timeoutInterval + ' seconds </h2>');
+        // change cards every 2 seconds
+        if ( (counter % 2) === 0 ){
+                // move to the next set of cards
+                i++;
+                //****************Charles this is where you put the html to display the cards
+                     console.log(gamedata[i]);
+                     console.log(i);
+                     $('#geek').html('<div class="score" data-score="' + gamedata[i].geek_score + '"data-id="' + gamedata[i].id + '">'+ gamedata[i].geek+'</div>');
+                     $('#nerd').html('<div class="score" data-score="' + gamedata[i].nerd_score + '"data-id="' + gamedata[i].id + '">'+ gamedata[i].nerd+'</div>');
+
+            }
+
+        // Once number hits zero...
+        if (timeoutInterval === 0){
+            //stop the timer
+            clearInterval(timeoutInterval);
+            //// end the game somehow
+            // capture the data in an array or something and give message to user
+        }
+    }
+
+    // start the game
+    setTimeout(displayGameData, 1000);
+
+})
+
+// // this is the click function
+// $('.geekornerd').on('click', function(){
+//
+
+$('.score').on('click', function(){
+  console.log($(this).data('score'));
+
+ })
+
+// })
+</script>
+
+</html>
