@@ -35,37 +35,64 @@ $.get('/cat', function(data) {
 
     var nerdType = data['0'].category;
     var nerdDiv = $('#nerd-category');
+    var nerdTitle = $('#nerd-title');
 
     var nerdCategories = [{
 
         category: "CULTURE",
         answer: '<p>You are a Culture Nerd! Friends sometimes tire of the way you burst into song at random moments, but there is no denying you bring creativity and zest for life to every gathering. While you may occasionally retire to your room to ruminate on the poetry of Rilke, your gregarious nature and love of beauty keep you from becoming too solitary.</p>',
-        img: '<img class="img-circle img-responsive" src="./img/band-nerd.png">'
+        img: '<img class="img-circle img-responsive" src="./img/band-nerd.png">',
+        color: '#EA4335'
     }, {
         category: 'ENGINEERING',
         answer: 'You love ENGINEERING',
-        imgsrc: 'assets/images/farley.gif'
+        imgsrc: 'assets/images/farley.gif',
+        color: '#FBBC05'
     }, {
         category: 'MUSIC',
-        answer: 'You love MUSIC',
-        imgsrc: 'assets/images/farley.gif'
+        answer: 'Maybe band camp was the best summer of your life.  Maybe you were a Gleek before it was cool.  Or maybe you moonlight on Saturdays as your alter ego, DJ SkittleByte. Either way, you are a hardcore Music Nerd, and you\'re not changing for anyone.',
+        img: 'assets/images/farley.gif',
+        color: '#34A853'
     }, {
         category: 'SCIENCE',
         answer: 'You love SCIENCE',
-        imgsrc: 'assets/images/farley.gif'
+        img: 'assets/images/farley.gif',
+        color: '#800080'
     }, {
         category: 'TECHNOLOGY',
         answer: 'You love technology',
-        imgsrc: 'assets/images/farley.gif'
+        img: 'assets/images/farley.gif',
+        color: '#4285F4'
     }];
 
-    $('#nerd-title').html('You are a ' + nerdType + ' Nerd!');
-    if (nerdType = nerdCategories[0].category) {
+    nerdTitle.html('You are a ' + nerdType + ' Nerd!');
 
-        nerdDiv.html(nerdCategories[0].answer);
-        // $('#nerd-image').html(nerdCategories[0].img);
+
+    switch (nerdType) {
+        case nerdCategories[0].category:
+            nerdDiv.html(nerdCategories[0].answer);
+            nerdTitle.css('color', nerdCategories[0].color);
+            break;
+        case nerdCategories[1].category:
+            nerdDiv.html(nerdCategories[1].answer);
+            nerdTitle.css('color', nerdCategories[1].color);
+            break;
+        case nerdCategories[2].category:
+            nerdDiv.html(nerdCategories[2].answer);
+            nerdTitle.css('color', nerdCategories[2].color);
+            break;
+        case nerdCategories[3].category:
+            nerdDiv.html(nerdCategories[3].answer);
+            nerdTitle.css('color', nerdCategories[3].color);
+            break;
+        case nerdCategories[4].category:
+            nerdDiv.html(nerdCategories[4].answer);
+            nerdTitle.css('color', nerdCategories[4].color);
+            break;
+        default:
+            nerdDiv.html('You are an Original Nerd');
+            nerdDiv.html("You are a whole new kind of nerd. Niiice!");
     }
-
 
 });
 
