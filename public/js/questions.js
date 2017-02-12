@@ -7,6 +7,9 @@
 // console.log(getCookie('auth_token'));
 
 
+
+
+
 //Interval controls speed of carousel. Wrap: false stops it from cycling back to first question
 $('#myCarousel').carousel({
     interval: 8000,
@@ -64,11 +67,11 @@ $.get("/question", function(data) {
     }
     var lastLi = '<li id="li-' + last + '"data-target="#myCarousel" data-slide-to="' + last + '"></li>';
 
-    var last = (data.length + 1);
+    var last = (data.length + 3);
     var lastDiv = '<div class=" item" id="' + last + '" data-category="' + category + '" data-question="' + last + '">' + '</div>';
     var lastContainer = '<div class="container" id="container-' + last + '">';
     var finalMessage = 'Click the button to see your results!';
-    var submitButton = '<button id="sendscores">Submit Answers</button>';
+    var submitButton = '<button class="btn btn-success btn-lg" id="sendscores">Submit Answers</button>';
     var lastCaption = '<div class="carousel-caption" id="caption-' + last + '">' + '<h1>' + finalMessage + '<br>' + submitButton;
 
 
@@ -88,7 +91,7 @@ $.get("/question", function(data) {
 })
 
 // submit the answers
-$('#sendscores').on("click", function(event) {
+$('#myCarousel').on("click", '#sendscores', function(event) {
 
     event.preventDefault();
     var questionsArr = [];

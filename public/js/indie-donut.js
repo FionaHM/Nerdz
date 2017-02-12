@@ -47,8 +47,6 @@ function getIndieData() {
 
         var indieData = data["1"];
 
-        console.log(indieData);
-
         var chart1 = AmCharts.makeChart("indie-chartdiv", {
             "type": "pie",
             "theme": "none",
@@ -59,6 +57,7 @@ function getIndieData() {
             "creditsPosition": "bottom-right",
             "labelTickColor": "#fff",
             "color": "fff",
+            "colors": ["#4285F4", "#EA4335", "#FBBC05", "#34A853", "#800080", "#47a2fd"],
             "radius": "30%",
             "innerRadius": "60%",
             "marginTop": 30,
@@ -71,7 +70,7 @@ function getIndieData() {
             "allLabels": [{
                 "y": "54%",
                 "align": "center",
-                "size": 25,
+                "size": 15,
                 "bold": true,
                 "text": indieData["0"].name,
                 "color": "#fff"
@@ -88,6 +87,8 @@ function getIndieData() {
             }
         });
     }).done(function(msg) {
+
+
         console.log(msg)
     }).fail(function(xhr, status, error) {
         // captures error so now we can handle

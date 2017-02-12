@@ -584,11 +584,11 @@ function router(app) {
                             console.log(err);
                         });
                     }).catch(function(err) {
-                        // res.redirect("/");
+                        res.redirect("/");
                     })
                 })
         }).catch(function(err) {
-            //
+            res.redirect("/");
         });
 
 
