@@ -276,11 +276,15 @@
           createCookie("user_email", $("#existing-user-email").val(), 0);
           // move to next page - this will error if user doesnt have perms
           console.log("am i here");
-          window.location.replace("../questionpage");
+          // window.location.replace("../questionpage");
 
         }
       })
-      .done(function(msg) {})
+      .done(function(msg) {
+
+        $('#loginbtn').html("Logout");
+        $('#myModal').modal('hide');
+      })
       .fail(function(xhr, status, error) {
         // captures error so now we can handle
         $('#err-message1').html('<h3 class="warning">' + xhr.responseText);
@@ -306,7 +310,7 @@
           createCookie("user_email", $("#new-user-email").val(), 0);
           // move to next page - this will error if user doesnt have perms
 
-          window.location.replace("../questionpage");
+          // window.location.replace("../questionpage");
 
         }
       })
