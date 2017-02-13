@@ -5,6 +5,14 @@
   background: #000;
 }
 
+.navbar {
+  opacity: 0;
+}
+
+.navbar:hover {
+  opacity: 90;
+}
+
 .modal-header {
   color: #eee;
   border: none;

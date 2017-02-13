@@ -2,10 +2,37 @@
 -------------------------------------------------- */
   /* Padding below the footer and lighter body text */
   
+  .navbar {
+    opacity: 0;
+  }
+  
+  .navbar:hover {
+    opacity: 90;
+  }
+  
   .modal-header {
-    color: #eee;
+    margin-top: 100px color: #eee;
     border: none;
     font-family: 'Share Tech', sans-serif;
+  }
+  
+  #intro-item {
+    background: #000;
+  }
+  
+  .carousel-indicators li {
+    display: inline-block;
+    text-indent: 0;
+    cursor: pointer;
+    border: none;
+    border-radius: 50%;
+    background-color: green;
+    box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0.5);
+  }
+  
+  .carousel-indicators .active {
+    margin: 10px;
+    background-color: #fff;
   }
   
   html,
@@ -61,4 +88,8 @@
     min-width: 100%;
     height: 500px;
     opacity: 0.2;
+  }
+  
+  #sendscores {
+    margin-top: 50px;
   }
