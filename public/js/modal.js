@@ -5,6 +5,12 @@ $('#loginbtn').on('click', function() {
 });
 
 
+//need some logic here to make sure recovery is successful before closing modal
+$('#resetpassword').on('click', function() {
+
+    $('.forget-modal').modal('hide');
+
+});
 
 
 function showPassword() {

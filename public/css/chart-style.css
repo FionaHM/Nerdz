@@ -9,6 +9,10 @@
   opacity: 0;
 }
 
+#brand-img {
+  margin-top: -7px;
+}
+
 .navbar:hover {
   opacity: 90;
 }

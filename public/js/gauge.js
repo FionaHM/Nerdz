@@ -115,42 +115,37 @@ var chart = AmCharts.makeChart("gauge-div", {
         "tickColor": "#67b7dc",
         "startAngle": -90,
         "endAngle": 90,
-        // "unit": "%",
+
         "bandOutlineAlpha": 0,
         "bands": [{
             "color": "#fd1d02",
             "endValue": 100,
             "innerRadius": "105%",
             "radius": "170%",
-            // "gradientRatio": [0.5, 0, -0.5],
             "startValue": 80
         }, {
             "color": "#ff4105",
             "endValue": 80,
             "innerRadius": "105%",
             "radius": "170%",
-            // "gradientRatio": [0.5, 0, -0.5],
             "startValue": 60
         }, {
             "color": "#f8ff01",
             "endValue": 60,
             "innerRadius": "105%",
             "radius": "170%",
-            // "gradientRatio": [0.5, 0, -0.5],
             "startValue": 40
         }, {
             "color": "#9dc707",
             "endValue": 40,
             "innerRadius": "105%",
             "radius": "170%",
-            // "gradientRatio": [0.5, 0, -0.5],
             "startValue": 20
         }, {
             "color": "#8ecfd5",
             "endValue": 20,
             "innerRadius": "105%",
             "radius": "170%",
-            // "gradientRatio": [0.5, 0, -0.5],
             "startValue": 0
         }]
     }],

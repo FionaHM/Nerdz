@@ -188,9 +188,10 @@
           </button>
           <h4 class="modal-title">Recovery password</h4>
         </div>
+        <h2 id="forget-message"></h2>
         <div class="modal-body">
           <p>Type your email account</p>
-          <input type="email" name="recoveryemail" id="recoveryemail" class="form-control" autocomplete="off">
+          <input type="email" name="recoveryemail" id="recoveryemail" class="form-control" required autocomplete="off">
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
@@ -215,7 +216,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#"><img id="brand-img" src="./img/nerd-icon-small.png">
+            <a class="navbar-brand" href="index.html"><img id="brand-img" src="./img/nerd-icon-small.png">
             </a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
@@ -389,9 +390,10 @@
 
             var you = [results[1].address_components[3].short_name];
 
-            $("#navbar").append('<button class="btn btn-success" value="' + you + '"id="your-city" name="your-city">Zoom to your nerd herd in ' + you + '</button>');
+            $("#navbar").append('<button class="btn btn-success" value="' + you + '"id="your-city" name="your-city">Zoom to your fellow nerds in ' + you + '</button>');
 
           } else {
+
             window.alert('No results found');
           }
         } else {

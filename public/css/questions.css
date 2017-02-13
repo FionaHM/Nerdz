@@ -10,6 +10,10 @@
     opacity: 90;
   }
   
+  #brand-img {
+    margin-top: -7px;
+  }
+  
   .modal-header {
     margin-top: 100px color: #eee;
     border: none;
