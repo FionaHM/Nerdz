@@ -34,3 +34,7 @@ db.sequelize.sync({ force: false }).then(function() {
   });
 });
 
+
+// export for testing with mocha
+module.exports = app;
+
