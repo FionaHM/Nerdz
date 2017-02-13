@@ -275,14 +275,23 @@
           createCookie("auth_token", data, 0);
           // createCookie("user_email", $("#existing-user-email").val(), 0);
           // move to next page - this will error if user doesnt have perms
-          window.location.replace("../questionpage");
+
+          console.log("am i here");
+          // window.location.replace("../questionpage");
+
 
 
         }
       })
       .done(function(msg) {
+
+
+        $('#loginbtn').html("Logout");
+        $('#myModal').modal('hide');
+
         // $.get("/questionpage", function(){});
         console.log(msg);
+
       })
       .fail(function(xhr, status, error) {
         // captures error so now we can handle
@@ -309,7 +318,7 @@
           createCookie("user_email", $("#new-user-email").val(), 0);
           // move to next page - this will error if user doesnt have perms
 
-          window.location.replace("../questionpage");
+          // window.location.replace("../questionpage");
 
         }
       })
