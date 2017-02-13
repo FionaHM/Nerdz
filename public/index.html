@@ -273,17 +273,25 @@
           console.log(xhr.responseText, xhr.statusText);
         } else {
           createCookie("auth_token", data, 0);
-          createCookie("user_email", $("#existing-user-email").val(), 0);
+          // createCookie("user_email", $("#existing-user-email").val(), 0);
           // move to next page - this will error if user doesnt have perms
+
           console.log("am i here");
           // window.location.replace("../questionpage");
+
+
 
         }
       })
       .done(function(msg) {
 
+
         $('#loginbtn').html("Logout");
         $('#myModal').modal('hide');
+
+        // $.get("/questionpage", function(){});
+        console.log(msg);
+
       })
       .fail(function(xhr, status, error) {
         // captures error so now we can handle
@@ -315,7 +323,8 @@
         }
       })
       .done(function(msg) {
-        console.log(msg)
+         // $.get("/questionpage", function(){});
+         console.log(msg);
       })
       .fail(function(xhr, status, error) {
         // captures error so now we can handle

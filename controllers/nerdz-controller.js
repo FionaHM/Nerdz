@@ -56,9 +56,7 @@ function router(app) {
             if (error) {
                 return console.log(error)
             }
-            console.log("Message %s send : %s", info.messageId, info.response);
-
-
+            // console.log("Message %s send : %s", info.messageId, info.response);
         })
     }
     // this is the function to capture and verify the incoming java web token - 
@@ -85,18 +83,18 @@ function router(app) {
                     token = null;
                 }
             }
-            console.log(token);
-
+        
             // use jwt verify to verify the token (symmetric - synchronous)
             // must use the same secret phrase as was used to generate token initally
             // verify the token
             jwt.verify(token, secret, function(err, decoded) {
                 if (err) {
                     // send an error request and deny access
-                    res.status(401).send({ message: 'invalid_token' });
-                    reject(err);
+                    // res.status(401).send({ message: 'invalid_token' });
+                    // res.json({ message: 'invalid_token' });
+                    var message = { message: 'invalid_token' };
+                    reject(message);
                 } else {
-                    // console.log("decoded", decoded);
                     // pass the decoded token for use by the api
                     resolve(decoded);
                 }
@@ -143,18 +141,7 @@ function router(app) {
 
     // not sure if this route will be used in final app
     app.get('/login', function(req, res) {
-        console.log("in login");
         res.sendFile(path.join(__dirname + "/../public/login.html"));
-    })
-
-    // // used to generate use charts based on test scores
-    // app.get('/graph', function(req, res){
-    //  res.sendFile(path.join(__dirname + "/../public/graphs.html"));
-    // })
-
-    // test file for password
-    app.get('/pwdtest', function(req, res) {
-        res.sendFile(path.join(__dirname + "/../public/password.html"));
     })
 
     app.get('/graph', function(req, res) {
@@ -162,20 +149,26 @@ function router(app) {
     })
 
     app.get('/geekornerd', function(req, res) {
-        res.sendFile(path.join(__dirname + "/../public/geeksornerds.html"));
+        decodeToken(req, res, jwtsecret, 'login').then(function(decoded) {
+            res.sendFile(path.join(__dirname + "/../public/geeksornerds.html"));
+        }).catch(function(err) {
+            res.status(401).send(err);
+        });     
     })
 
     app.get('/flashcards', function(req, res){
-        // get flashcard data from database and retrun
-                db.Flashcard.findAll({}).then(function(data){
-                    res.json(data)
-                }).catch(function(err){
-                    res.redirect("/");
-                })
+        decodeToken(req, res, jwtsecret, 'login').then(function(decoded) {
+           // get flashcard data from database and retrun
+            db.Flashcard.findAll({}).then(function(data){
+                res.json(data)
+            }).catch(function(err){
+                res.redirect("/");
+            })
+        }).catch(function(err) {
+            res.status(401).send(err);
+        });
+        
     })
-
-
-
 
 
     function changePassword(email, password) {
@@ -183,10 +176,7 @@ function router(app) {
         db.User.update({ 
             password: password },
             { where: { email: email } }, { fields: ['password'] 
-        }).then(function(data){
-            return data;
-        })
-        .catch(function(err) {
+        }).catch(function(err) {
             console.log(err);
         })
     }
@@ -196,19 +186,12 @@ function router(app) {
         var token = req.params.token;
         console.log(token);
         decodeToken(req, res, pwdsecret, 'pwd', token).then(function(decoded) {
-            // use data in token to create temp password
+            // use data in token to create  password
             var tokenObj = { "token": token };
-            console.log(tokenObj);
             res.render('index', { "token": token });
-            // res.render('index', {resultsObj: resultsObj});
-            // need to randomly generate
-            // var tmppwd = "tmppwd"; // send email with tmp pwd needs to match pwd send in email
-            // tell user to update password
-            // var password = passwordHash.generate(tmppwd);
-            // changePassword(email,password);
 
         }).catch(function(err) {
-            //
+            res.status(401).send(err);
         });
     })
 
@@ -217,21 +200,15 @@ function router(app) {
 
     // for creating the email to send out
     app.post('/password', function(req, res) {
-        // email = req.body.email -- get from form
-        // var email ="jhornsten@comcast.net";
-        // var email ="fiona.hegarty@icloud.com";
         var email = req.body.email.trim();
         // verify valid user in database ****
         db.User.findOne({ where: { email: email } })
             .then(function(user) {
                 // Check if record exists in db
-                // var temppwd = "tmppwd"; // send email with tmp pwd
-                // var password = passwordHash.generate(temppwd);
-                console.log(user);
-
                 if (user) {
                     var token = returnToken(res, pwdsecret, "pwd", email);
                     passwordResetEmail(email, token);
+                    res.redirect('/');
                 } else {
                     // res.status(400).send("Invalid Password");
                     res.status(400).send("No User found.");
@@ -241,38 +218,16 @@ function router(app) {
 
     })
 
-    // user can change password when logged in with auth token
-    app.post('/password/reset/', function(req, res) {
-        decodeToken(req, res, jwtsecret, 'login').then(function(decoded) {
+    function passwordReset(req, res, secret, action, token){
+        decodeToken(req, res, secret, action, token).then(function(decoded) {
             // use data in token to create temp password
             var email = decoded.email;
             //// take password from body
-            var newpassword = req.body.password;
-            console.log("newpassword", newpassword);
-            // tell user to update password
-            var password = passwordHash.generate(newpassword);
-            changePassword(email, password);
-        }).then(function(){
-            res.end();
-        }).catch(function(err) {
-            // console.log(err)
-        })
-    })
-
-
-    // user can change password when logged in with auth token
-    app.post('/password/mail/reset', function(req, res) {
-        var token = req.body.token;
-        // console.log("token", token);
-        decodeToken(req, res, pwdsecret, 'pwd', token).then(function(decoded) {
-            // use data in token to create temp password
-            var email = decoded.email;
+            var newpassword = req.body.newpassword;
+            var confirmpassword = req.body.confirmpassword;
+            // confirm passwords match and reset
             var passwordmatch = false;
-            //// take password from body
-            console.log("in here");
-            var newpassword = req.body.newpassword.trim();
-            var confirmpassword = req.body.confirmpassword.trim();
-            console.log(newpassword, confirmpassword);
+            // verify passwords match
             if (newpassword === confirmpassword) {
                 // tell user to update password
                 var password = passwordHash.generate(newpassword);
@@ -280,20 +235,83 @@ function router(app) {
                 passwordmatch = true;
                 return passwordmatch;
             } 
-
         }).then(function(passwordmatch){
-            console.log(passwordmatch);
+            // handle result
             if (passwordmatch) {
-                res.end();
+                //send to login page
+                res.redirect("/");
             }
             else {
-                res.status(400).send("Passwords don't match.")
+                // send error message
+                res.render('index', {message: "passwords don't match"});
             }
 
         }).catch(function(err) {
-            message = err.errors[0].message;
-            return res.status(401).send(message);
-        })
+            res.status(401).send(err);
+        });
+    }
+
+    // user can change password when logged in with auth token
+    app.post('/password/reset/', function(req, res) {
+        // decodeToken(req, res, jwtsecret, 'login').then(function(decoded) {
+            passwordReset(req, res, jwtsecret, 'login');
+        //     // use data in token to create temp password
+        //     var email = decoded.email;
+        //     //// take password from body
+        //     var newpassword = req.body.newpassword;
+        //     var confirmpassword = req.body.confirmpassword;
+        //     // confirm passwords match and reset
+        //     var passwordmatch = false;
+        //     // verify passwords match
+        //     if (newpassword === confirmpassword) {
+        //         // tell user to update password
+        //         var password = passwordHash.generate(newpassword);
+        //         changePassword(email, password);
+        //         passwordmatch = true;
+        //         return passwordmatch;
+        //     } 
+        // }).then(function(passwordmatch){
+        //     // handle result
+        //     if (passwordmatch) {
+        //         res.end();
+        //     }
+        //     else {
+        //         res.status(400).send("Passwords don't match.")
+        //     }
+
+        // }).catch(function(err) {
+        //     message = err.errors[0].message;
+        //     return res.status(401).send(message);
+        // })
+    })
+
+
+    // user can change password when logged in with auth token
+    app.post('/password/mail/reset', function(req, res) {
+        var token = req.body.token;
+        passwordReset(req, res, pwdsecret, 'pwd', token);
+
+        // // console.log("token", token);
+        // decodeToken(req, res, pwdsecret, 'pwd', token).then(function(decoded) {
+        //     // use data in token to create temp password
+        //     var email = decoded.email;
+        //     var newpassword = req.body.newpassword;
+        //     var confirmpassword = req.body.confirmpassword;
+        //     // confirm passwords match and reset
+        //     return passwordReset(email, newpassword, confirmpassword);
+        //     // return passwordmatch;
+        // }).then(function(passwordmatch){
+        //     // handle result
+        //     if (passwordmatch) {
+        //         res.redirect('/');
+        //     }
+        //     else {
+        //         res.status(400).send("Passwords don't match.")
+        //     }
+        // }).catch(function(err) {
+        //     message = err.errors[0].message;
+        //     return res.status(401).send(message);
+        // })
     })
 
     // create a new user
@@ -301,30 +319,36 @@ function router(app) {
         // capture the name of the user
         var username = req.body.username.toLowerCase();
         var email = req.body.email.toLowerCase();
-        // hash the password before saving
-        var password = passwordHash.generate(req.body.password);
+        var password = req.body.password;
         var location = req.body.location;
+        // validation
+        if (!username) {
+            res.status(400).send("username required");
+            return;
+        }
+        if (!email) {
+            res.status(400).send("email required");
+            return;
+        }
+        if (!password) {
+            res.status(400).send("password required");
+            return;
+        }
+        // hash before saving
+        password = passwordHash.generate(req.body.password);
         // unique constraint on username and email
         // checkif user exists
         db.User.findOrCreate({
             where: { username: username, email: email, password: password, location: location }
         }).spread(function(data, created) {
             // if found verify that password is correct and generate token if 
-            // console.log("data", data);
-            // console.log("created", created);
             if (created) { // should be true if newly created
                 returnToken(res, jwtsecret, "login", data);
-                // returnToken(data, res, secret, auth)
             }
-            // else {
-            //  verifyPassword(password, data, res);
-            // }
 
         }).catch(function(err) {
-            // console.log(err);
             message = err.errors[0].message;
             return res.status(401).send(message);
-            // res.json(err.errors[0].message);
         })
     })
 
@@ -360,7 +384,7 @@ function router(app) {
                         // user id, username and email stored in the payload of the token
                         // this is needed for other apis to get user specific data
                     var myToken = jwt.sign({ id: data.id, email: data.email, username: data.username }, secret, { expiresIn: 60 * 30 });
-                    console.log(myToken);
+                    // console.log(myToken);
                     // send back the token 
                     // store it as a cookie on client - this will then be
                     //  sent back with user requests as Bearer in the AJAX Header
@@ -375,8 +399,6 @@ function router(app) {
         }).catch(function(err) {
             res.status(400).send("Database Error");
             return;
-            // ***** to be completed once app is working as a unit
-            // res.redirect("/");
         })
     })
 
@@ -384,14 +406,9 @@ function router(app) {
 
     // gets all questions from the database - with multiple categories per questiob
     app.get('/questionpage', function(req, res) {
-        // decodeToken(req, res, jwtsecret, "login").then(function(decoded){
         // Query the database
-        res.sendFile(path.join(__dirname + "/../public/questions.html"), function(err) {
-            // console.log(__dirname + "/../public/questions.html");
-        });
-        // }).catch(function(err){
-        //  console.log(err);
-        // })
+        
+      res.sendFile(path.join(__dirname + "/../public/questions.html"), function(err) {});
 
 
     })
@@ -399,20 +416,18 @@ function router(app) {
     // gets all questions from the database - with multiple categories per questiob
     app.get('/question', function(req, res) {
         decodeToken(req, res, jwtsecret, "login").then(function(decoded) {
-            // console.log(decoded);
             // Query the database
             db.Question.findAll({
                 include: [db.Category]
             }).then(function(data) {
                 // pull out each category and append to the question
-                res.json(data)
+                res.json(data);
             }).catch(function(err) {
                 res.redirect("/");
             })
         }).catch(function(err) {
-            c
-           
-        })
+            res.status(401).send(err);
+        });
 
     })
 
@@ -426,15 +441,11 @@ function router(app) {
     app.get('/aggregatescore/user/', function(req, res) {
         decodeToken(req, res, jwtsecret, "login", "").then(function(decoded) {
             // get aggregate score for a user
-            console.log(decoded);
-            var userid = decoded.id; // passed in from client
-            // console.log("userid", userid);
+            var userid = decoded.id; // from token
             aggregates(req, res, userid);
         }).catch(function(err) {
-            res.status(400).send("Error getting data");
+            res.status(401).send(err);
         });
-        // decodeToken(req, res); //code for token validation 
-
     })
 
     function aggregates(req, res, userid) {
@@ -522,7 +533,6 @@ function router(app) {
     // get all users data for the map
     app.get('/map', function(req, res) {
         // select a count of users by category and location
-        console.log()
         var total = 50;
         var queryString = "select count(b.id) as total, b.overall_category, b.location from users as b group by b.location, b.overall_category";
         // select b.username, sum(a.score), a.category from rawscores as a, users as b where b.id = a.user_id and a.user_id = 1 group by a.category
@@ -531,17 +541,14 @@ function router(app) {
                 console.log(results);
                 res.json(results);
             })
-
     })
 
     // get category for user id 
     app.get('/cat', function(req, res) {
         decodeToken(req, res, jwtsecret, 'login').then(function(decoded) {
             // get aggregate score for a user
-            var userid = decoded.id; // passed in from client
-            // var userid = ; // passed in from client
+            var userid = decoded.id; // passed in from token
             var queryString = "select sum(score) as total, a.category from rawscores as a  where a.user_id = " + userid + " group by a.category order by total desc limit 1"
-                // select b.username, sum(a.score), a.category from rawscores as a, users as b where b.id = a.user_id and a.user_id = 1 group by a.category
             db.sequelize.query(queryString, { type: db.sequelize.QueryTypes.SELECT })
                 .then(function(results) {
                     console.log(results);
@@ -549,13 +556,25 @@ function router(app) {
                 }).catch(function(err) {
                     console.log(err);
                 });
-        })
+        }).catch(function(err) {
+            res.status(401).send(err);
+        });
+    })
+
+    // used for confirmation that user has valid token
+    app.get('/validuser', function(req, res) {
+        decodeToken(req, res, jwtsecret, 'login').then(function(decoded) {
+            var validuser = { "message": valid_user };
+            res.json(validuser);
+        }).catch(function(err) {
+            res.status(401).send(err);
+        });
     })
 
 
-    // add scores
-    app.post('/score', function(req, res) {
 
+    // add scores to database
+    app.post('/score', function(req, res) {
         decodeToken(req, res, jwtsecret, 'login', "").then(function(decoded) {
             // loops through and updates rawscores table
             // composite key : question_id, category, user_id
@@ -576,20 +595,17 @@ function router(app) {
             }
             res.end();
         }).catch(function(err) {
-            console.log("arrgh - error");
-            console.log(err);
-            // res.sendFile(path.join(__dirname + "/../public/graphs.html"));
+            res.status(401).send(err);
         });
-
     })
 
-    // update the category and nerd_level in users table based on user_id
+    // determine the nerd level
     app.get('/category/nerd', function(req, res) {
         decodeToken(req, res, jwtsecret, 'login', "").then(function(decoded) {
             var userid = decoded.id; // passed in from client
             // select a count of users by category and take the highest only (limit 1)
             var queryString = "select sum(score) as total, a.category from rawscores as a  where a.user_id = " + userid + " group by a.category order by total desc limit 1"
-                // the category, then the nerd level then update user table
+            // the category, then the nerd level then update user table
             db.sequelize.query(queryString, { type: db.sequelize.QueryTypes.SELECT })
                 .then(function(results) {
                     var score = results[0].total;
@@ -601,23 +617,13 @@ function router(app) {
                         limit: 1
                     }).then(function(data) {
                         res.json(data);
-                        // no need to update for now
-                        // mremove columsn from table
-                        // finally update the nerd_level in the user table
-                        // db.User.update({
-                        //     nerd_level: data[0].nerd_level,
-                        //     overall_category: category
-                        // }, { where: { id: userid } }, { fields: ['nerd_level', 'overall_category'] }).catch(function(err) {
-                        //     console.log(err);
-                        // });
                     }).catch(function(err) {
                         res.status(400).send("Nerd Level Not Found");
                     })
                 })
         }).catch(function(err) {
-             res.status(400).send("Max Score Not Found");
+            res.status(401).send(err);
         });
-
 
     })
 
