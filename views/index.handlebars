@@ -10,4 +10,8 @@
 		<p class="input-form"><div class="form-input-title">Confirm Password</div><input id="confirmpassword" type="password" name="confirmpassword" maxlength="32"></textarea></p>
 		<p class="input-form"><button class="btn btn-info" type="submit" id="submit-button">Reset Email</button><br></p>
 	</form>
+	{{#if message}}
+		{{ message }}
+	{{/if}}
+
 </body>
