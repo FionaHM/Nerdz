@@ -2,153 +2,161 @@
 <html>
 
 <head>
-  <title> Nerdz </title>
-  <link href="https://fonts.googleapis.com/css?family=Barrio|Indie+Flower|Oswald" rel="stylesheet">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <link rel="stylesheet" href="./css/chart-style.css">
-  <script src="https://code.jquery.com/jquery.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+ <title> Nerdz </title>
+ <link href="https://fonts.googleapis.com/css?family=Barrio|Indie+Flower|Oswald" rel="stylesheet">
+
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+ <link rel="stylesheet" href="./css/chart-style.css">
+ <script src="https://code.jquery.com/jquery.js"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 
 <body>
-  <div id="logout" name="logout">Logout</button>
-    <!-- This is where the timer goes -->
-    <div class="row timer-section" id="timer-div">
-      <div class="col-md-12 text-center timer-section">
-        <h2 class="timer-section">Time Remaining <div id="timer"></div></h2>
-      </div>
-    </div>
-    <!-- This is where the data goes -->
-    <div class="row">
-      <div class="col-md-6">
-        <!-- this is where geek data goes -->
-        <div class="geekornerd" id="geek"></div>
-      </div>
-      <div class="col-md-6">
-        <!-- this is where nerd data goes -->
-        <div class="geekornerd" id="nerd"></div>
-      </div>
-      <div class="col-md-12">
-        <div id="result"></div>
-      </div>
-      <div class="col-md-12 text-center">
-        <button class="start-game btn btn-success" id="start-button">Click to Start</button>
-      </div>
-    </div>
+ <div id="logout" name="logout">Logout</button>
+<!-- This is where the timer goes -->
+ <div class="row timer-section" id="timer-div">
+   <div class="col-md-12 text-center timer-section">
+         <h2 class="timer-section">Time Remaining <div id="timer"></div></h2>
+   </div>
+ </div>
+<!-- This is where the data goes -->
+<div class="row">
+ <div class="col-md-6">
+ <!-- this is where geek data goes -->
+       <div class="geekornerd" id="geek"></div>
+ </div>
+ <div class="col-md-6">
+ <!-- this is where nerd data goes -->
+       <div class="geekornerd" id="nerd"></div>
+ </div>
+ <div class="col-md-12">
+ <div id="result"></div>
+</div>
+
+<div class="col-md-12">
+
+       <button class="start-game" id="start-button">Click to Start</button>
+</div>
+
+
+</div>
+
 </body>
 <script type="text/javascript">
-var timeoutInterval;
-var i;
-var counter;
-var flag = true;
-var geek;
-var nerd;
-var gamedata = [];
 
-function displayGameData() {
-  timeoutInterval = 20;
-  // get the data
-  $.get("/flashcards", function(results) {
+    var timeoutInterval;
+    var i;
+    var counter;
+    var flag = true;
+    var geek;
+    var nerd;
+    var gamedata = [];
 
-    gamedata = results.splice(0);
-    console.log(gamedata);
-  });
-  console.log("gamedata", gamedata);
-  // set initial data
-  i = 0;
-  counter = 0;
-  geek = 0;
-  nerd = 0;
+    function displayGameData(){
+        timeoutInterval = 20;
+        // get the data
+        $.get("/flashcards", function(results){
+          
+            gamedata = results.splice(0);
+            console.log(gamedata);
+        });
+        console.log("gamedata", gamedata);
+        // set initial data
+        i=0;
+        counter=0;
+        geek = 0;
+        nerd = 0;
 
-  //display initial time
+        //display initial time
+        $('#timer').html('<h2>' + timeoutInterval + ' seconds </h2>');
+        $('#result').hide();
+        // call the countdown function every 5 seconds
+        if (flag === true){
+            var timer = setInterval(countDown, 1000);
+        } else {
+            //stop the timer
+            clearInterval(timer);
+            // timeoutInterval = 20;
+        }
+    }
+
+
+function countDown(){
+
+   // Show the number in the #timer tag.
   $('#timer').html('<h2>' + timeoutInterval + ' seconds </h2>');
-  $('#result').hide();
-  // call the countdown function every 5 seconds
-  if (flag === true) {
-    var timer = setInterval(countDown, 1000);
-  } else {
-    //stop the timer
-    clearInterval(timer);
-    // timeoutInterval = 20;
-  }
-}
-
-
-function countDown() {
-
-  // Show the number in the #timer tag.
-  $('#timer').html('<h2>' + timeoutInterval + ' seconds </h2>');
-
+  
   // change cards every 2 seconds
   // reset word choice flag - only one word choice per interval
   choice = false;
 
-  if (counter === 0) {
+   if (counter === 0){
 
-    console.log(counter, "counter", i, "i");
+      // console.log(counter, "counter", i, "i");
 
-    $('#geek').html('<div class="score" data-score="' + gamedata[i].geek_score + '"id="geek">' + gamedata[i].geek + '</div>');
-    $('#nerd').html('<div class="score" data-score="' + gamedata[i].nerd_score + '"id="nerd">' + gamedata[i].nerd + '</div>');
+      $('#geek').html('<div class="score" data-score="' + gamedata[i].geek_score + '"id="geek">'+ gamedata[i].geek+'</div>');
+      $('#nerd').html('<div class="score" data-score="' + gamedata[i].nerd_score + '"id="nerd">'+ gamedata[i].nerd+'</div>');
 
-    i++;
+     i++;
 
-  } else if (((counter % 2) === 0) && (i < 10)) {
-    // move to the next set of cards
-    console.log(counter, "counter", i, "i");
+   } else if (( (counter % 2) === 0 ) && (i < 10)) {
+           // move to the next set of cards
+    // console.log(counter, "counter", i, "i");
 
-    $('#geek').html('<div class="score" data-score="' + gamedata[i].geek_score + '"id="geek">' + gamedata[i].geek + '</div>');
-    $('#nerd').html('<div class="score" data-score="' + gamedata[i].nerd_score + '"id="nerd">' + gamedata[i].nerd + '</div>');
-    i++;
+      $('#geek').html('<div class="score" data-score="' + gamedata[i].geek_score + '"id="geek">'+ gamedata[i].geek+'</div>');
+      $('#nerd').html('<div class="score" data-score="' + gamedata[i].nerd_score + '"id="nerd">'+ gamedata[i].nerd+'</div>');
+      i++;
 
-  }
-
-  // Once number hits zero...
-
-  if (timeoutInterval === 0) {
-    // show the results data
-    $('#result').show();
-    // calculate if geek or nerd
-    if (geek > nerd) {
-      // display message
-      $('#result').html('<div class="score" id="geek"> You are a Geek.</div>');
-      $('#geek').html('');
-      $('#nerd').html('');
-    } else if (nerd > geek) {
-      console.log("nerd");
-      $('#result').html('<div class="score" "id="geek"> You are only a Nerd.</div>');
-      $('#geek').html('');
-      $('#nerd').html('');
-    } else {
-      $('#result').html('<div class="score"> Please try again and select a word from each pair!</div>');
-      $('#geek').html('');
-      $('#nerd').html('');
     }
 
-    flag = false;
-    console.log(flag, "flag");
-    // hide the clock
-    $(".timer-section").hide();
-    $(".start-game").show();
+   // Once number hits zero...
+   
+   if (timeoutInterval === 0){
+      // show the results data
+      $('#result').show();
+      // calculate if geek or nerd
+      if (geek > nerd){
+        // display message 
+        $('#result').html('<div class="score" id="geek"> You are a Geek.</div>');
+        $('#geek').html('');
+        $('#nerd').html('');
+      } else if (nerd > geek){
+            console.log("nerd");
+         $('#result').html('<div class="score" "id="geek"> You are only a Nerd.</div>');
+             $('#geek').html('');
+           $('#nerd').html('');
+      } else {
+         $('#result').html('<div class="score"> Please try again and select a word from each pair!</div>');
+        $('#geek').html('');
+        $('#nerd').html('');
+      }
 
-  }
-  // increase counter
-  counter++;
+      flag = false;
+      console.log(flag, "flag");
+      // hide the clock
+      $(".timer-section").hide();
+      $(".start-game").show();
 
-  // Decrease number by one second.
-  timeoutInterval--;
+   }
+    // increase counter
+    counter++;
+
+    // Decrease number by one second.
+    timeoutInterval--;
 
 
 }
 
 
 // Click work to select score
-$(document).on('click', '.score', function() {
-
-  if (($(this).attr('id') === 'nerd') && (choice === false)) {
+$(document).on('click', '.score', function(){
+ 
+  if (($(this).attr('id')==='nerd') && (choice === false)){
     nerd += parseInt($(this).attr('data-score'));
     choice = true;
 
-  } else if (($(this).attr('id') === 'geek') && (choice === false)) {
+  } else  if (($(this).attr('id')==='geek') && (choice === false)){
     geek += parseInt($(this).attr('data-score'));
     choice = true;
   }
@@ -157,14 +165,16 @@ $(document).on('click', '.score', function() {
 })
 
 // Button to start the game
-$('#start-button').on('click', function() {
+$('#start-button').on('click', function(){
   // reset dom elements
-  $(".timer-section").show();
-  $(".start-game").hide();
-  $('#result').hide();
+   $(".timer-section").show();
+   $(".start-game").hide();
+   $('#result').hide();
   // start the game
   displayGameData();
 })
+
+
 </script>
 
 </html>

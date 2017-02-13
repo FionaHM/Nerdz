@@ -70,7 +70,6 @@ function router(app) {
             // set token as null initially
             var token = null;
             // checks the request header for the token
-            console.log("auth", auth);
             if (auth == "login") {
                 // console.log(req.headers.authorization);
                 if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
@@ -165,9 +164,13 @@ function router(app) {
         res.sendFile(path.join(__dirname + "/../public/geeksornerds.html"));
     })
 
-    app.get('/flashcards', function(req, res) {
+    app.get('/flashcards', function(req, res){
         // get flashcard data from database and retrun
-
+                db.Flashcard.findAll({}).then(function(data){
+                    res.json(data)
+                }).catch(function(err){
+                    res.redirect("/");
+                })
     })
 
 
@@ -298,7 +301,7 @@ function router(app) {
             // }
 
         }).catch(function(err) {
-            console.log(err);
+            // console.log(err);
             message = err.errors[0].message;
             return res.status(401).send(message);
             // res.json(err.errors[0].message);
@@ -491,6 +494,7 @@ function router(app) {
                             outputObj[k + 1] = outputArr[k][k + 1];
                         }
                         // console.log("arr", outputArr[0][1]);
+                        console.log(outputObj);
                         res.json(outputObj);
                     })
             })
@@ -560,7 +564,7 @@ function router(app) {
     })
 
     // update the category and nerd_level in users table based on user_id
-    app.get('/category/nerd/', function(req, res) {
+    app.get('/category/nerd', function(req, res) {
         decodeToken(req, res, jwtsecret, 'login', "").then(function(decoded) {
             var userid = decoded.id; // passed in from client
             // select a count of users by category and take the highest only (limit 1)
@@ -576,19 +580,22 @@ function router(app) {
                         order: 'max_score DESC',
                         limit: 1
                     }).then(function(data) {
+                        res.json(data);
+                        // no need to update for now
+                        // mremove columsn from table
                         // finally update the nerd_level in the user table
-                        db.User.update({
-                            nerd_level: data[0].nerd_level,
-                            overall_category: category
-                        }, { where: { id: userid } }, { fields: ['nerd_level', 'overall_category'] }).catch(function(err) {
-                            console.log(err);
-                        });
+                        // db.User.update({
+                        //     nerd_level: data[0].nerd_level,
+                        //     overall_category: category
+                        // }, { where: { id: userid } }, { fields: ['nerd_level', 'overall_category'] }).catch(function(err) {
+                        //     console.log(err);
+                        // });
                     }).catch(function(err) {
-                        res.redirect("/");
+                        res.status(400).send("Nerd Level Not Found");
                     })
                 })
         }).catch(function(err) {
-            res.redirect("/");
+             res.status(400).send("Max Score Not Found");
         });
 
 
