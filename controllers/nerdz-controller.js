@@ -85,6 +85,7 @@ function router(app) {
                     token = null;
                 }
             }
+            console.log(token);
 
             // use jwt verify to verify the token (symmetric - synchronous)
             // must use the same secret phrase as was used to generate token initally
@@ -179,10 +180,14 @@ function router(app) {
 
     function changePassword(email, password) {
         // var password = passwordHash.generate(tmppwd);
-        db.User.update({ password: password }, { where: { email: email } }, { fields: ['password'] }).catch(function(err) {}).then(function() {
-            //nofity password has been changed
-            // message on screen for user chanege while logged in
-            // not sure when reset email..
+        db.User.update({ 
+            password: password },
+            { where: { email: email } }, { fields: ['password'] 
+        }).then(function(data){
+            return data;
+        })
+        .catch(function(err) {
+            console.log(err);
         })
     }
 
@@ -222,7 +227,8 @@ function router(app) {
                 // Check if record exists in db
                 // var temppwd = "tmppwd"; // send email with tmp pwd
                 // var password = passwordHash.generate(temppwd);
-                // console.log(user);
+                console.log(user);
+
                 if (user) {
                     var token = returnToken(res, pwdsecret, "pwd", email);
                     passwordResetEmail(email, token);
@@ -241,10 +247,13 @@ function router(app) {
             // use data in token to create temp password
             var email = decoded.email;
             //// take password from body
-            var tmppwd = req.body.password;
+            var newpassword = req.body.password;
+            console.log("newpassword", newpassword);
             // tell user to update password
-            var password = passwordHash.generate(tmppwd);
+            var password = passwordHash.generate(newpassword);
             changePassword(email, password);
+        }).then(function(){
+            res.end();
         }).catch(function(err) {
             // console.log(err)
         })
@@ -258,6 +267,7 @@ function router(app) {
         decodeToken(req, res, pwdsecret, 'pwd', token).then(function(decoded) {
             // use data in token to create temp password
             var email = decoded.email;
+            var passwordmatch = false;
             //// take password from body
             console.log("in here");
             var newpassword = req.body.newpassword.trim();
@@ -267,12 +277,22 @@ function router(app) {
                 // tell user to update password
                 var password = passwordHash.generate(newpassword);
                 changePassword(email, password);
-            } else {
+                passwordmatch = true;
+                return passwordmatch;
+            } 
+
+        }).then(function(passwordmatch){
+            console.log(passwordmatch);
+            if (passwordmatch) {
+                res.end();
+            }
+            else {
                 res.status(400).send("Passwords don't match.")
             }
 
         }).catch(function(err) {
-            // console.log(err)
+            message = err.errors[0].message;
+            return res.status(401).send(message);
         })
     })
 
@@ -390,9 +410,8 @@ function router(app) {
                 res.redirect("/");
             })
         }).catch(function(err) {
-            // redirect to login if unauth?
-            // console.log("redirect somewhere?")
-            // res.redirect('/');
+            c
+           
         })
 
     })
@@ -412,7 +431,7 @@ function router(app) {
             // console.log("userid", userid);
             aggregates(req, res, userid);
         }).catch(function(err) {
-            //
+            res.status(400).send("Error getting data");
         });
         // decodeToken(req, res); //code for token validation 
 
@@ -493,8 +512,7 @@ function router(app) {
                         for (var k = 0; k < outputArr.length; k++) {
                             outputObj[k + 1] = outputArr[k][k + 1];
                         }
-                        // console.log("arr", outputArr[0][1]);
-                        console.log(outputObj);
+                
                         res.json(outputObj);
                     })
             })
@@ -504,11 +522,13 @@ function router(app) {
     // get all users data for the map
     app.get('/map', function(req, res) {
         // select a count of users by category and location
+        console.log()
         var total = 50;
         var queryString = "select count(b.id) as total, b.overall_category, b.location from users as b group by b.location, b.overall_category";
         // select b.username, sum(a.score), a.category from rawscores as a, users as b where b.id = a.user_id and a.user_id = 1 group by a.category
         db.sequelize.query(queryString, { type: db.sequelize.QueryTypes.SELECT })
             .then(function(results) {
+                console.log(results);
                 res.json(results);
             })
 
