@@ -30,3 +30,5 @@ function showPassword() {
     }
 
 }
+
+$('.dropdown-toggle').dropdown();

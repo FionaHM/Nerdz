@@ -13,6 +13,23 @@ body {
   opacity: 90;
 }
 
+#logout,
+#your-city,
+.btn-primary-outline {
+  background-color: transparent;
+  border-color: #ccc;
+  color: #030303;
+}
+
+#your-city {
+  margin-top: 3px;
+  color: #bbb;
+}
+
+#your-city:hover {
+  color: #eee;
+}
+
 .warning {
   color: #EA4335;
 }
@@ -36,20 +53,25 @@ a {
   text-decoration: none;
 }
 
-a:link {
+a:link,
+#logout {
   text-decoration: none;
 }
 
-a:visited {
+a:visited,
+#logout {
   text-decoration: none;
 }
 
-a:hover {
+a:hover,
+#logout {
   text-decoration: none;
 }
 
-a:active {
+a:active,
+#logout {
   text-decoration: none;
+  border: none;
 }
 
 .navbar-brand {

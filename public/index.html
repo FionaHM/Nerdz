@@ -26,7 +26,7 @@
 </head>
 
 <body>
-  <div class="alert page-alert alert-warning alert-dismissible" role="alert">
+  <div id="cookie-alert" class="alert page-alert alert-warning alert-dismissible" role="alert">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">Ok, got it!</span></button>
     <strong>We use cookies to improve your browsing experience. Continuing to use this website means you agree to our use of cookies.</strong></div>
   <!-- Large modal -->
@@ -202,6 +202,34 @@
     </div>
     <!-- /.modal-dialog -->
   </div>
+  <div class="modal fade reset-modal" tabindex="-1" role="dialog" aria-labelledby="myResetModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div id="reset-modal-content" class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">×</span>
+            <span class="sr-only">Close</span>
+          </button>
+          <h4 class="modal-title">Reset password</h4>
+        </div>
+        <h2 id="reset-message"></h2>
+        <div class="modal-body">
+          <p>Type your email account</p>
+          <input type="email" name="updateemail" id="updateemail" class="form-control" required autocomplete="off">
+          <p>Type your new password</p>
+          <input type="password" name="resetpass" id="resetpass" class="form-control" placeholder="New Pasword" required autocomplete="off">
+          <p>Confirm your new password</p>
+          <input type="password" name="confirmresetpass" id="confirmresetpass" class="form-control" placeholder="Confirm New Pasword" required autocomplete="off">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
+          <button id="loggedinreset" type="button" class="btn btn-success">Reset Password</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
   <!-- /.modal -->
   <!-- End of Password Recovery Modal -->
   <!-- Navbar -->
@@ -220,21 +248,21 @@
             </a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
-            <button class="btn btn-success" id="loginbtn" name="loginbtn">Login/Sign Up</button>
+            <button class="btn btn-success" id="loginbtn" name="loginbtn">Login to Take Quizzes</button>
             <ul class="nav navbar-nav">
               <li class="active"><a href="#">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+              <li id="logged-dropdown" class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">You are logged in<span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="#">Action</a></li>
-                  <li><a href="#">Another action</a></li>
-                  <li><a href="#">Something else here</a></li>
+                  <li><a href="questions.html">What Kind of Nerd Are You?</a></li>
+                  <li><a href="geeksornerds.html">Geek or Nerd?</a></li>
+                  <li><a href="graphs.html">Your Nerd Stats</a></li>
                   <li role="separator" class="divider"></li>
-                  <li class="dropdown-header">Nav header</li>
-                  <li><a href="#">Separated link</a></li>
-                  <li><a href="#">One more separated link</a></li>
+                  <li class="dropdown-header">Your Account</li>
+                  <li><a href="#" data-toggle="modal" data-target=".reset-modal">Update Password</a></li>
+                  <li>
+                    <button class="btn btn-primary-outline text-center" id="logout" name="logout">Logout</button>
+                  </li>
                 </ul>
               </li>
             </ul>
@@ -255,6 +283,7 @@
     <input type="button" class="btn btn-success" id="attach-btn" value="Attach Nerds" />
   </div>
   <script type="text/javascript">
+  loggedOutDom();
   $("#login-submit").on("click", function(event) {
     event.preventDefault();
     var loginObj = {
@@ -286,8 +315,7 @@
       .done(function(msg) {
 
 
-        $('#loginbtn').html("Logout");
-        $('#myModal').modal('hide');
+        loggedInDom();
 
         // $.get("/questionpage", function(){});
         console.log(msg);
@@ -323,8 +351,9 @@
         }
       })
       .done(function(msg) {
-         // $.get("/questionpage", function(){});
-         console.log(msg);
+        // $.get("/questionpage", function(){});
+        console.log(msg);
+        loggedInDom();
       })
       .fail(function(xhr, status, error) {
         // captures error so now we can handle
@@ -334,6 +363,19 @@
       })
   })
 
+  function loggedInDom() {
+
+    $('#loginbtn').hide();
+    $('#logged-dropdown').show();
+    $('#myModal').modal('hide');
+    $('#cookie-alert').hide();
+  }
+
+  function loggedOutDom() {
+    $('#loginbtn').show();
+    $('#logged-dropdown').hide();
+
+  }
 
   // // copied from stackoverflow.com
   // var createCookie = function(name, value, days) {
@@ -403,7 +445,7 @@
 
             var you = [results[1].address_components[3].short_name];
 
-            $("#navbar").append('<button class="btn btn-success" value="' + you + '"id="your-city" name="your-city">Zoom to your fellow nerds in ' + you + '</button>');
+            $("#navbar").append('<button class="btn btn-primary-outline" value="' + you + '"id="your-city" name="your-city">Zoom to your fellow nerds in ' + you + '</button>');
 
           } else {
 
@@ -424,6 +466,7 @@
   <script src="./js/modal.js" type="text/javascript"></script>
   <script src="./js/password.js" type="text/javascript"></script>
   <script src="./js/token.js" type="text/javascript"></script>
+  <script src="./js/logout.js" type="text/javascript"></script>
   <!--   <script src="./js/API.js"></script> -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAddiqSupF7BhNzmafgwWImSllcV_zGv7c&libraries=places&callback=initMap" async defer></script>
   <script src="./js/map-final.js" type="text/javascript"></script>
