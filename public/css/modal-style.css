@@ -88,7 +88,8 @@ div#OR {
   text-decoration: none;
 }
 
-#forget-modal-content {
+#forget-modal-content,
+#reset-modal-content {
   background-image: url("../img/map-shot.png");
   background-repeat: none;
   background-size: cover;

@@ -15,12 +15,41 @@
   <script src="https://www.amcharts.com/lib/3/themes/dark.js"></script>
   <script src="https://www.amcharts.com/lib/3/themes/chalk.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/modal-style.css">
   <link rel="stylesheet" href="./css/chart-style.css">
   <script src="https://code.jquery.com/jquery.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 
 <body>
+  <div class="modal fade reset-modal" tabindex="-1" role="dialog" aria-labelledby="myResetModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div id="reset-modal-content" class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">×</span>
+            <span class="sr-only">Close</span>
+          </button>
+          <h4 class="modal-title">Reset password</h4>
+        </div>
+        <h2 id="reset-message"></h2>
+        <div class="modal-body">
+          <p>Type your email account</p>
+          <input type="email" name="updateemail" id="updateemail" class="form-control" required autocomplete="off">
+          <p>Type your new password</p>
+          <input type="password" name="resetpass" id="resetpass" class="form-control" placeholder="New Pasword" required autocomplete="off">
+          <p>Confirm your new password</p>
+          <input type="password" name="confirmresetpass" id="confirmresetpass" class="form-control" placeholder="Confirm New Pasword" required autocomplete="off">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
+          <button id="loggedinreset" type="button" class="btn btn-success">Reset Password</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
   <div class="navbar-wrapper">
     <div class="container">
       <nav class="navbar navbar-inverse navbar-static-top">
@@ -36,21 +65,20 @@
             </a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
-            <button class="btn btn-success" id="logout" name="logout">Logout</button>
             <ul class="nav navbar-nav">
-              <li class="active"><a href="index.html">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+              <li class="active"><a href="#">Home</a></li>
+              <li id="logged-dropdown" class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">You are logged in<span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="#">Action</a></li>
-                  <li><a href="#">Another action</a></li>
-                  <li><a href="#">Something else here</a></li>
+                  <li><a href="questions.html">What Kind of Nerd Are You?</a></li>
+                  <li><a href="geeksornerds.html">Geek or Nerd?</a></li>
+                  <li><a href="graphs.html">Your Nerd Stats</a></li>
                   <li role="separator" class="divider"></li>
-                  <li class="dropdown-header">Nav header</li>
-                  <li><a href="#">Separated link</a></li>
-                  <li><a href="#">One more separated link</a></li>
+                  <li class="dropdown-header">Your Account</li>
+                  <li><a href="#" data-toggle="modal" data-target=".reset-modal">Update Password</a></li>
+                  <li>
+                    <button class="btn btn-primary-outline text-center" id="logout" name="logout">Logout</button>
+                  </li>
                 </ul>
               </li>
             </ul>
@@ -84,6 +112,8 @@
       </div>
     </div>
   </div>
+  <script src="./js/modal.js" type="text/javascript"></script>
+  <script src="./js/password.js" type="text/javascript"></script>
   <script src="./js/anim-donut.js" type="text/javascript"></script>
   <script src="./js/indie-donut.js" type="text/javascript"></script>
   <script src="./js/gauge.js" type="text/javascript"></script>
@@ -91,10 +121,6 @@
   <script src="./js/logout.js" type="text/javascript"></script>
 </body>
 <script type="text/javascript">
-
-
-
-
 // $.ajaxSetup({
 //     beforeSend: function(xhr) {
 //       xhr.setRequestHeader("Accept", "application/vvv.website+json;version=1");
@@ -126,7 +152,6 @@ $.get('/cat', function(data) {
   // $('#err-message2').html('<h3 class="warning">' + xhr.responseText);
   console.log(xhr.responseText, xhr.statusText);
 })
-
 </script>
 
 </html>

@@ -9,12 +9,13 @@
 
 
 
-
 //Interval controls speed of carousel. Wrap: false stops it from cycling back to first question
 $('#myCarousel').carousel({
     interval: 8000,
     wrap: false
 });
+
+
 
 $.ajaxSetup({
     beforeSend: function(xhr) {
@@ -23,9 +24,9 @@ $.ajaxSetup({
     }
 });
 
+
 // get the questions
 $.get("/question", function(data) {
-
 
     // loop through the results and paint the dom
     for (var i = 0; i < data.length; i++) {
