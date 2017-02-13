@@ -41,7 +41,7 @@ $.get('/cat', function(data) {
 
         category: "CULTURE",
         answer: '<p>Friends sometimes tire of the way you burst into song at random moments, but there is no denying you bring creativity and zest for life to every gathering. While you may occasionally retire to your room to ruminate on the poetry of Rilke, your gregarious nature and love of beauty keep you from becoming too solitary.</p>',
-        img: '<img class="media-object img-responsive" src="./img/band-nerd.png">',
+        img: '',
         color: '#EA4335'
     }, {
         category: 'ENGINEERING',
@@ -50,17 +50,17 @@ $.get('/cat', function(data) {
         color: '#FBBC05'
     }, {
         category: 'MUSIC',
-        answer: 'Maybe band camp was the best summer of your life.  Maybe you were a Gleek before it was cool.  Or maybe you moonlight on Saturdays as your alter ego, DJ SkittleByte. Either way, you are a hardcore Music Nerd, and you\'re not changing for anyone.',
+        answer: 'Band camp was the best summer of your life.  You were a Gleek both before and after it was cool.  By night you spin as your alter ego, DJ SkittleByte, but you can still shred on the tuba when the situation calls for it.',
         img: 'assets/images/farley.gif',
         color: '#34A853'
     }, {
         category: 'SCIENCE',
-        answer: 'You love SCIENCE',
+        answer: 'You garnish your fries with NaCl. You have a basement lab. You see the glass as completely full, half with liquid and half with air. Go forth, Science Nerd!',
         img: 'assets/images/farley.gif',
         color: '#800080'
     }, {
         category: 'TECHNOLOGY',
-        answer: 'You love technology',
+        answer: 'You refer to eating and drinking as "uploading", pay for your socks using Bitcoin, and know more IP addresses than phone numbers. Cute nerds want to date you, and your boss wants to BE you.',
         img: 'assets/images/farley.gif',
         color: '#4285F4'
     }];
