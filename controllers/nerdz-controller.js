@@ -68,7 +68,6 @@ function router(app) {
             // set token as null initially
             var token = null;
             // checks the request header for the token
-            console.log("auth", auth);
             if (auth == "login") {
                 // console.log(req.headers.authorization);
                 if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
@@ -300,7 +299,7 @@ function router(app) {
             // }
 
         }).catch(function(err) {
-            console.log(err);
+            // console.log(err);
             message = err.errors[0].message;
             return res.status(401).send(message);
             // res.json(err.errors[0].message);
@@ -493,6 +492,7 @@ function router(app) {
                             outputObj[k + 1] = outputArr[k][k + 1];
                         }
                         // console.log("arr", outputArr[0][1]);
+                        console.log(outputObj);
                         res.json(outputObj);
                     })
             })
