@@ -1,4 +1,5 @@
 <body>
+
   <div class="jumbotron">
     <div class="row">
       <div class="col-sm-4"></div>
@@ -8,7 +9,12 @@
         <h3 class="text-center">Please enter your new password: </h3>
         <form method="POST" action="/password/mail/reset" id="submit-form" class="text-center">
           {{#if token}}
-          <input type="hidden" value="{{ token }}" name="token" /> {{/if}}
+          <input type="hidden" value="{{ token }}" name="token" /> 
+          {{/if}}
+          
+          {{#if message}}
+		      Error: {{ message }}
+	        {{/if}}
           <p class="input-form">
             <div class="form-input-title">New Password</div>
             <input required class="form-control" type="password" name="newpassword" id="newpassword" maxlength="32">
@@ -28,4 +34,5 @@
       <div class="col-sm-4"></div>
     </div>
   </div>
+
 </body>

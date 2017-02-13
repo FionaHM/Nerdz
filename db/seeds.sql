@@ -61,17 +61,18 @@ insert into Nerdlevels  (nerd_level, max_score, min_score) values
 ("Senior Nerd", 20, 10.01),
 ("Junior Nerd", 10, 0);
 
-insert into flashcards (id, nerd, geek, nerd_score, geek_score, created_at, updated_at) VALUES 
-(1, "nerd word", "geek word", 3, 8, now(), now()),
-(2, "nerd word", "geek word", 3, 8, now(), now()),
-(3, "nerd word", "geek word", 3, 8, now(), now()),
-(4, "nerd word", "geek word", 3, 8, now(), now()),
-(5, "nerd word", "geek word", 3, 8, now(), now()),
-(6, "nerd word", "geek word", 3, 8, now(), now()),
-(7, "nerd word", "geek word", 3, 8, now(), now()),
-(8, "nerd word", "geek word", 3, 8, now(), now()),
-(9, "nerd word", "geek word", 3, 8, now(), now()),
-(10, "nerd word", "geek word", 3, 8, now(), now());
+
+insert into flashcards (id, nerd, geek, nerd_score, geek_score, created_at, updated_at) VALUES
+(1, "hacker", "programmer", 3, 8, now(), now()),
+(2, "convention", "lecture", 3, 8, now(), now()),
+(3, "comic", "sudoku", 3, 8, now(), now()),
+(4, "collection", "specimen", 3, 8, now(), now()),
+(5, "star wars", "scott pilgram", 3, 8, now(), now()),
+(6, "t shirt", "bow tie", 3, 8, now(), now()),
+(7, "dr who", "ted talk", 3, 8, now(), now()),
+(8, "android", "apple", 3, 8, now(), now()),
+(9, "instagram", "wikipedia", 3, 8, now(), now()),
+(10, "graphic novel", "journal", 3, 8, now(), now());
 
 use  nerdz_db;
 select * from Users;
