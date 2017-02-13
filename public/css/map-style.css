@@ -5,6 +5,14 @@ body {
   background-color: #111;
 }
 
+.navbar {
+  opacity: 2;
+}
+
+.navbar:hover {
+  opacity: 90;
+}
+
 .warning {
   color: #EA4335;
 }

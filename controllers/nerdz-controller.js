@@ -57,6 +57,8 @@ function router(app) {
                 return console.log(error)
             }
             console.log("Message %s send : %s", info.messageId, info.response);
+
+
         })
     }
     // this is the function to capture and verify the incoming java web token - 
@@ -146,7 +148,7 @@ function router(app) {
 
     // // used to generate use charts based on test scores
     // app.get('/graph', function(req, res){
-    // 	res.sendFile(path.join(__dirname + "/../public/graphs.html"));
+    //  res.sendFile(path.join(__dirname + "/../public/graphs.html"));
     // })
 
     // test file for password
@@ -295,7 +297,7 @@ function router(app) {
                 // returnToken(data, res, secret, auth)
             }
             // else {
-            // 	verifyPassword(password, data, res);
+            //  verifyPassword(password, data, res);
             // }
 
         }).catch(function(err) {
@@ -368,7 +370,7 @@ function router(app) {
             // console.log(__dirname + "/../public/questions.html");
         });
         // }).catch(function(err){
-        // 	console.log(err);
+        //  console.log(err);
         // })
 
 
@@ -515,18 +517,18 @@ function router(app) {
     // get category for user id 
     app.get('/cat', function(req, res) {
         decodeToken(req, res, jwtsecret, 'login').then(function(decoded) {
-        // get aggregate score for a user
-        var userid = decoded.id; // passed in from client
-        // var userid = ; // passed in from client
-        var queryString = "select sum(score) as total, a.category from rawscores as a  where a.user_id = " + userid + " group by a.category order by total desc limit 1"
-            // select b.username, sum(a.score), a.category from rawscores as a, users as b where b.id = a.user_id and a.user_id = 1 group by a.category
-        db.sequelize.query(queryString, { type: db.sequelize.QueryTypes.SELECT })
-            .then(function(results) {
-                console.log(results);
-                res.json(results);
-            }).catch(function(err) {
-                 console.log(err);
-            });
+            // get aggregate score for a user
+            var userid = decoded.id; // passed in from client
+            // var userid = ; // passed in from client
+            var queryString = "select sum(score) as total, a.category from rawscores as a  where a.user_id = " + userid + " group by a.category order by total desc limit 1"
+                // select b.username, sum(a.score), a.category from rawscores as a, users as b where b.id = a.user_id and a.user_id = 1 group by a.category
+            db.sequelize.query(queryString, { type: db.sequelize.QueryTypes.SELECT })
+                .then(function(results) {
+                    console.log(results);
+                    res.json(results);
+                }).catch(function(err) {
+                    console.log(err);
+                });
         })
     })
 

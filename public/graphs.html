@@ -32,12 +32,13 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Nerdz</a>
+            <a class="navbar-brand" href="index.html"><img id="brand-img" src="./img/nerd-icon-small.png">
+            </a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <button class="btn btn-success" id="logout" name="logout">Logout</button>
             <ul class="nav navbar-nav">
-              <li class="active"><a href="#">Home</a></li>
+              <li class="active"><a href="index.html">Home</a></li>
               <li><a href="#about">About</a></li>
               <li><a href="#contact">Contact</a></li>
               <li class="dropdown">
@@ -70,15 +71,18 @@
         <div class="text-center" id="chartdiv"></div>
       </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 col-sm-6">
-      <p>You are a Culture Nerd! Friends sometimes tire of the way you burst into song at random moments, but there's no denying you bring creativity and zest for life to every gathering. While you may occasionally retire to your room to ruminate on the poetry of Rilke, your gregarious nature and love of beauty keep you from becoming too solitary.</p>
+    <div class="row">
+      <div class="media col-xs-12 col-sm-6">
+        <div id="nerd-image" class="media-left">
+        </div>
+        <div class="media-body" id="nerd-category">
+          <h2 class="media-heading" id="nerd-title"></h2>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div id="gauge-div"></div>
+      </div>
     </div>
-    <div class="col-xs-12 col-sm-6">
-      <div id="gauge-div"></div>
-    </div>
-  </div>
   </div>
   <script src="./js/anim-donut.js" type="text/javascript"></script>
   <script src="./js/indie-donut.js" type="text/javascript"></script>
@@ -87,6 +91,8 @@
   <script src="./js/logout.js" type="text/javascript"></script>
 </body>
 <script type="text/javascript">
+
+
 
 
 // $.ajaxSetup({

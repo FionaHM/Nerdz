@@ -5,6 +5,18 @@
   background: #000;
 }
 
+.navbar {
+  opacity: 0;
+}
+
+#brand-img {
+  margin-top: -7px;
+}
+
+.navbar:hover {
+  opacity: 90;
+}
+
 .modal-header {
   color: #eee;
   border: none;

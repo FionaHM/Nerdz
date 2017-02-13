@@ -26,6 +26,7 @@ $.ajaxSetup({
 // get the questions
 $.get("/question", function(data) {
 
+
     // loop through the results and paint the dom
     for (var i = 0; i < data.length; i++) {
         var category = '';
