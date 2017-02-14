@@ -32,11 +32,12 @@ function router(app) {
 
     function passwordResetEmail(email, token) {
         // this part creates a reusable transporter using SMTP of gmail
+        var emailAccountPassword = process.env.TEAM_EMAIL || '';
         var transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
                 user: 'nerdzquiz@gmail.com',
-                pass: 'JessicaFionaCharles' ///to be removed and changed
+                pass:  emailAccountPassword///to be removed and changed
             }
         });
         var link = " http://localhost:8080/forgot/" + token; //API TO RESET PASSWORD
