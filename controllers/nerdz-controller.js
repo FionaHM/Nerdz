@@ -93,7 +93,7 @@ function router(app) {
                     // res.status(401).send({ message: 'invalid_token' });
                     // res.json({ message: 'invalid_token' });
                     var message = { message: 'invalid_token' };
-                    reject(message);
+                    reject(message.message);
                 } else {
                     // pass the decoded token for use by the api
                     resolve(decoded);
@@ -117,8 +117,8 @@ function router(app) {
     function returnToken(res, secret, auth, data) {
         if (auth === "login") {
             // this token is stored as a cookie on client and sent in AJAX Header
-            // token expires in 30 mins 
-            var myToken = jwt.sign({ id: data.id, email: data.email, username: data.username }, secret, { expiresIn: 60 * 30 });
+            // token expires in 60 mins 
+            var myToken = jwt.sign({ id: data.id, email: data.email, username: data.username }, secret, { expiresIn: 60 * 60 });
             // console.log(token);
             res.json(myToken);
             return;
@@ -155,6 +155,12 @@ function router(app) {
             res.status(401).send(err);
         });     
     })
+   
+   // pop up login modal
+   app.get('/modal/login', function(req, res) {
+        res.sendFile(path.join(__dirname + "/../public/modal_login.html"));
+    })
+
 
     app.get('/flashcards', function(req, res){
         decodeToken(req, res, jwtsecret, 'login').then(function(decoded) {
@@ -220,11 +226,14 @@ function router(app) {
 
     function passwordReset(req, res, secret, action, token){
         decodeToken(req, res, secret, action, token).then(function(decoded) {
+            console.log(decoded);
             // use data in token to create temp password
             var email = decoded.email;
             //// take password from body
+
             var newpassword = req.body.newpassword;
             var confirmpassword = req.body.confirmpassword;
+             // console.log(newpassword,confirmpassword );
             // confirm passwords match and reset
             var passwordmatch = false;
             // verify passwords match
@@ -252,7 +261,8 @@ function router(app) {
     }
 
     // user can change password when logged in with auth token
-    app.post('/password/reset/', function(req, res) {
+    app.post('/password/reset', function(req, res) {
+        console.log(req.headers.authorization);
         // decodeToken(req, res, jwtsecret, 'login').then(function(decoded) {
             passwordReset(req, res, jwtsecret, 'login');
         //     // use data in token to create temp password
@@ -617,7 +627,6 @@ function router(app) {
                         limit: 1
                     }).then(function(data) {
                         var nerdObj = { nerd_level : data[0].nerd_level};
-                        // console.log(nerdObj, "nerdobj", data , "data");
                         // finally update the nerd_level in the user table
                         db.User.update(
                             {nerd_level: data[0].nerd_level, 

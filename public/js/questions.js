@@ -1,14 +1,3 @@
-// clear the div
-
-// $('.add-questions').html("");
-
-// send auth-token in header
-// getCookie('auth_token');
-// console.log(getCookie('auth_token'));
-
-
-
-
 //Interval controls speed of carousel. Wrap: false stops it from cycling back to first question
 $('#myCarousel').carousel({
     interval: 8000,
@@ -86,10 +75,12 @@ $.get("/question", function(data) {
     // console.log(msg)
 }).fail(function(xhr, status, error) {
     // captures error so now we can handle
-    console.log(xhr.responseText, xhr.statusText);
+    console.log(xhr.responseText.message, xhr.statusText);
+
+    
     // redirect to login
     window.location.replace("../");
-    // alert('Error, please try again');
+   
 })
 
 // submit the answers

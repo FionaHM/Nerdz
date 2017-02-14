@@ -18,7 +18,8 @@ $("#loggedinreset").on("click", function() {
 
     var userObj = {
             // email: $('#updateemail').val(),
-            password: $('#confirmresetpass').val()
+            newpassword: $('#resetpass').val(),
+            confirmpassword: $('#confirmresetpass').val()
         }
         // store the email for use when resetting password
         // createCookie("user_email", $("#existing-user-email").val(), 0);
