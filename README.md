@@ -26,7 +26,7 @@ Using a proprietary API and powerful algorithms, the Nerdz Team will calculate y
 ![nerd type survey](/public/img/nerd-survey.png?raw=true "Nerd Type Survey")
 
 ## Nerd Stats
-After you have taken the survey, view a series of graphs illustrating your results.  See if you can make it all the way to "Master Nerd" in your preferred category. See how you match up with other nerds; maybe you have finally found your tribe!
+After you have taken the survey, view a series of graphs illustrating your results.  See if you can make it all the way to "Master Nerd" in your preferred category. Discover how you match up with other nerds; maybe you have finally found your tribe!
 
 ![nerd stats](/public/img/graphs.png?raw=true "Nerd Stats")
 
