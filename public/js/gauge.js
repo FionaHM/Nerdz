@@ -6,29 +6,24 @@ $.get('/cat', function(data) {
 
     var nerdCategories = [{
 
-        category: "CULTURE",
-        answer: '<p>Friends sometimes tire of the way you burst into song at random moments, but there is no denying you bring creativity and zest for life to every gathering. While you may occasionally retire to your room to ruminate on the poetry of Rilke, your gregarious nature and love of beauty keep you from becoming too solitary.</p>',
-        img: '',
+        category: "FANTASY",
+        answer: '<p>LARPing, Cosplay, Magic: The Gathering...you are the Dungeon Master of all Nerddom.  Maybe sell some of those collectors items on eBay, if only to free up some space in your parents\' basement.</p>',
         color: '#EA4335'
     }, {
         category: 'ENGINEERING',
-        answer: 'You love ENGINEERING',
-        imgsrc: 'assets/images/farley.gif',
+        answer: 'If you build it, they will come. Whether in the real or virtual world, you love to design things, take them apart, and re-design them.  You provide a vital service to nerds and civilians alike.',
         color: '#FBBC05'
     }, {
         category: 'MUSIC',
         answer: 'Band camp was the best summer of your life.  You were a Gleek both before and after it was cool.  By night you spin as your alter ego, DJ SkittleByte, but you can still shred on the tuba when the situation calls for it.',
-        img: 'assets/images/farley.gif',
         color: '#34A853'
     }, {
         category: 'SCIENCE',
         answer: 'You garnish your fries with NaCl. You have a basement lab. You see the glass as completely full, half with liquid and half with air. Go forth, Science Nerd!',
-        img: 'assets/images/farley.gif',
         color: '#800080'
     }, {
         category: 'TECHNOLOGY',
         answer: 'You refer to eating and drinking as "uploading", pay for your socks using Bitcoin, and know more IP addresses than phone numbers. Cute nerds want to date you, and your boss wants to BE you.',
-        img: 'assets/images/farley.gif',
         color: '#4285F4'
     }];
 
