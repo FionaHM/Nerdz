@@ -1,0 +1,64 @@
+body,
+html {
+  background-image: url(../img/galaxy.gif);
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #eee;
+}
+
+.navbar {
+  opacity: 0;
+}
+
+#brand-img {
+  margin-top: -7px;
+}
+
+.navbar:hover {
+  opacity: 90;
+}
+
+.modal-header {
+  color: #eee;
+  border: none;
+  font-family: 'Share Tech', sans-serif;
+}
+
+.selected {
+  background: black;
+  height: 200px;
+  width: 200px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  padding: 40px 15px;
+  background: radial-gradient(circle at 100px 100px, #5cabff, #000);
+}
+
+.circle {
+  display: block;
+  background: black;
+  border-radius: 50%;
+  margin: 0;
+  background: radial-gradient(circle at 100px 100px, #5cabff, #000);
+}
+
+.geekornerd {
+  background: transparent;
+  border: none;
+  padding: 80px;
+}
+
+#logout,
+#your-city,
+.btn-primary-outline {
+  background-color: transparent;
+  border-color: #ccc;
+  color: #030303;
+}
+
+#geek,
+#nerd {
+  color: #eee;
+  text-shadow: 1px 1px 2px #555;
+}
