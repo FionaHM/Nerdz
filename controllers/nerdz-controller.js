@@ -13,6 +13,7 @@ var jwtsecret = process.env.JWT_SECRET || "putthisinaseparatefile";
 // secret for login auth token
 var pwdsecret = process.env.PWD_SECRET || "icantbelieveyouforgotyourpassword";
 
+
 var twitter = require("ntwitter");
 
 
@@ -27,6 +28,7 @@ var twit = new twitter({
 
 // var app = require('express').createServer(),
 //     twitter
+
 
 
 function router(app) {
@@ -188,11 +190,7 @@ function router(app) {
         });
 
     })
-
-
- 
-   
-
+  
     app.get('/', function(req, res) {
         res.sendFile(path.join(__dirname + '/../public/index.html'));
     })

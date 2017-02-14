@@ -57,6 +57,7 @@ latlong["IL"] = {
     "latitude": 40.349457,
     "longitude": -88.986137
 };
+
 latlong["IN"] = {
     "latitude": 39.849426,
     "longitude": -86.258278
@@ -1230,7 +1231,7 @@ $.get("/map", function(data) {
     var max = -Infinity;
     for (var i = 0; i < mapData.length; i++) {
         var value = mapData[i].total;
- 
+
         if (value < min) {
             min = value;
         }
@@ -1302,7 +1303,7 @@ $.get("/map", function(data) {
         // create circle for each country
         for (var i = 0; i < mapData.length; i++) {
             var dataItem = mapData[i];
-            console.log( mapData[i].location);
+            console.log(mapData[i].location);
             var value = dataItem.total;
 
             if (mapData[i].location === null) {

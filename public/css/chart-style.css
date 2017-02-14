@@ -13,6 +13,15 @@
   margin-top: -7px;
 }
 
+#logout,
+.btn-primary-outline {
+  background-color: transparent;
+  border-color: #ccc;
+  color: #eee;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
 .navbar:hover {
   opacity: 90;
 }
