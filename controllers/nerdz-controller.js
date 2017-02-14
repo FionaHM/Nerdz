@@ -533,12 +533,11 @@ function router(app) {
     // get all users data for the map
     app.get('/map', function(req, res) {
         // select a count of users by category and location
-        var total = 50;
+        // var total = 50;
         var queryString = "select count(b.id) as total, b.overall_category, b.location from users as b group by b.location, b.overall_category";
         // select b.username, sum(a.score), a.category from rawscores as a, users as b where b.id = a.user_id and a.user_id = 1 group by a.category
         db.sequelize.query(queryString, { type: db.sequelize.QueryTypes.SELECT })
             .then(function(results) {
-                console.log(results);
                 res.json(results);
             })
     })
@@ -616,7 +615,21 @@ function router(app) {
                         order: 'max_score DESC',
                         limit: 1
                     }).then(function(data) {
-                        res.json(data);
+                        var nerdObj = { nerd_level : data[0].nerd_level};
+                        // console.log(nerdObj, "nerdobj", data , "data");
+                        // finally update the nerd_level in the user table
+                        db.User.update(
+                            {nerd_level: data[0].nerd_level, 
+                            overall_category: category }, 
+                            {where : { id : userid }}, 
+                            {fields: ['nerd_level', 'overall_category']}
+                        ).catch(function(err){
+                            console.log(err);
+                        });
+                        // console.log(nerdObj, "nerdobj");
+                        return nerdObj;     
+                    }).then(function(nerdObj){
+                        res.json(nerdObj);
                     }).catch(function(err) {
                         res.status(400).send("Nerd Level Not Found");
                     })

@@ -63,251 +63,189 @@
 ["DO"] = {
 dlatitude": 19,
 dlongitude": -70.6667
-};
 ["DZ"] = {
 dlatitude": 28,
 dlongitude": 3
-};
 ["EC"] = {
 dlatitude": -2,
 dlongitude": -77.5
-};
 ["EE"] = {
 dlatitude": 59,
 dlongitude": 26
-};
 ["EG"] = {
 dlatitude": 27,
 dlongitude": 30
-};
 ["EH"] = {
 dlatitude": 24.5,
 dlongitude": -13
-};
 ["ER"] = {
 dlatitude": 15,
 dlongitude": 39
-};
 ["ES"] = {
 dlatitude": 40,
 dlongitude": -4
-};
 ["ET"] = {
 dlatitude": 8,
 dlongitude": 38
-};
 ["EU"] = {
 dlatitude": 47,
 dlongitude": 8
-};
 ["FI"] = {
 dlatitude": 62,
 dlongitude": 26
-};
 ["FJ"] = {
 dlatitude": -18,
 dlongitude": 175
-};
 ["FK"] = {
 dlatitude": -51.75,
 dlongitude": -59
-};
 ["FM"] = {
 dlatitude": 6.9167,
 dlongitude": 158.25
-};
 ["FO"] = {
 dlatitude": 62,
 dlongitude": -7
-};
 ["FR"] = {
 dlatitude": 46,
 dlongitude": 2
-};
 ["GAB"] = {
 dlatitude": -1,
 dlongitude": 11.75
-};
 ["GB"] = {
 dlatitude": 54,
 dlongitude": -2
-};
 ["GD"] = {
 dlatitude": 12.1167,
 dlongitude": -61.6667
-};
 ["GE"] = {
 dlatitude": 42,
 dlongitude": 43.5
-};
 ["GF"] = {
 dlatitude": 4,
 dlongitude": -53
-};
 ["GH"] = {
 dlatitude": 8,
 dlongitude": -2
-};
 ["GI"] = {
 dlatitude": 36.1833,
 dlongitude": -5.3667
-};
 ["GL"] = {
 dlatitude": 72,
 dlongitude": -40
-};
 ["GM"] = {
 dlatitude": 13.4667,
 dlongitude": -16.5667
-};
 ["GN"] = {
 dlatitude": 11,
 dlongitude": -10
-};
 ["GP"] = {
 dlatitude": 16.25,
 dlongitude": -61.5833
-};
 ["GQ"] = {
 dlatitude": 2,
 dlongitude": 10
-};
 ["GR"] = {
 dlatitude": 39,
 dlongitude": 22
-};
 ["GS"] = {
 dlatitude": -54.5,
 dlongitude": -37
-};
 ["GT"] = {
 dlatitude": 15.5,
 dlongitude": -90.25
-};
 ["GU"] = {
 dlatitude": 13.4667,
 dlongitude": 144.7833
-};
 ["GW"] = {
 dlatitude": 12,
 dlongitude": -15
-};
 ["GY"] = {
 dlatitude": 5,
 dlongitude": -59
-};
 ["HK"] = {
 dlatitude": 22.25,
 dlongitude": 114.1667
-};
 ["JH"] = {
 dlatitude": 40.3,
 dlongitude": -89
-};
 ["HM"] = {
 dlatitude": -53.1,
 dlongitude": 72.5167
-};
 ["HN"] = {
 dlatitude": 15,
 dlongitude": -86.5
-};
 ["HR"] = {
 dlatitude": 45.1667,
 dlongitude": 15.5
-};
 ["HT"] = {
 dlatitude": 19,
 dlongitude": -72.4167
-};
 ["HU"] = {
 dlatitude": 47,
 dlongitude": 20
-};
 ["IDA"] = {
 dlatitude": -5,
 dlongitude": 120
-};
 ["IE"] = {
 dlatitude": 53,
 dlongitude": -8
-};
 ["ISL"] = {
 dlatitude": 31.5,
 dlongitude": 34.75
-};
 ["IND"] = {
 dlatitude": 20,
 dlongitude": 77
-};
 ["IO"] = {
 dlatitude": -6,
 dlongitude": 71.5
-};
 ["IQ"] = {
 dlatitude": 33,
 dlongitude": 44
-};
 ["IR"] = {
 dlatitude": 32,
 dlongitude": 53
-};
 ["IS"] = {
 dlatitude": 65,
 dlongitude": -18
-};
 ["IT"] = {
 dlatitude": 42.8333,
 dlongitude": 12.8333
-};
 ["JM"] = {
 dlatitude": 18.25,
 dlongitude": -77.5
-};
 ["JO"] = {
 dlatitude": 31,
 dlongitude": 36
-};
 ["JP"] = {
 dlatitude": 36,
 dlongitude": 138
-};
 ["KE"] = {
 dlatitude": 1,
 dlongitude": 38
-};
 ["KG"] = {
 dlatitude": 41,
 dlongitude": 75
-};
 ["KH"] = {
 dlatitude": 13,
 dlongitude": 105
-};
 ["KI"] = {
 dlatitude": 1.4167,
 dlongitude": 173
-};
 ["KM"] = {
 dlatitude": -12.1667,
 dlongitude": 44.25
-};
 ["KN"] = {
 dlatitude": 17.3333,
 dlongitude": -62.75
-};
 ["KP"] = {
 dlatitude": 40,
 dlongitude": 127
-};
 ["KR"] = {
 dlatitude": 37,
 dlongitude": 127.5
-};
 ["KW"] = {
 dlatitude": 29.3375,
 dlongitude": 47.6581
-};
 // ["KY"] = {
 // dlatitude": 19.5,
 // dlongitude": -80.5
@@ -315,91 +253,69 @@ dlongitude": 47.6581
 ["KZ"] = {
 dlatitude": 48,
 dlongitude": 68
-};
 ["LAO"] = {
 dlatitude": 18,
 dlongitude": 105
-};
 ["LB"] = {
 dlatitude": 33.8333,
 dlongitude": 35.8333
-};
 ["LC"] = {
 dlatitude": 13.8833,
 dlongitude": -61.1333
-};
 ["LI"] = {
 dlatitude": 47.1667,
 dlongitude": 9.5333
-};
 ["LK"] = {
 dlatitude": 7,
 dlongitude": 81
-};
 ["LR"] = {
 dlatitude": 6.5,
 dlongitude": -9.5
-};
 ["LS"] = {
 dlatitude": -29.5,
 dlongitude": 28.5
-};
 ["LT"] = {
 dlatitude": 55,
 dlongitude": 24
-};
 ["LU"] = {
 dlatitude": 49.75,
 dlongitude": 6
-};
 ["LV"] = {
 dlatitude": 57,
 dlongitude": 25
-};
 ["LY"] = {
 dlatitude": 25,
 dlongitude": 17
-};
 ["MAR"] = {
 dlatitude": 32,
 dlongitude": -5
-};
 ["MC"] = {
 dlatitude": 43.7333,
 dlongitude": 7.4
-};
 ["MOD"] = {
 dlatitude": 47,
 dlongitude": 29
-};
 ["MEN"] = {
 dlatitude": 42.5,
 dlongitude": 19.4
-};
 ["MG"] = {
 dlatitude": -20,
 dlongitude": 47
-};
 ["MH"] = {
 dlatitude": 9,
 dlongitude": 168
-};
 ["MK"] = {
 dlatitude": 41.8333,
 dlongitude": 22
-};
 ["ML"] = {
 dlatitude": 17,
 dlongitude": -4
-};
 ["MM"] = {
 dlatitude": 22,
 dlongitude": 98
-};
 ["MON"] = {
 dlatitude": 46,
 dlongitude": 105
-};
 // ["MO"] = {
 // dlatitude": 22.1667,
 // dlongitude": 113.55
@@ -407,15 +323,12 @@ dlongitude": 105
 ["MP"] = {
 dlatitude": 15.2,
 dlongitude": 145.75
-};
 ["MQ"] = {
 dlatitude": 14.6667,
 dlongitude": -61
-};
 ["MR"] = {
 dlatitude": 20,
 dlongitude": -12
-};
 // ["MS"] = {
 // dlatitude": 16.75,
 // dlongitude": -62.2
@@ -427,31 +340,24 @@ dlongitude": -12
 ["MU"] = {
 dlatitude": -20.2833,
 dlongitude": 57.55
-};
 ["MV"] = {
 dlatitude": 3.25,
 dlongitude": 73
-};
 ["MW"] = {
 dlatitude": -13.5,
 dlongitude": 34
-};
 ["MX"] = {
 dlatitude": 23,
 dlongitude": -102
-};
 ["MY"] = {
 dlatitude": 2.5,
 dlongitude": 112.5
-};
 ["MZ"] = {
 dlatitude": -18.25,
 dlongitude": 35
-};
 ["NA"] = {
 dlatitude": -22,
 dlongitude": 17
-};
 // ["NC"] = {
 // dlatitude": -21.5,
 // dlongitude": 165.5
@@ -459,131 +365,99 @@ dlongitude": 17
 ["NER"] = {
 dlatitude": 16,
 dlongitude": 8
-};
 ["NF"] = {
 dlatitude": -29.0333,
 dlongitude": 167.95
-};
 ["NG"] = {
 dlatitude": 10,
 dlongitude": 8
-};
 ["NI"] = {
 dlatitude": 13,
 dlongitude": -85
-};
 ["NL"] = {
 dlatitude": 52.5,
 dlongitude": 5.75
-};
 ["NO"] = {
 dlatitude": 62,
 dlongitude": 10
-};
 ["NP"] = {
 dlatitude": 28,
 dlongitude": 84
-};
 ["NR"] = {
 dlatitude": -0.5333,
 dlongitude": 166.9167
-};
 ["NU"] = {
 dlatitude": -19.0333,
 dlongitude": -169.8667
-};
 ["NZ"] = {
 dlatitude": -41,
 dlongitude": 174
-};
 ["OM"] = {
 dlatitude": 21,
 dlongitude": 57
-};
 ["PAN"] = {
 dlatitude": 9,
 dlongitude": -80
-};
 ["PE"] = {
 dlatitude": -10,
 dlongitude": -76
-};
 ["PF"] = {
 dlatitude": -15,
 dlongitude": -140
-};
 ["PG"] = {
 dlatitude": -6,
 dlongitude": 147
-};
 ["PH"] = {
 dlatitude": 13,
 dlongitude": 122
-};
 ["PK"] = {
 dlatitude": 30,
 dlongitude": 70
-};
 ["PL"] = {
 dlatitude": 52,
 dlongitude": 20
-};
 ["PM"] = {
 dlatitude": 46.8333,
 dlongitude": -56.3333
-};
 ["PR"] = {
 dlatitude": 18.25,
 dlongitude": -66.5
-};
 ["PS"] = {
 dlatitude": 32,
 dlongitude": 35.25
-};
 ["PT"] = {
 dlatitude": 39.5,
 dlongitude": -8
-};
 ["PW"] = {
 dlatitude": 7.5,
 dlongitude": 134.5
-};
 ["PY"] = {
 dlatitude": -23,
 dlongitude": -58
-};
 ["QA"] = {
 dlatitude": 25.5,
 dlongitude": 51.25
-};
 ["RE"] = {
 dlatitude": -21.1,
 dlongitude": 55.6
-};
 ["RO"] = {
 dlatitude": 46,
 dlongitude": 25
-};
 ["RS"] = {
 dlatitude": 44,
 dlongitude": 21
-};
 ["RU"] = {
 dlatitude": 60,
 dlongitude": 100
-};
 ["RW"] = {
 dlatitude": -2,
 dlongitude": 30
-};
 ["SA"] = {
 dlatitude": 25,
 dlongitude": 45
-};
 ["SB"] = {
 dlatitude": -8,
 dlongitude": 159
-};
 // ["SC"] = {
 // dlatitude": -4.5833,
 // dlongitude": 55.6667
@@ -591,151 +465,114 @@ dlongitude": 159
 ["SUD"] = {
 dlatitude": 15,
 dlongitude": 30
-};
 ["SE"] = {
 dlatitude": 62,
 dlongitude": 15
-};
 ["SG"] = {
 dlatitude": 1.3667,
 dlongitude": 103.8
-};
 ["SH"] = {
 dlatitude": -15.9333,
 dlongitude": -5.7
-};
 ["SI"] = {
 dlatitude": 46,
 dlongitude": 15
-};
 ["SJ"] = {
 dlatitude": 78,
 dlongitude": 20
-};
 ["SK"] = {
 dlatitude": 48.6667,
 dlongitude": 19.5
-};
 ["SL"] = {
 dlatitude": 8.5,
 dlongitude": -11.5
-};
 ["SM"] = {
 dlatitude": 43.7667,
 dlongitude": 12.4167
-};
 ["SN"] = {
 dlatitude": 14,
 dlongitude": -14
-};
 ["SO"] = {
 dlatitude": 10,
 dlongitude": 49
-};
 ["SR"] = {
 dlatitude": 4,
 dlongitude": -56
-};
 ["ST"] = {
 dlatitude": 1,
 dlongitude": 7
-};
 ["SV"] = {
 dlatitude": 13.8333,
 dlongitude": -88.9167
-};
 ["SY"] = {
 dlatitude": 35,
 dlongitude": 38
-};
 ["SZ"] = {
 dlatitude": -26.5,
 dlongitude": 31.5
-};
 ["TC"] = {
 dlatitude": 21.75,
 dlongitude": -71.5833
-};
 ["TD"] = {
 dlatitude": 15,
 dlongitude": 19
-};
 ["TF"] = {
 dlatitude": -43,
 dlongitude": 67
-};
 ["TG"] = {
 dlatitude": 8,
 dlongitude": 1.1667
-};
 ["TH"] = {
 dlatitude": 15,
 dlongitude": 100
-};
 ["TJ"] = {
 dlatitude": 39,
 dlongitude": 71
-};
 ["TK"] = {
 dlatitude": -9,
 dlongitude": -172
-};
 ["TM"] = {
 dlatitude": 40,
 dlongitude": 60
-};
 ["TUN"] = {
 dlatitude": 34,
 dlongitude": 9
-};
 ["TO"] = {
 dlatitude": -20,
 dlongitude": -175
-};
 ["TR"] = {
 dlatitude": 39,
 dlongitude": 35
-};
 ["TT"] = {
 dlatitude": 11,
 dlongitude": -61
-};
 ["TV"] = {
 dlatitude": -8,
 dlongitude": 178
-};
 ["TW"] = {
 dlatitude": 23.5,
 dlongitude": 121
-};
 ["TZ"] = {
 dlatitude": -6,
 dlongitude": 35
-};
 ["UA"] = {
 dlatitude": 49,
 dlongitude": 32
-};
 ["UG"] = {
 dlatitude": 1,
 dlongitude": 32
-};
 ["UM"] = {
 dlatitude": 19.2833,
 dlongitude": 166.6
-};
 ["US"] = {
 dlatitude": 38,
 dlongitude": -97
-};
 ["UY"] = {
 dlatitude": -33,
 dlongitude": -56
-};
 ["UZ"] = {
 dlatitude": 41,
 dlongitude": 64
-};
 // ["VA"] = {
 // dlatitude": 41.9,
 // dlongitude": 12.45
@@ -743,52 +580,39 @@ dlongitude": 64
 ["VC"] = {
 dlatitude": 13.25,
 dlongitude": -61.2
-};
 ["VE"] = {
 dlatitude": 8,
 dlongitude": -66
-};
 ["VG"] = {
 dlatitude": 18.5,
 dlongitude": -64.5
-};
 ["VI"] = {
 dlatitude": 18.3333,
 dlongitude": -64.8333
-};
 ["VN"] = {
 dlatitude": 16,
 dlongitude": 106
-};
 ["VU"] = {
 dlatitude": -16,
 dlongitude": 167
-};
 ["WF"] = {
 dlatitude": -13.3,
 dlongitude": -176.2
-};
 ["WS"] = {
 dlatitude": -13.5833,
 dlongitude": -172.3333
-};
 ["YE"] = {
 dlatitude": 15,
 dlongitude": 48
-};
 ["YT"] = {
 dlatitude": -12.8333,
 dlongitude": 45.1667
-};
 ["ZA"] = {
 dlatitude": -29,
 dlongitude": 24
-};
 ["ZM"] = {
 dlatitude": -15,
 dlongitude": 30
-};
 ["ZW"] = {
 dlatitude": -20,
 dlongitude": 30
-};
