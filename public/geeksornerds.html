@@ -76,8 +76,7 @@
       </nav>
     </div>
   </div>
-  <!--   <div id="logout" name="logout">Logout</button> -->
-  <div id="includedContent"></div> 
+  <!--   <div id="logout" name="logout">Logout</button> --> 
   <div class="container text-center">
     <!-- This is where the timer goes -->
     <div class="row timer-section" id="timer-div">
@@ -137,6 +136,7 @@ var geek;
 var nerd;
 var gamedata = [];
 
+$('.timer-section').hide();
 function displayGameData() {
   timeoutInterval = 20;
   // get the data
@@ -273,9 +273,7 @@ $('#start-button').on('click', function() {
   displayGameData();
 })
 
-$(function(){
-  $("#includedContent").load("/modal/login"); 
-});
+
 
 </script>
 

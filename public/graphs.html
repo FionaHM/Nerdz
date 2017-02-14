@@ -122,21 +122,18 @@
   <script src="./js/logout.js" type="text/javascript"></script>
 </body>
 <script type="text/javascript">
-// to include modal file for login
-$(function(){
-  $("#includedContent").load("/modal/login"); 
-});
+
 // get category data for current authenticated user
 $.get('/cat', function(data) {
       // console.log(data);
 }).fail(function(xhr, status, error) {
     // captures error so now we can handle
     // added to push login menu if token expires
-    // console.log(xhr.responseText, xhr.statusText);
-    if (xhr.responseText === "invalid_token"){
-        // console.log("TEST");
-        $('#popModal').modal('show');
-    }
+    console.log(xhr.responseText);
+    // if (xhr.responseText === "invalid_token"){
+    //     // console.log("TEST");
+       
+    // }
 })
 </script>
 

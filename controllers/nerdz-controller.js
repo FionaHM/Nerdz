@@ -152,7 +152,8 @@ function router(app) {
         decodeToken(req, res, jwtsecret, 'login').then(function(decoded) {
             res.sendFile(path.join(__dirname + "/../public/geeksornerds.html"));
         }).catch(function(err) {
-            res.status(401).send(err);
+            // res.status(401).send(err);
+            res.redirect("/");
         });     
     })
    
@@ -171,7 +172,8 @@ function router(app) {
                 res.redirect("/");
             })
         }).catch(function(err) {
-            res.status(401).send(err);
+             res.redirect("/");
+            // res.status(401).send(err);
         });
         
     })
