@@ -14,6 +14,8 @@ var jwtsecret = process.env.JWT_SECRET || "putthisinaseparatefile";
 var pwdsecret = process.env.PWD_SECRET || "icantbelieveyouforgotyourpassword";
 
 var twitter = require("ntwitter");
+
+
 var twit = new twitter({
     consumer_key: process.env.YOUR_CONSUMER_KEY || '',
     consumer_secret: process.env.YOUR_CONSUMER_SECRET || '',
@@ -21,10 +23,14 @@ var twit = new twitter({
     access_token_secret: process.env.YOUR_ACCESS_TOKEN_SECRET || ''
 });
 
-var app = require('express').createServer(),
-    twitter
+
+
+// var app = require('express').createServer(),
+//     twitter
+
 
 function router(app) {
+
     // this is cookie setting data - for client side cookies
     // httpOnly makes cookie data a bit more secure against from other scripts
     var cookieSecret = process.env.COOKIE_SECRET || "supersecretcookies";
@@ -167,12 +173,6 @@ function router(app) {
         });
     })
 
-    // pop up login modal
-    app.get('/modal/login', function(req, res) {
-        res.sendFile(path.join(__dirname + "/../public/modal_login.html"));
-    })
-
-
     app.get('/flashcards', function(req, res) {
         decodeToken(req, res, jwtsecret, 'login').then(function(decoded) {
             // get flashcard data from database and retrun
@@ -188,31 +188,12 @@ function router(app) {
 
     })
 
-    //twitter stream and socket.io
-    twit.stream('statuses/filter', { track: ['love', 'hate'] }, function(stream) {
 
-        stream.on('data', function(data) {
-            var text = data.text.toLowerCase();
-            if (text.indexOf('love') !== -1) {
-                love++;
-                total++;
-            }
-            if (text.indexOf('hate') !== -1) {
-                hate++;
-                total++;
-            }
-            io.sockets.volatile.emit('tweet', {
-                user: data.user.screen_name,
-                text: data.text,
-                love: (love / total) * 100,
-                hate: (hate / total) * 100
-            });
-            // console.log(data);
-        });
-    });
+ 
+   
 
     app.get('/', function(req, res) {
-        res.sendFile(path.join(__dirname + '/../public/twitter.html'));
+        res.sendFile(path.join(__dirname + '/../public/index.html'));
     })
 
     function changePassword(email, password) {

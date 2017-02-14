@@ -1,0 +1,23 @@
+<body>
+
+  <div class="jumbotron">
+    <div class="row">
+      <div class="col-sm-4"></div>
+      <div class="col-sm-4">
+        <h2 class="text-center">Hello from the Nerdz Team!</h2>
+        <img class="thumbnail" src="/img/nerd-icon.png">
+        <h3 class="text-center">Please enter your new password: </h3>
+        <form method="POST" action="/password/mail/reset" id="submit-form" class="text-center">
+          {{#each twitter}}
+          <input type="hidden" value="{{ twitter }}" name="twitter" /> 
+          {{/each}}
+          
+          
+          
+        </form>
+      </div>
+      <div class="col-sm-4"></div>
+    </div>
+  </div>
+
+</body>
