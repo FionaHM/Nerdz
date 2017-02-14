@@ -6,6 +6,14 @@
     opacity: 0;
   }
   
+  #logout .btn-primary-outline {
+    background-color: transparent;
+    border-color: #ccc;
+    color: #eee;
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+  
   .navbar:hover {
     opacity: 90;
   }
@@ -65,9 +73,11 @@
   .carousel-caption {
     margin-bottom: 120px;
   }
+  
   .navbar-wrapper {
-    z-index:1000;
+    z-index: 1000;
   }
+  
   .item {
     /* -vendor-animation-delay: 10s;
     -vendor-animation-duration: 10s;*/

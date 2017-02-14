@@ -10,6 +10,13 @@ html {
   opacity: 0;
 }
 
+#logout,
+.btn-primary-outline {
+  background-color: transparent;
+  border-color: #ccc;
+  color: #030303;
+}
+
 #brand-img {
   margin-top: -7px;
 }
@@ -31,18 +38,19 @@ html {
 }
 
 .selected {
-    background: radial-gradient( 5px -9px, circle, white 8%, red 26px );
-    background-image: url(../img/nerd-word.png);
-    border: 2px solid white;
-    border-radius: 12px; /* one half of ( (border * 2) + height + padding ) */
-    box-shadow: 1px 1px 1px black;
-    color: white;
-    font: bold 15px/13px Helvetica, Verdana, Tahoma;
-    height: 200px; 
-    min-width: 300px;
-    padding: 4px 3px 0 3px;
-    margin: auto;
-    text-align: center;
+  background: radial-gradient( 5px -9px, circle, white 8%, red 26px);
+  background-image: url(../img/nerd-word.png);
+  border: 2px solid white;
+  border-radius: 12px;
+  /* one half of ( (border * 2) + height + padding ) */
+  box-shadow: 1px 1px 1px black;
+  color: white;
+  font: bold 15px/13px Helvetica, Verdana, Tahoma;
+  height: 200px;
+  min-width: 300px;
+  padding: 4px 3px 0 3px;
+  margin: auto;
+  text-align: center;
 }
 
 .circle {
