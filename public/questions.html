@@ -29,8 +29,7 @@
         </div>
         <h2 id="reset-message"></h2>
         <div class="modal-body">
-          <p>Type your email account</p>
-          <input type="email" name="updateemail" id="updateemail" class="form-control" required autocomplete="off">
+          <div id="err-message3"></div>
           <p>Type your new password</p>
           <input type="password" name="resetpass" id="resetpass" class="form-control" placeholder="New Pasword" required autocomplete="off">
           <p>Confirm your new password</p>
@@ -59,24 +58,55 @@
             <a class="navbar-brand" href="index.html"><img id="brand-img" src="./img/nerd-icon-small.png">
             </a>
           </div>
-          <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li id="logged-dropdown" class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">You are logged in<span class="caret"></span></a>
-                <ul class="dropdown-menu">
+           <!--  <nav class="navbar navbar-inverse">
+           -->
+          <!--     <div class="navbar-header">
+                <a class="navbar-brand" href="#">WebSiteName</a>
+              </div> -->
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
                   <li><a href="questions.html">What Kind of Nerd Are You?</a></li>
                   <li><a href="geeksornerds.html">Geek or Nerd?</a></li>
                   <li><a href="graphs.html">Your Nerd Stats</a></li>
                   <li role="separator" class="divider"></li>
-                  <li class="dropdown-header">Your Account</li>
-                  <li><a href="#" data-toggle="modal" data-target=".reset-modal">Update Password</a></li>
+
+                  </ul>
+                  <ul class="nav navbar-nav navbar-right">
+                  <li>
+                    <li><a href="#" data-toggle="modal" data-target=".reset-modal">Update Password</a></li>
+                    <button class="btn btn-primary-outline text-center" id="logout" name="logout">Logout</button>
+                  </li>
+                  </ul>
+
+                  <!-- li class="dropdown-header">Your Account</li>
+              </ul>
+      <!    </div>
+          </nav> -->
+<!--           <div id="navbar" class="navbar navbar-inverse">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li id="logged-dropdown" class="dropdown"> -->
+            <!--     <a href="#" class="dropdown-default" role="button" aria-haspopup="true" aria-expanded="false">You are logged in<span class="caret"></span></a> -->
+                <!-- <ul class="dropdown-menu"> -->
+
+                    <!-- <ul class="nav navbar-nav">
+                      <li class="active"><a href="#">Home</a></li>
+                     <li><a href="#">Page 1</a></li> -->
+                 <!--      <li><a href="#">Page 2</a></li>
+                      <li><a href="#">Page 3</a></li>
+                    </ul> --> 
+                  <!-- <li><a href="questions.html">What Kind of Nerd Are You?</a></li>
+                  <li><a href="geeksornerds.html">Geek or Nerd?</a></li>
+                  <li><a href="graphs.html">Your Nerd Stats</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li class="dropdown-header">Your Account</li> -->
+    <!--               <li><a href="#" data-toggle="modal" data-target=".reset-modal">Update Password</a></li>
                   <li>
                     <button class="btn btn-primary-outline text-center" id="logout" name="logout">Logout</button>
                   </li>
-                </ul>
-              </li>
-            </ul>
+                </ul> -->
+           <!--    </li>
+            </ul> -->
           </div>
         </div>
       </nav>

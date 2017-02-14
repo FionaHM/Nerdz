@@ -37,8 +37,7 @@
                 </div>
                 <h2 id="reset-message"></h2>
                 <div class="modal-body">
-                  <p>Type your email account</p>
-                  <input type="email" name="updateemail" id="updateemail" class="form-control" required autocomplete="off">
+                  <div id="err-message3"></div>
                   <p>Type your new password</p>
                   <input type="password" name="resetpass" id="resetpass" class="form-control" placeholder="New Pasword" required autocomplete="off">
                   <p>Confirm your new password</p>
@@ -82,16 +81,17 @@
     <div class="row timer-section" id="timer-div">
       <div class="col-md-12 text-center timer-section">
         <h2 class="timer-section">Time Remaining <div id="timer"></div></h2>
-        <!-- <hr> -->
-        <p id="intro">Word Association Game - only 2 seconds per pair. Click fast to find out if you are truly just a nerd or a bit of a geek too! <div id="timer"></div></p>
+        <hr>
       </div>
     </div>
+ 
     <!-- This is where the data goes -->
+
     <div class="row">
       <div class="row">
         <div class="col-sm-6">
-          <div class="thumbnail geekornerd">
-            <div class="caption" id="geek">
+          <div class="geekornerd">
+            <div class="words" id="geek" >
             </div>
           </div>
         </div>
@@ -100,8 +100,8 @@
         <!--  <div class="geekornerd" id="geek"></div> -->
         <!-- </div> -->
         <div class="col-sm-6">
-          <div class="thumbnail geekornerd">
-            <div class="caption" id="nerd">
+          <div class="geekornerd">
+            <div class="words" id="nerd">
             </div>
           </div>
         </div>
@@ -111,6 +111,12 @@
         this is where nerd data goes
         <div class="geekornerd" id="nerd"></div>
       </div> -->
+    <div class="row">
+      <div class="col-md-12 text-center">
+      <h2 id="intro">Word Association Game - only 2 seconds per pair of words. Click fast to find out if you are truly just a nerd or a bit of a geek too! 
+      </h2>
+      </div>
+    </div>
     <div class="col-md-12 text-center">
       <button class="start-game btn btn-success btn-lg" id="start-button">Click to Start</button>
     </div>
@@ -137,6 +143,8 @@ var nerd;
 var gamedata = [];
 
 $('.timer-section').hide();
+$('#intro').show();
+$('.words').hide();
 function displayGameData() {
   timeoutInterval = 20;
   // get the data
@@ -148,10 +156,10 @@ function displayGameData() {
     // captures error so now we can handle
     // added to push login menu if token expires
     // console.log(xhr.responseText, xhr.statusText);
-    if (xhr.responseText === "invalid_token"){
-        // console.log("TEST");
-        $('#popModal').modal('show');
-    }
+    // if (xhr.responseText === "invalid_token"){
+    //     // console.log("TEST");
+    //     $('#popModal').modal('show');
+    // }
 })
 
   // set initial data
@@ -186,20 +194,16 @@ function countDown() {
 
   if (counter === 0) {
 
-    console.log(counter, "counter", i, "i");
-
-    $('#geek').html('<div class="score" data-score="' + gamedata[i].geek_score + '"id="geek"><h2>' + gamedata[i].geek + '</h2></div>');
-    $('#nerd').html('<div class="score" data-score="' + gamedata[i].nerd_score + '"id="nerd"><h2>' + gamedata[i].nerd + '</h2></div>');
+    $('#geek').html('<div class="score" data-score="' + gamedata[i].geek_score + '"id="geek"><h2>' + gamedata[i].geek.toUpperCase() + '</h2></div>');
+    $('#nerd').html('<div class="score" data-score="' + gamedata[i].nerd_score + '"id="nerd"><h2>' + gamedata[i].nerd.toUpperCase() + '</h2></div>');
     $('#')
 
     i++;
 
   } else if (((counter % 2) === 0) && (i < 10)) {
     // move to the next set of cards
-    console.log(counter, "counter", i, "i");
-
-    $('#geek').html('<div class="score" data-score="' + gamedata[i].geek_score + '"id="geek"><h2>' + gamedata[i].geek + '</h2></div>');
-    $('#nerd').html('<div class="score" data-score="' + gamedata[i].nerd_score + '"id="nerd"><h2>' + gamedata[i].nerd + '</h2></div>');
+    $('#geek').html('<div class="score" data-score="' + gamedata[i].geek_score + '"id="geek"><h2>' + gamedata[i].geek.toUpperCase()  + '</h2></div>');
+    $('#nerd').html('<div class="score" data-score="' + gamedata[i].nerd_score + '"id="nerd"><h2>' + gamedata[i].nerd.toUpperCase()  + '</h2></div>');
     i++;
 
   }
@@ -209,6 +213,7 @@ function countDown() {
   if (timeoutInterval === 0) {
     // show the results data
     $('#result').show();
+    $('.words').hide();
     // calculate if geek or nerd
     if (geek > nerd) {
       // display message
@@ -216,7 +221,6 @@ function countDown() {
       $('#geek').html('');
       $('#nerd').html('');
     } else if (nerd > geek) {
-      console.log("nerd");
       $('#result').html('<div class="score" "id="geek"><h2>You are only a Nerd.<h2></div>');
       $('#geek').html('');
       $('#nerd').html('');
@@ -227,7 +231,6 @@ function countDown() {
     }
 
     flag = false;
-    console.log(flag, "flag");
     // hide the clock
     $(".timer-section").hide();
     $(".start-game").show();
@@ -257,7 +260,6 @@ $(document).on('click', '.score', function() {
     choice = true;
     $(this).addClass('selected');
   }
-  // console.log(geek, "geek", nerd, "nerd", choice);
 
 })
 
@@ -269,6 +271,7 @@ $('#start-button').on('click', function() {
   $(".start-game").hide();
   $('#result').hide();
   $('#intro').hide();
+  $('.words').show();
   // start the game
   displayGameData();
 })

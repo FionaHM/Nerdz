@@ -1,31 +1,29 @@
 $("#resetpassword").on("click", function() {
     // capture users email
-
     var userObj = {
             email: $('#recoveryemail').val()
         }
-        // store the email for use when resetting password
-        // createCookie("user_email", $("#existing-user-email").val(), 0);
-    $.post("/password", userObj, function(data) {
-        //
-        console.log(data);
-    })
-
+    // post to server
+    $.post("/password", userObj, function(data) {})
 })
 
 $("#loggedinreset").on("click", function() {
-    // capture users email
-
+    // capture users password
     var userObj = {
-            // email: $('#updateemail').val(),
             newpassword: $('#resetpass').val(),
             confirmpassword: $('#confirmresetpass').val()
         }
-        // store the email for use when resetting password
-        // createCookie("user_email", $("#existing-user-email").val(), 0);
-    $.post("/password/reset/", userObj, function(data) {
+    // post to server
+    $.post("/password/reset/", userObj, function(data, success) {
         //
-        console.log(data);
+        if (data.message === "passwords don't match"){
+            // log error message
+            $('#err-message3').html('<h3 class="warning">' + data.message +'</h3>');
+
+        } else if (success === "success"){
+            // close modal
+            $('.reset-modal').modal('hide');
+        }
     })
 
 })
