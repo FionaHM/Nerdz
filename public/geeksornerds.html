@@ -76,12 +76,14 @@
       </nav>
     </div>
   </div>
-  <!--   <div id="logout" name="logout">Logout</button> -->
+  <!--   <div id="logout" name="logout">Logout</button> --> 
   <div class="container text-center">
     <!-- This is where the timer goes -->
     <div class="row timer-section" id="timer-div">
       <div class="col-md-12 text-center timer-section">
         <h2 class="timer-section">Time Remaining <div id="timer"></div></h2>
+        <!-- <hr> -->
+        <p id="intro">Word Association Game - only 2 seconds per pair. Click fast to find out if you are truly just a nerd or a bit of a geek too! <div id="timer"></div></p>
       </div>
     </div>
     <!-- This is where the data goes -->
@@ -134,15 +136,24 @@ var geek;
 var nerd;
 var gamedata = [];
 
+$('.timer-section').hide();
 function displayGameData() {
   timeoutInterval = 20;
   // get the data
   $.get("/flashcards", function(results) {
 
     gamedata = results.splice(0);
-    console.log(gamedata);
-  });
-  console.log("gamedata", gamedata);
+
+  }).fail(function(xhr, status, error) {
+    // captures error so now we can handle
+    // added to push login menu if token expires
+    // console.log(xhr.responseText, xhr.statusText);
+    if (xhr.responseText === "invalid_token"){
+        // console.log("TEST");
+        $('#popModal').modal('show');
+    }
+})
+
   // set initial data
   i = 0;
   counter = 0;
@@ -257,9 +268,13 @@ $('#start-button').on('click', function() {
   $(".thumbnail").show();
   $(".start-game").hide();
   $('#result').hide();
+  $('#intro').hide();
   // start the game
   displayGameData();
 })
+
+
+
 </script>
 
 </html>

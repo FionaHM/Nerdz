@@ -304,11 +304,7 @@
           createCookie("auth_token", data, 0);
           // createCookie("user_email", $("#existing-user-email").val(), 0);
           // move to next page - this will error if user doesnt have perms
-
-          console.log("am i here");
           // window.location.replace("../questionpage");
-
-
 
         }
       })
@@ -338,27 +334,27 @@
     }
 
     $.post('/newuser', registerObj, function(data, status, err) {
-
-        console.log(data);
+        // save token
         if (status === "success") {
-
-          createCookie("auth_token", data, 0);
-          createCookie("user_email", $("#new-user-email").val(), 0);
-          // move to next page - this will error if user doesnt have perms
-
-          // window.location.replace("../questionpage");
-
+            createCookie("auth_token", data, 0);
+            // createCookie("user_email", $("#new-user-email").val(), 0);
+            // move to next page - this will error if user doesnt have perms
+            // window.location.replace("../questionpage");
         }
       })
       .done(function(msg) {
         // $.get("/questionpage", function(){});
-        console.log(msg);
+        // console.log(msg);
         loggedInDom();
       })
       .fail(function(xhr, status, error) {
         // captures error so now we can handle
         $('#err-message2').html('<h3 class="warning">' + xhr.responseText);
         console.log(xhr.responseText, xhr.statusText);
+        if (xhr.responseText === "invalid_token"){
+          // console.log("TEST");
+          $('#popModal').modal('show');
+        }
 
       })
   })
@@ -377,35 +373,6 @@
 
   }
 
-  // // copied from stackoverflow.com
-  // var createCookie = function(name, value, days) {
-  //   var expires;
-  //   if (days) {
-  //     var date = new Date();
-  //     date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-  //     expires = "; expires=" + date.toGMTString();
-  //   } else {
-  //     expires = "";
-  //   }
-  //   document.cookie = name + "=" + value + expires + "; path=/";
-  // }
-
-  // // copied from stackoverflow.com
-  // function getCookie(c_name) {
-  //   if (document.cookie.length > 0) {
-  //     c_start = document.cookie.indexOf(c_name + "=");
-  //     if (c_start != -1) {
-  //       c_start = c_start + c_name.length + 1;
-  //       c_end = document.cookie.indexOf(";", c_start);
-  //       if (c_end == -1) {
-  //         c_end = document.cookie.length;
-  //       }
-  //       return unescape(document.cookie.substring(c_start, c_end));
-  //     }
-  //   }
-  //   return "";
-  // }
-
   // Map Script
   var latitude = 41.881832;
   var longitude = -87.623177;
@@ -416,8 +383,7 @@
     var geocoder = new google.maps.Geocoder;
 
     navigator.geolocation.getCurrentPosition(function(position) {
-        // $('#location-lat').html(position.coords.latitude);
-        // $('#location-lng').html(position.coords.longitude);
+
         geocodeLatLng(geocoder, position.coords.latitude, position.coords.longitude);
 
 
@@ -425,8 +391,6 @@
         return [position.coords.longitude, position.coords.latitude];
 
       })
-      // }
-
 
     function geocodeLatLng(geocoder, lat, lng) {
 
