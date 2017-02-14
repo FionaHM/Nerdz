@@ -1,5 +1,5 @@
-# Nerdz :neckbeard: :alien:  :game_die:
-What kind of Nerd are you? Or are you actually a Geek?  Which nerd type prevails in your location?  Nerds everywhere will find the answers to these and many questions with the launch of our newest app, Nerdz.
+# Nerdz :alien: :neckbeard: :game_die:
+What kind of Nerd are you? Or are you actually a Geek?  Which nerd type prevails in your location?  Nerds everywhere will find the answers to these and many other questions with the launch of our newest app, Nerdz.
 
 ## Table of Contents
 
