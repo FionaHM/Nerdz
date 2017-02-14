@@ -156,10 +156,6 @@ $.get('/category/nerd', function(data) {
     function setNerdLevel(value) {
         chart.arrows[0].setValue(value);
         chart.axes[0].setTopText("Nerd Level: \n" + nerdLevel);
-
-        console.log("cookie", getCookie('auth_token'));
-
-        console.log("data", data.nerd_level);
     }
 
 

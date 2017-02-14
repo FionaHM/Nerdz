@@ -68,14 +68,10 @@ function getIndieData() {
         });
     }).done(function(msg) {
 
-
-        console.log(msg)
     }).fail(function(xhr, status, error) {
         // captures error so now we can handle
         console.log(xhr.responseText, xhr.statusText);
-        // redirect to login
-        // window.location.replace("../");
-        // alert('Error, please try again');
+
     })
 
 }

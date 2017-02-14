@@ -1,8 +1,6 @@
 $("#logout").on("click", function() {
     // logout
-    console.log("testsett");
     delete_cookie("auth_token", null);
-    console.log("token", getCookie("auth_token"));
     if (getCookie("auth_token") === "") {
         $("#logout").hide();
         var message = "Successfully logged out - please close your browser."
@@ -16,9 +14,7 @@ $("#logout").on("click", function() {
 
 $("#logout2").on("click", function() {
     // logout
-    console.log("testsett");
     delete_cookie("auth_token", null);
-    console.log("token", getCookie("auth_token"));
     if (getCookie("auth_token") === "") {
         $("#logout").hide();
         var message = "Successfully logged out - please close your browser."
