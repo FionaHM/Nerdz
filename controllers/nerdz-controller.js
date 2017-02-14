@@ -517,7 +517,7 @@ function router(app) {
     app.get('/map', function(req, res) {
         // select a count of users by category and location
         // var total = 50;
-        var queryString = "select count(b.id) as total, b.overall_category, b.location from users as b group by b.location, b.overall_category";
+        var queryString = "select count(b.id) as total, b.overall_category, b.location from Users as b group by b.location, b.overall_category";
         // select b.username, sum(a.score), a.category from rawscores as a, users as b where b.id = a.user_id and a.user_id = 1 group by a.category
         db.sequelize.query(queryString, { type: db.sequelize.QueryTypes.SELECT })
             .then(function(results) {
@@ -531,7 +531,7 @@ function router(app) {
         decodeToken(req, res, jwtsecret, 'login').then(function(decoded) {
             // get aggregate score for a user
             var userid = decoded.id; // passed in from token
-            var queryString = "select sum(score) as total, a.category from rawscores as a  where a.user_id = " + userid + " group by a.category order by total desc limit 1"
+            var queryString = "select sum(score) as total, a.category from Rawscores as a  where a.user_id = " + userid + " group by a.category order by total desc limit 1"
             db.sequelize.query(queryString, { type: db.sequelize.QueryTypes.SELECT })
                 .then(function(results) {
                     console.log(results);
@@ -587,7 +587,7 @@ function router(app) {
         decodeToken(req, res, jwtsecret, 'login', "").then(function(decoded) {
             var userid = decoded.id; // passed in from client
             // select a count of users by category and take the highest only (limit 1)
-            var queryString = "select sum(score) as total, a.category from rawscores as a  where a.user_id = " + userid + " group by a.category order by total desc limit 1"
+            var queryString = "select sum(score) as total, a.category from Rawscores as a  where a.user_id = " + userid + " group by a.category order by total desc limit 1"
                 // the category, then the nerd level then update user table
             db.sequelize.query(queryString, { type: db.sequelize.QueryTypes.SELECT })
                 .then(function(results) {
