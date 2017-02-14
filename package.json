@@ -29,6 +29,7 @@
     "should": "^11.2.0",
     "sinon": "^1.17.7",
     "socket.io": "^1.7.2",
-    "supertest": "^3.0.0"
+    "supertest": "^3.0.0",
+    "twitter": "^1.7.0"
   }
 }
