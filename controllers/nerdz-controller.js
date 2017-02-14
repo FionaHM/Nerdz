@@ -444,10 +444,10 @@ function router(app) {
                 // gives percentage
                 total = results[0].total;
                 // this give back raw scores
-                queryString = "select b.username, sum(a.score) as total_score, a.category from rawscores as a, users as b where b.id = a.user_id group by  b.username, a.category";
+                queryString = "select b.username, sum(a.score) as total_score, a.category from Rawscores as a, Users as b where b.id = a.user_id group by  b.username, a.category";
                 // user id gives raw scores
                 if (userid !== undefined) {
-                    queryString = "select b.username, sum(a.score) as total_score, a.category from rawscores as a, users as b where b.id = a.user_id and a.user_id = " + userid + " group by a.category";
+                    queryString = "select b.username, sum(a.score) as total_score, a.category from Rawscores as a, Users as b where b.id = a.user_id and a.user_id = " + userid + " group by a.category";
                 }
                 db.sequelize.query(queryString, { type: db.sequelize.QueryTypes.SELECT })
                     .then(function(results) {
