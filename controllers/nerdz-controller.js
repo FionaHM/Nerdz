@@ -538,6 +538,7 @@ function router(app) {
         // select b.username, sum(a.score), a.category from rawscores as a, users as b where b.id = a.user_id and a.user_id = 1 group by a.category
         db.sequelize.query(queryString, { type: db.sequelize.QueryTypes.SELECT })
             .then(function(results) {
+                // console.log(results);
                 res.json(results);
             })
     })
