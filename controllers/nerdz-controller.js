@@ -254,7 +254,12 @@ function router(app) {
             }
             else {
                 // send error message
-                res.render('index', {message: "passwords don't match"});
+                if (action === "pwd"){
+                    res.render('index', {message: "passwords don't match"});
+                } else {
+                    res.json({message: "passwords don't match"});
+                }
+                
             }
 
         }).catch(function(err) {
@@ -263,38 +268,8 @@ function router(app) {
     }
 
     // user can change password when logged in with auth token
-    app.post('/password/reset', function(req, res) {
-        console.log(req.headers.authorization);
-        // decodeToken(req, res, jwtsecret, 'login').then(function(decoded) {
-            passwordReset(req, res, jwtsecret, 'login');
-        //     // use data in token to create temp password
-        //     var email = decoded.email;
-        //     //// take password from body
-        //     var newpassword = req.body.newpassword;
-        //     var confirmpassword = req.body.confirmpassword;
-        //     // confirm passwords match and reset
-        //     var passwordmatch = false;
-        //     // verify passwords match
-        //     if (newpassword === confirmpassword) {
-        //         // tell user to update password
-        //         var password = passwordHash.generate(newpassword);
-        //         changePassword(email, password);
-        //         passwordmatch = true;
-        //         return passwordmatch;
-        //     } 
-        // }).then(function(passwordmatch){
-        //     // handle result
-        //     if (passwordmatch) {
-        //         res.end();
-        //     }
-        //     else {
-        //         res.status(400).send("Passwords don't match.")
-        //     }
-
-        // }).catch(function(err) {
-        //     message = err.errors[0].message;
-        //     return res.status(401).send(message);
-        // })
+    app.post('/password/reset', function(req, res) {  
+        passwordReset(req, res, jwtsecret, 'login');      
     })
 
 
@@ -302,28 +277,6 @@ function router(app) {
     app.post('/password/mail/reset', function(req, res) {
         var token = req.body.token;
         passwordReset(req, res, pwdsecret, 'pwd', token);
-
-        // // console.log("token", token);
-        // decodeToken(req, res, pwdsecret, 'pwd', token).then(function(decoded) {
-        //     // use data in token to create temp password
-        //     var email = decoded.email;
-        //     var newpassword = req.body.newpassword;
-        //     var confirmpassword = req.body.confirmpassword;
-        //     // confirm passwords match and reset
-        //     return passwordReset(email, newpassword, confirmpassword);
-        //     // return passwordmatch;
-        // }).then(function(passwordmatch){
-        //     // handle result
-        //     if (passwordmatch) {
-        //         res.redirect('/');
-        //     }
-        //     else {
-        //         res.status(400).send("Passwords don't match.")
-        //     }
-        // }).catch(function(err) {
-        //     message = err.errors[0].message;
-        //     return res.status(401).send(message);
-        // })
     })
 
     // create a new user

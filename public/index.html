@@ -214,8 +214,9 @@
         </div>
         <h2 id="reset-message"></h2>
         <div class="modal-body">
-          <p>Type your email account</p>
-          <input type="email" name="updateemail" id="updateemail" class="form-control" required autocomplete="off">
+          <!-- <p>Type your email account</p> -->
+          <!-- <input type="email" name="updateemail" id="updateemail" class="form-control" required autocomplete="off"> -->
+          <div id="err-message3"></div>
           <p>Type your new password</p>
           <input type="password" name="resetpass" id="resetpass" class="form-control" placeholder="New Pasword" required autocomplete="off">
           <p>Confirm your new password</p>
@@ -350,11 +351,11 @@
       .fail(function(xhr, status, error) {
         // captures error so now we can handle
         $('#err-message2').html('<h3 class="warning">' + xhr.responseText);
-        console.log(xhr.responseText, xhr.statusText);
-        if (xhr.responseText === "invalid_token"){
+        // console.log(xhr.responseText, xhr.statusText);
+        // if (xhr.responseText === "invalid_token"){
           // console.log("TEST");
-          $('#popModal').modal('show');
-        }
+          // $('#popModal').modal('show');
+        // }
 
       })
   })
