@@ -13,6 +13,16 @@ var jwtsecret = process.env.JWT_SECRET || "putthisinaseparatefile";
 // secret for login auth token
 var pwdsecret = process.env.PWD_SECRET || "icantbelieveyouforgotyourpassword";
 
+var twitter = require("ntwitter");
+var twit = new twitter({
+    consumer_key: process.env.YOUR_CONSUMER_KEY || '',
+    consumer_secret: process.env.YOUR_CONSUMER_SECRET || '',
+    access_token_key: process.env.YOUR_ACCESS_TOKEN_KEY || '',
+    access_token_secret: process.env.YOUR_ACCESS_TOKEN_SECRET || ''
+});
+
+var app = require('express').createServer(),
+    twitter
 
 function router(app) {
     // this is cookie setting data - for client side cookies
@@ -83,7 +93,7 @@ function router(app) {
                     token = null;
                 }
             }
-        
+
             // use jwt verify to verify the token (symmetric - synchronous)
             // must use the same secret phrase as was used to generate token initally
             // verify the token
@@ -154,36 +164,63 @@ function router(app) {
         }).catch(function(err) {
             // res.status(401).send(err);
             res.redirect("/");
-        });     
+        });
     })
-   
-   // pop up login modal
-   app.get('/modal/login', function(req, res) {
+
+    // pop up login modal
+    app.get('/modal/login', function(req, res) {
         res.sendFile(path.join(__dirname + "/../public/modal_login.html"));
     })
 
 
-    app.get('/flashcards', function(req, res){
+    app.get('/flashcards', function(req, res) {
         decodeToken(req, res, jwtsecret, 'login').then(function(decoded) {
-           // get flashcard data from database and retrun
-            db.Flashcard.findAll({}).then(function(data){
+            // get flashcard data from database and retrun
+            db.Flashcard.findAll({}).then(function(data) {
                 res.json(data)
-            }).catch(function(err){
+            }).catch(function(err) {
                 res.redirect("/");
             })
         }).catch(function(err) {
-             res.redirect("/");
+            res.redirect("/");
             // res.status(401).send(err);
         });
-        
+
     })
 
+    //twitter stream and socket.io
+    twit.stream('statuses/filter', { track: ['love', 'hate'] }, function(stream) {
+
+        stream.on('data', function(data) {
+            var text = data.text.toLowerCase();
+            if (text.indexOf('love') !== -1) {
+                love++;
+                total++;
+            }
+            if (text.indexOf('hate') !== -1) {
+                hate++;
+                total++;
+            }
+            io.sockets.volatile.emit('tweet', {
+                user: data.user.screen_name,
+                text: data.text,
+                love: (love / total) * 100,
+                hate: (hate / total) * 100
+            });
+            // console.log(data);
+        });
+    });
+
+    app.get('/', function(req, res) {
+        res.sendFile(path.join(__dirname + '/../public/twitter.html'));
+    })
 
     function changePassword(email, password) {
         // var password = passwordHash.generate(tmppwd);
-        db.User.update({ 
-            password: password },
-            { where: { email: email } }, { fields: ['password'] 
+        db.User.update({
+            password: password
+        }, { where: { email: email } }, {
+            fields: ['password']
         }).catch(function(err) {
             console.log(err);
         })
@@ -226,7 +263,7 @@ function router(app) {
 
     })
 
-    function passwordReset(req, res, secret, action, token){
+    function passwordReset(req, res, secret, action, token) {
         decodeToken(req, res, secret, action, token).then(function(decoded) {
             console.log(decoded);
             // use data in token to create temp password
@@ -235,7 +272,7 @@ function router(app) {
 
             var newpassword = req.body.newpassword;
             var confirmpassword = req.body.confirmpassword;
-             // console.log(newpassword,confirmpassword );
+            // console.log(newpassword,confirmpassword );
             // confirm passwords match and reset
             var passwordmatch = false;
             // verify passwords match
@@ -245,21 +282,20 @@ function router(app) {
                 changePassword(email, password);
                 passwordmatch = true;
                 return passwordmatch;
-            } 
-        }).then(function(passwordmatch){
+            }
+        }).then(function(passwordmatch) {
             // handle result
             if (passwordmatch) {
                 //send to login page
                 res.redirect("/");
-            }
-            else {
+            } else {
                 // send error message
-                if (action === "pwd"){
-                    res.render('index', {message: "passwords don't match"});
+                if (action === "pwd") {
+                    res.render('index', { message: "passwords don't match" });
                 } else {
-                    res.json({message: "passwords don't match"});
+                    res.json({ message: "passwords don't match" });
                 }
-                
+
             }
 
         }).catch(function(err) {
@@ -268,8 +304,8 @@ function router(app) {
     }
 
     // user can change password when logged in with auth token
-    app.post('/password/reset', function(req, res) {  
-        passwordReset(req, res, jwtsecret, 'login');      
+    app.post('/password/reset', function(req, res) {
+        passwordReset(req, res, jwtsecret, 'login');
     })
 
 
@@ -372,8 +408,8 @@ function router(app) {
     // gets all questions from the database - with multiple categories per questiob
     app.get('/questionpage', function(req, res) {
         // Query the database
-        
-      res.sendFile(path.join(__dirname + "/../public/questions.html"), function(err) {});
+
+        res.sendFile(path.join(__dirname + "/../public/questions.html"), function(err) {});
 
 
     })
@@ -488,7 +524,7 @@ function router(app) {
                         for (var k = 0; k < outputArr.length; k++) {
                             outputObj[k + 1] = outputArr[k][k + 1];
                         }
-                
+
                         res.json(outputObj);
                     })
             })
@@ -570,7 +606,7 @@ function router(app) {
             var userid = decoded.id; // passed in from client
             // select a count of users by category and take the highest only (limit 1)
             var queryString = "select sum(score) as total, a.category from rawscores as a  where a.user_id = " + userid + " group by a.category order by total desc limit 1"
-            // the category, then the nerd level then update user table
+                // the category, then the nerd level then update user table
             db.sequelize.query(queryString, { type: db.sequelize.QueryTypes.SELECT })
                 .then(function(results) {
                     var score = results[0].total;
@@ -581,19 +617,17 @@ function router(app) {
                         order: 'max_score DESC',
                         limit: 1
                     }).then(function(data) {
-                        var nerdObj = { nerd_level : data[0].nerd_level};
+                        var nerdObj = { nerd_level: data[0].nerd_level };
                         // finally update the nerd_level in the user table
-                        db.User.update(
-                            {nerd_level: data[0].nerd_level, 
-                            overall_category: category }, 
-                            {where : { id : userid }}, 
-                            {fields: ['nerd_level', 'overall_category']}
-                        ).catch(function(err){
+                        db.User.update({
+                            nerd_level: data[0].nerd_level,
+                            overall_category: category
+                        }, { where: { id: userid } }, { fields: ['nerd_level', 'overall_category'] }).catch(function(err) {
                             console.log(err);
                         });
                         // console.log(nerdObj, "nerdobj");
-                        return nerdObj;     
-                    }).then(function(nerdObj){
+                        return nerdObj;
+                    }).then(function(nerdObj) {
                         res.json(nerdObj);
                     }).catch(function(err) {
                         res.status(400).send("Nerd Level Not Found");
