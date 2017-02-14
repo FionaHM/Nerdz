@@ -1,4 +1,4 @@
-# Nerdz :neckbeard: :videogame: :alien:  :game_die:
+# Nerdz :neckbeard: :alien:  :game_die:
 What kind of Nerd are you? Or are you actually a Geek?  Which nerd type prevails in your location?
 
 ## Table of Contents
@@ -28,6 +28,7 @@ Using a proprietary API and powerful algorhythms, the Nerdz Team will calculate 
 ## Nerd Stats
 After you have taken the survey, view a series of graphs illustrating your results.  See if you can make it all the way to "Master Nerd" in your preferred category. See how you match up with other nerds; maybe you have finally found your tribe!
 
+![nerd stats](/public/img/graphs.png?raw=true "Nerd Stats")
 
 ## Nerd vs Geek Quiz
 Are you really a nerd, or are you actually a geek? True dorkerati know the difference, and soon you will, too.
@@ -60,6 +61,6 @@ Are you really a nerd, or are you actually a geek? True dorkerati know the diffe
 We plan to incorporate a Nerdz Meetup page to allow users to find communities near them.
 
 ## The Nerdz Team 
-Fiona Hegarty
-Jessica Hornsten
-Charles West
+* Fiona Hegarty
+* Jessica Hornsten
+* Charles West
