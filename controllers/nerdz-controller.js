@@ -56,7 +56,7 @@ function router(app) {
                 pass:  emailAccountPassword///to be removed and changed
             }
         });
-        var link = " http://localhost:8080/forgot/" + token; //API TO RESET PASSWORD
+        var link = "https://mysterious-tor-57036.herokuapp.com/forgot/" + token; //API TO RESET PASSWORD
         var text = 'You are receiving this email because you requested a password reset for the Nerdz website. Please use the following link to reset your password.' + link + ' This link will expire in 5 minutes.';
         var html = '<br><p>You are receiving this email because you requested a password reset for the Nerdz website.</p><p> Please use the following link to reset your password:' + link + '</p><br><strong> This link will expire in 5 minutes.</strong><br><h2>The Nerdz Team</h2>';
         // setup email data
@@ -433,7 +433,7 @@ function router(app) {
 
     function aggregates(req, res, userid) {
         var total = 0;
-        var queryString = "select sum(a.score) as total from rawscores as a, users as b where b.id = a.user_id";
+        var queryString = "select sum(a.score) as total from Rawscores as a, Users as b where b.id = a.user_id";
         // if there is a userid sent then append it to the query
         if (userid !== undefined) {
             queryString += " and a.user_id = " + userid;
@@ -444,10 +444,10 @@ function router(app) {
                 // gives percentage
                 total = results[0].total;
                 // this give back raw scores
-                queryString = "select b.username, sum(a.score) as total_score, a.category from rawscores as a, users as b where b.id = a.user_id group by  b.username, a.category";
+                queryString = "select b.username, sum(a.score) as total_score, a.category from Rawscores as a, Users as b where b.id = a.user_id group by  b.username, a.category";
                 // user id gives raw scores
                 if (userid !== undefined) {
-                    queryString = "select b.username, sum(a.score) as total_score, a.category from rawscores as a, users as b where b.id = a.user_id and a.user_id = " + userid + " group by a.category";
+                    queryString = "select b.username, sum(a.score) as total_score, a.category from Rawscores as a, Users as b where b.id = a.user_id and a.user_id = " + userid + " group by a.category";
                 }
                 db.sequelize.query(queryString, { type: db.sequelize.QueryTypes.SELECT })
                     .then(function(results) {
