@@ -1,23 +1,3 @@
-// var indieData = [{
-//     "name": "Lewis",
-//     "location": ""
-// }, {
-//     "title": "Culture",
-//     "value": 20
-// }, {
-//     "title": "Tech",
-//     "value": 13
-// }, {
-//     "title": "Collector",
-//     "value": 15
-// }, {
-//     "title": "Fantasy",
-//     "value": 4
-// }, {
-//     "title": "Well-Rounded",
-//     "value": 10
-// }];
-
 function getIndieData() {
 
     $.ajaxSetup({

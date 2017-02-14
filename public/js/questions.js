@@ -38,10 +38,11 @@ $.get("/question", function(data) {
         //Builds up a carousel item for each question
         var carouselDiv = '<div class="item questions" id="' + data[i].id + '"data-question="' + data[i].id + '">' + '</div>';
         var carouselContainer = '<div class="container" id="container-' + data[i].id + '">';
-        var carouselCaption = '<div class="carousel-caption" id="caption-' + data[i].id + '">' + '<h1>Question ' + data[i].id + '</h1><br>' + '<h4>' + data[i].question;
+        var carouselCaption = '<div class="carousel-caption" id="caption-' + data[i].id + '">' + '<h1>' + data[i].id + '.  ' + data[i].question + '</h1><br><br>';
 
 
         var radios = '<br><br><br><input checked type="radio" class="radio" data-category="' + category + '" id="radio-' + data[i].id + '-1" value="1" name="optradio-' + data[i].id + '" /><label for="radio-' + data[i].id + '-1" class="animated bounce"></label><input type="radio" class="radio" data-category="' + category + '" id="radio-' + data[i].id + '-2" value="2" name="optradio-' + data[i].id + '" /><label for="radio-' + data[i].id + '-2" class="animated bounce"></label><input type="radio" class="radio" data-category="' + category + '" id="radio-' + data[i].id + '-3" value="3" name="optradio-' + data[i].id + '" /><label check for="radio-' + data[i].id + '-3" class="animated bounce"></label><input type="radio" class="radio" data-category="' + category + '" id="radio-' + data[i].id + '-4" value="4" name="optradio-' + data[i].id + '" /><label for="radio-' + data[i].id + '-4" class="animated bounce"></label><input type="radio" class="radio" data-category="' + category + '" id="radio-' + data[i].id + '-5" value="5" name="optradio-' + data[i].id + '" /><label for="radio-' + data[i].id + '-5" class="animated bounce"></label>';
+
         // 'class="questions " id="' + data[i].id + '" data-category="' + category + '" data-question="' + data[i].id + '
 
         $('#add-questions').append(carouselDiv);
