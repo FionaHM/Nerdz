@@ -1,14 +1,3 @@
-
-
-
-$.get('/category/nerd', function(data) {
-
-    console.log("cookie", getCookie('auth_token'));
-
-    console.log("data", data);
-
-});
-
 $.get('/cat', function(data) {
 
     var nerdType = data['0'].category;
@@ -70,7 +59,7 @@ $.get('/cat', function(data) {
             break;
         default:
             nerdDiv.html('You are an Original Nerd');
-            nerdDiv.html("You are a whole new kind of nerd. Niiice!");
+            nerdDiv.html("<h2>You are a whole new kind of nerd. Niiice!</h2>");
     }
 
 });
@@ -101,31 +90,36 @@ var chart = AmCharts.makeChart("gauge-div", {
             "endValue": 100,
             "innerRadius": "105%",
             "radius": "170%",
-            "startValue": 80
+            "startValue": 80,
+            "balloonText": "Master Nerd"
         }, {
             "color": "#ff4105",
             "endValue": 80,
             "innerRadius": "105%",
             "radius": "170%",
-            "startValue": 60
+            "startValue": 60,
+            "balloonText": "Super Nerd"
         }, {
             "color": "#f8ff01",
             "endValue": 60,
             "innerRadius": "105%",
             "radius": "170%",
-            "startValue": 40
+            "startValue": 40,
+            "balloonText": "Full-Blown Nerd"
         }, {
             "color": "#9dc707",
             "endValue": 40,
             "innerRadius": "105%",
             "radius": "170%",
-            "startValue": 20
+            "startValue": 20,
+            "balloonText": "Intermediate Nerd"
         }, {
             "color": "#8ecfd5",
             "endValue": 20,
             "innerRadius": "105%",
             "radius": "170%",
-            "startValue": 0
+            "startValue": 0,
+            "balloonText": "Entry-Level Nerd"
         }]
     }],
     "arrows": [{
@@ -138,15 +132,50 @@ var chart = AmCharts.makeChart("gauge-div", {
 });
 
 //test for nerd type and do stuff with it.
-setInterval(randomValue, 2000);
 
-// set random value
-function randomValue() {
+$.get('/category/nerd', function(data) {
 
-    // var value = Math.round(Math.random() * 100);
-    var value = 55;
-    chart.arrows[0].setValue(value);
-    chart.axes[0].setTopText("Your \n Overall \n Nerdiness: \n" + value);
-    // adjust darker band to new value
-    // chart.axes[0].bands[1].setEndValue(value);
-}
+    var nerdLevel = data.nerd_level;
+    var value = 0;
+    switch (nerdLevel) {
+        case "Entry Level Nerd":
+            setNerdLevel(20);
+            break;
+        case "Intermediate Nerd":
+            setNerdLevel(40);
+            break;
+        case "Full Blown Nerd":
+            setNerdLevel(60);
+            break;
+        case "Super Nerd":
+            setNerdLevel(80);
+            break;
+        case "Master Nerd":
+            setNerdLevel(100);
+            break;
+        default:
+
+            setInterval(randomValue, 2000);
+    }
+
+    function setNerdLevel(value) {
+        chart.arrows[0].setValue(value);
+        chart.axes[0].setTopText("Nerd Level: \n" + nerdLevel);
+
+        console.log("cookie", getCookie('auth_token'));
+
+        console.log("data", data.nerd_level);
+    }
+
+
+
+    // set random value
+    function randomValue() {
+
+        var value = Math.round(Math.random() * 100);
+
+        chart.arrows[0].setValue(value);
+        chart.axes[0].setTopText("You Broke the Nerd Meter!");
+
+    }
+});

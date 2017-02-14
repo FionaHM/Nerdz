@@ -26,16 +26,18 @@
   
   .carousel-indicators li {
     display: inline-block;
+    height: 10px;
+    width: 10px;
     text-indent: 0;
     cursor: pointer;
     border: none;
     border-radius: 50%;
-    background-color: green;
+    background: radial-gradient(circle at 5px 5px, #5cabff, #000);
     box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0.5);
   }
   
   .carousel-indicators .active {
-    margin: 10px;
+    margin: 3px;
     background-color: #fff;
   }
   
@@ -44,7 +46,6 @@
     color: #e7e7e7;
     font-size: 1em;
     background: #000;
-    /* background-image: url("../img/map-shot.png");*/
     background-repeat: no-repeat;
     background-size: cover;
   }
@@ -55,26 +56,25 @@
   .carousel {
     height: 500px;
     margin-bottom: 60px;
-    background: #000;
-    /*  background-image: url("../img/map-shot.png");*/
-    background-repeat: no-repeat;
-    background-size: cover;
   }
   
   #logout {
     margin-top: 10px;
   }
   
-  .item {}
-  /* Since positioning the image, we need to help out the caption */
-  
   .carousel-caption {
     margin-bottom: 120px;
   }
-  /* Declare heights because of positioning of img element */
   
-  .carousel .item {
+  .item {
+    /* -vendor-animation-delay: 10s;
+    -vendor-animation-duration: 10s;*/
     height: 500px;
+    margin-bottom: 60px;
+    background-color: black;
+    background-image: radial-gradient(white, rgba(255, 255, 255, .2) 2px, transparent 40px), radial-gradient(white, rgba(255, 255, 255, .15) 1px, transparent 30px), radial-gradient(white, rgba(255, 255, 255, .1) 2px, transparent 40px), radial-gradient(rgba(255, 255, 255, .4), rgba(255, 255, 255, .1) 2px, transparent 30px);
+    background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px;
+    background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
   }
   
   h1 {
