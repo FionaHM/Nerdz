@@ -1,5 +1,5 @@
 # Nerdz :neckbeard: :alien:  :game_die:
-What kind of Nerd are you? Or are you actually a Geek?  Which nerd type prevails in your location?
+What kind of Nerd are you? Or are you actually a Geek?  Which nerd type prevails in your location?  Nerds everywhere will find the answers to these and many questions with the launch of our newest app, Nerdz.
 
 ## Table of Contents
 
@@ -20,7 +20,7 @@ What kind of Nerd are you? Or are you actually a Geek?  Which nerd type prevails
 ![home page](public/img/home-page.png?raw=true "Home Page")
 
 ## Nerd Type Survey
-Using a proprietary API and powerful algorhythms, the Nerdz Team will calculate your nerd type and nerd level.  Click to view your results, and see how you stack up against other nerds around the world.
+Using a proprietary API and powerful algorithms, the Nerdz Team will calculate your nerd type and nerd level.  Click to view your results, and see how you stack up against other nerds around the world.
 
 
 ![nerd type survey](/public/img/nerd-survey.png?raw=true "Nerd Type Survey")
