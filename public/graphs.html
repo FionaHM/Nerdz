@@ -65,11 +65,11 @@
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="#">Home</a></li>
+              <li class="active"><a href="/">Home</a></li>
               <li id="logged-dropdown" class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">You are logged in<span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="questions.html">What Kind of Nerd Are You?</a></li>
+                  <li><a href="questionpage">What Kind of Nerd Are You?</a></li>
                   <li><a href="geeksornerds.html">Geek or Nerd?</a></li>
                   <li><a href="graphs.html">Your Nerd Stats</a></li>
                   <li role="separator" class="divider"></li>
@@ -125,15 +125,11 @@
 
 // get category data for current authenticated user
 $.get('/cat', function(data) {
-      // console.log(data);
+    
 }).fail(function(xhr, status, error) {
     // captures error so now we can handle
     // added to push login menu if token expires
     console.log(xhr.responseText);
-    // if (xhr.responseText === "invalid_token"){
-    //     // console.log("TEST");
-       
-    // }
 })
 </script>
 

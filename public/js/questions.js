@@ -25,15 +25,12 @@ $.get("/question", function(data) {
             console.log(data[i].Categories[j].category_name);
             category += data[i].Categories[j].category_name + "/";
         }
-        // console.log(category);
+
         var id = i + 1;
         var last = (data.length + 1);
         //adds the little circle carousel-indicators to the bottom of the carousel
         var li = '<li id="li-' + i + '"data-target="#myCarousel" data-slide-to="' + i + '"></li>';
         $('.carousel-indicators').append(li);
-
-        //first slide selected by default
-        // $('#li-' + 0).addClass("active");
 
         //Builds up a carousel item for each question
         var carouselDiv = '<div class="item questions" id="' + data[i].id + '"data-question="' + data[i].id + '">' + '</div>';
@@ -73,7 +70,7 @@ $.get("/question", function(data) {
     $('.carousel-indicators').append(lastLi);
 
 }).done(function(msg) {
-    // console.log(msg)
+
 }).fail(function(xhr, status, error) {
     // captures error so now we can handle
     console.log(xhr.responseText.message, xhr.statusText);
@@ -91,36 +88,26 @@ $('#myCarousel').on("click", '#sendscores', function(event) {
     var questionsArr = [];
     // loop through the answers and save to the database
     $('.questions').each(function(i, obj) {
-        console.log("this: ", this);
-        // console.log($('#' + id).attr("data-category"));
+
         // split the category and insert multiple rows with score prorated
         var id = i + 1;
         var radioName = 'name="optradio-' + (id) + '"';
 
-        // var cat = $('input[' + radioName + ']:checked').attr("data-category");
         var catArr = $('input[' + radioName + ']:checked').attr("data-category").split("/");
-        // var cat = $('#' + id).attr("data-category");
-        console.log("catArr", catArr);
-        // // var radioButtonId = '#radio-' + data[i].id + '-1';
+
         for (var j = 0; j < catArr.length - 1; j++) {
-            //     // console.log(catArr.length);
-            // var score = ($(radioButtonId).val() / (catArr.length - 1)); // 5 is DUMMY DATA
-            // var score = (5 / (2 - 1)); // 5 is DUMMY DATA
+
             var num = $('#' + id).attr("data-question");
 
             var score = $('input[' + radioName + ']:checked').val();
-            console.log("score: ", score);
 
-            // console.log("score", score);
             var questionObj = {
                 "score": score,
                 "question_id": $('#' + id).attr("data-question"),
                 "category": catArr[j]
-                    // "category": cat,
-                    // "user_id": 1 // DUMMY DATA
             };
             questionsArr.push(questionObj);
-            // console.log(questionsObj);
+
         }
     });
     //

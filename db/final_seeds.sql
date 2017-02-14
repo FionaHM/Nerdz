@@ -107,50 +107,19 @@ SET NAMES utf8; -- //needed to import the fs data
 -- (1,1, "CULTURE",4, now() , now() ),
 -- (1, 3, "ENGINEERING", 5, now() , now() );
 
-insert into flashcards (id, nerd, geek, nerd_score, geek_score, created_at, updated_at) VALUES
-(1, "hacker", "programmer", 3, 8, now(), now()),
-(2, "convention", "lecture", 3, 8, now(), now()),
-(3, "comic", "sudoku", 3, 8, now(), now()),
-(4, "collection", "specimen", 3, 8, now(), now()),
-(5, "star wars", "scott pilgram", 3, 8, now(), now()),
-(6, "t shirt", "bow tie", 3, 8, now(), now()),
-(7, "dr who", "ted talk", 3, 8, now(), now()),
-(8, "android", "apple", 3, 8, now(), now()),
-(9, "instagram", "wikipedia", 3, 8, now(), now()),
-(10, "graphic novel", "journal", 3, 8, now(), now());
+insert into Flashcards (id, nerd, geek, nerd_score, geek_score, created_at, updated_at) VALUES
+(1, "hacker", "startrek", 1, 2, now(), now()),
+(2, "lecture", "documentary", 2, 7, now(), now()),
+(3, "sudoku", "comic", 4, 6, now(), now()),
+(4, "credits", "collection", 6, 1, now(), now()),
+(5, "atari", "starwars", 8, 8, now(), now()),
+(6, "bow tie", "t-shirt", 8, 6, now(), now()),
+(7, "ted talk", "dr who", 5, 4, now(), now()),
+(8, "apple","android" , 8, 5, now(), now()),
+(9, "wikipedia", "instagram", 3, 4, now(), now()),
+(10, "journal", "graphic novel", 5, 8, now(), now());
 
 
-use  nerdz_db;
-select * from Users;
-select * from Rawscores;
-select * from Nerdlevels;
-select * from Categories;
-select * from Questions;
 
 
-select * from users where location = 'BOBRBS'
-select * from users where location = 'CUCV'
-select * from users where location = 'CYCZ'
-select * from users where username = 'Jessica86819'
 
-
-update users set location = "AD" where location = "CYCZ" and id=288
-
--- this section is just random queries i am testing-- 
-
--- select b.username, sum(a.score) as total_score, a.category from rawscores as a, users as b where b.id = a.user_id and a.user_id = 2 group by a.category
-
--- select count(b.id) as total, b.overall_category, b.location from users as b group by b.location, b.overall_category
--- select sum(a.score) as total from rawscores as a, users as b where b.id = a.user_id and a.user_id = 1;
--- select count(b.id)/5 as total, b.overall_category, b.location from users as b group by b.location, b.overall_category
--- select count(b.id), b.overall_category, b.location from users as b group by b.location, b.overall_category;
--- - ct sum(score) as total, a.category from rawscores as a  where a.user_id = 777 group by a.category order by total desc limit 1;
-
--- select nerd_level from nerdlevels where min_score < 13 order by max_score desc limit 1
-
--- select sum(a.score) as total from rawscores as a, users as b where b.id = a.user_id
-
--- select sum(a.score) as total from rawscores as a, users as b where b.id = a.user_id
-
--- select b.username, sum(a.score) as total_score, a.category from rawscores as a, users as b where b.id = a.user_id group by  b.username, a.category
--- 
