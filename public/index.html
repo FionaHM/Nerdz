@@ -252,7 +252,7 @@
           <div id="navbar" class="navbar-collapse collapse">
             <button class="btn btn-success" id="loginbtn" name="loginbtn">Login to Take Quizzes</button>
             <ul class="nav navbar-nav">
-              <li class="active"><a href="#">Home</a></li>
+              <li class="active"><a href="/">Home</a></li>
               <li id="logged-dropdown" class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">You are logged in<span class="caret"></span></a>
                 <ul class="dropdown-menu">
@@ -292,6 +292,7 @@
   </div>
   <script type="text/javascript">
   loggedOutDom();
+
   $("#login-submit").on("click", function(event) {
     event.preventDefault();
     var loginObj = {
@@ -301,18 +302,12 @@
     };
     $.post('/existinguser', loginObj, function(data, status) {
 
-        // console.log(xhr.responseText, xhr.statusText);
-        console.log(data);
         if (data === null) {
           // captures error so now we can handle
           // invalid password or no user
           $('#err-message1').html('<h3 class="warning">' + xhr.responseText);
-          console.log(xhr.responseText, xhr.statusText);
         } else {
           createCookie("auth_token", data, 0);
-          // createCookie("user_email", $("#existing-user-email").val(), 0);
-          // move to next page - this will error if user doesnt have perms
-          // window.location.replace("../questionpage");
 
         }
       })
@@ -321,14 +316,10 @@
 
         loggedInDom();
 
-        // $.get("/questionpage", function(){});
-        console.log(msg);
-
       })
       .fail(function(xhr, status, error) {
         // captures error so now we can handle
         $('#err-message1').html('<h3 class="warning">' + xhr.responseText);
-        console.log(xhr.responseText, xhr.statusText);
       })
   })
 
@@ -344,25 +335,18 @@
     $.post('/newuser', registerObj, function(data, status, err) {
         // save token
         if (status === "success") {
-          createCookie("auth_token", data, 0);
-          // createCookie("user_email", $("#new-user-email").val(), 0);
-          // move to next page - this will error if user doesnt have perms
-          // window.location.replace("../questionpage");
+
+            createCookie("auth_token", data, 0);
+
         }
       })
       .done(function(msg) {
-        // $.get("/questionpage", function(){});
-        // console.log(msg);
+   
         loggedInDom();
       })
       .fail(function(xhr, status, error) {
         // captures error so now we can handle
         $('#err-message2').html('<h3 class="warning">' + xhr.responseText);
-        // console.log(xhr.responseText, xhr.statusText);
-        // if (xhr.responseText === "invalid_token"){
-        // console.log("TEST");
-        // $('#popModal').modal('show');
-        // }
 
       })
   })
@@ -411,9 +395,7 @@
       }, function(results, status) {
         if (status === 'OK') {
           if (results[1]) {
-            console.log(results[1].address_components[3].short_name);
             $('#cities').html(results[1].address_components[3].short_name);
-            // $('#location-state').html(results[1].address_components[3].short_name);
 
             var you = [results[1].address_components[3].short_name];
 

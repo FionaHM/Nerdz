@@ -1302,7 +1302,6 @@ $.get("/map", function(data) {
         // create circle for each country
         for (var i = 0; i < mapData.length; i++) {
             var dataItem = mapData[i];
-            console.log( mapData[i].location);
             var value = dataItem.total;
 
             if (mapData[i].location === null) {
