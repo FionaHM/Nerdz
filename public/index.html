@@ -278,7 +278,13 @@
   <div id="map" class="map-page"></div>
   <div id="selector">
   </div>
-  <div id="mapdiv" style="width: 900px; height: 600px; margin:auto"></div>
+  <div id="mapdiv" style="width: 900px; height: 600px; margin:auto">
+    <div class="progress">
+      <div class="progress-bar progress-bar-striped progress-bar-success active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:60%">
+        60%
+      </div>
+    </div>
+  </div>
   <div id="error-div"></div>
   <div style="text-align:center">
     <input type="button" class="btn btn-success" id="release-btn" value="Release Nerds" />
@@ -338,10 +344,10 @@
     $.post('/newuser', registerObj, function(data, status, err) {
         // save token
         if (status === "success") {
-            createCookie("auth_token", data, 0);
-            // createCookie("user_email", $("#new-user-email").val(), 0);
-            // move to next page - this will error if user doesnt have perms
-            // window.location.replace("../questionpage");
+          createCookie("auth_token", data, 0);
+          // createCookie("user_email", $("#new-user-email").val(), 0);
+          // move to next page - this will error if user doesnt have perms
+          // window.location.replace("../questionpage");
         }
       })
       .done(function(msg) {
@@ -354,8 +360,8 @@
         $('#err-message2').html('<h3 class="warning">' + xhr.responseText);
         // console.log(xhr.responseText, xhr.statusText);
         // if (xhr.responseText === "invalid_token"){
-          // console.log("TEST");
-          // $('#popModal').modal('show');
+        // console.log("TEST");
+        // $('#popModal').modal('show');
         // }
 
       })
@@ -386,13 +392,13 @@
 
     navigator.geolocation.getCurrentPosition(function(position) {
 
-        geocodeLatLng(geocoder, position.coords.latitude, position.coords.longitude);
+      geocodeLatLng(geocoder, position.coords.latitude, position.coords.longitude);
 
 
 
-        return [position.coords.longitude, position.coords.latitude];
+      return [position.coords.longitude, position.coords.latitude];
 
-      })
+    })
 
     function geocodeLatLng(geocoder, lat, lng) {
 
