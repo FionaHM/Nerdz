@@ -31,7 +31,7 @@ After you have taken the survey, view a series of graphs illustrating your resul
 ![nerd stats](/public/img/graphs.png?raw=true "Nerd Stats")
 
 ## Nerd vs Geek Quiz
-Are you really a nerd, or are you actually a geek? True dorkerati know the difference, and soon you will, too.
+What's the difference between a nerd and a geek? True dorkerati know the difference, and soon you will, too.
 
 
 ![nerd vs geek](/public/img/nerd-vs-geek.png?raw=true "Nerd vs Geek")

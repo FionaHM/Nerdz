@@ -14,6 +14,10 @@
     margin-top: -7px;
   }
   
+  h1 {
+    padding-bottom: 10px;
+  }
+  
   .modal-header {
     margin-top: 100px color: #eee;
     border: none;
@@ -65,9 +69,11 @@
   .carousel-caption {
     margin-bottom: 120px;
   }
+  
   .navbar-wrapper {
-    z-index:1000;
+    z-index: 1000;
   }
+  
   .item {
     /* -vendor-animation-delay: 10s;
     -vendor-animation-duration: 10s;*/
