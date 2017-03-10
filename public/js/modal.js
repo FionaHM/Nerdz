@@ -4,7 +4,7 @@ $('#loginbtn').on('click', function() {
 
 });
 
-var stops = [25, 55, 85, 100];
+var stops = [25, 55, 85, 95];
 $.each(stops, function(index, value) {
     setTimeout(function() {
         $(".progress-bar").css("width", value + "%").attr("aria-valuenow", value);

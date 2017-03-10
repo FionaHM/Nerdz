@@ -10,6 +10,12 @@ body {
   width: 900px;
 }
 
+.progress {
+  background-color: #222;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
 .navbar {
   opacity: 2;
 }
