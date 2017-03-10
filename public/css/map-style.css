@@ -5,6 +5,11 @@ body {
   background-color: #111;
 }
 
+#map-opener {
+  height: 600px;
+  width: 900px;
+}
+
 .navbar {
   opacity: 2;
 }

@@ -4,6 +4,14 @@ $('#loginbtn').on('click', function() {
 
 });
 
+var stops = [25, 55, 85, 100];
+$.each(stops, function(index, value) {
+    setTimeout(function() {
+        $(".progress-bar").css("width", value + "%").attr("aria-valuenow", value);
+    }, index * 1500);
+});
+
+
 
 //need some logic here to make sure recovery is successful before closing modal
 $('#resetpassword').on('click', function() {
